@@ -31,10 +31,11 @@ pub(crate) fn validate(
         lalr,
     } = grammar;
 
+    if tokens.is_empty() {
+        return Err(ValidationError::EmptyTokenTable);
+    }
     let token_count = checked_len(tokens.len(), ArithmeticKind::TokenCount)?;
     check_limit(LimitKind::Tokens, u64::from(token_count), limits.max_tokens)?;
-    let token_bytes = validate_tokens(&tokens)?;
-    check_limit(LimitKind::TokenBytes, token_bytes, limits.max_token_bytes)?;
 
     check_limit(
         LimitKind::DfaStates,
@@ -99,14 +100,23 @@ pub(crate) fn validate(
         limits.max_parser_cells,
     )?;
 
-    let sizes = DeclaredSizes {
-        token_count,
-        token_bytes,
+    let sizes_without_tokens = DeclaredSizes {
+        token_count: 0,
+        token_bytes: 0,
         lexer_states: lexer.state_count,
         lexer_cells,
         parser_action_cells,
         parser_goto_cells,
         production_count,
+    };
+    let base_work = validation_base_work(sizes_without_tokens)?;
+    check_limit(LimitKind::Work, base_work, limits.max_work)?;
+    let token_bytes = validate_tokens(&tokens, base_work, &limits)?;
+
+    let sizes = DeclaredSizes {
+        token_count,
+        token_bytes,
+        ..sizes_without_tokens
     };
     let logical_bytes = logical_bytes(sizes)?;
     check_limit(
@@ -114,9 +124,6 @@ pub(crate) fn validate(
         logical_bytes,
         limits.max_logical_bytes,
     )?;
-    let work = validation_work(sizes)?;
-    check_limit(LimitKind::Work, work, limits.max_work)?;
-
     check_length(
         ValidationTable::LexerByteClasses,
         BYTE_CLASS_TABLE_LEN,
@@ -234,16 +241,20 @@ pub(crate) fn validate(
     ))
 }
 
-fn validate_tokens(tokens: &[TokenEntry]) -> Result<u64, ValidationError> {
-    if tokens.is_empty() {
-        return Err(ValidationError::EmptyTokenTable);
-    }
-
+fn validate_tokens(
+    tokens: &[TokenEntry],
+    initial_work: u64,
+    limits: &ValidationLimits,
+) -> Result<u64, ValidationError> {
     let mut has_ordinary = false;
     let mut has_eos = false;
     let mut total_bytes = 0_u64;
+    let mut work = initial_work;
     let mut index = 0;
     while index < tokens.len() {
+        work = checked_add(work, 1, ArithmeticKind::Work)?;
+        check_limit(LimitKind::Work, work, limits.max_work)?;
+
         match &tokens[index] {
             TokenEntry::Bytes(bytes) => {
                 has_ordinary = true;
@@ -258,6 +269,9 @@ fn validate_tokens(tokens: &[TokenEntry]) -> Result<u64, ValidationError> {
                     }
                 })?;
                 total_bytes = checked_add(total_bytes, byte_count, ArithmeticKind::TokenBytes)?;
+                check_limit(LimitKind::TokenBytes, total_bytes, limits.max_token_bytes)?;
+                work = checked_add(work, byte_count, ArithmeticKind::Work)?;
+                check_limit(LimitKind::Work, work, limits.max_work)?;
             }
             TokenEntry::Eos => has_eos = true,
         }
@@ -467,10 +481,9 @@ fn logical_bytes(sizes: DeclaredSizes) -> Result<u64, ValidationError> {
     )
 }
 
-fn validation_work(sizes: DeclaredSizes) -> Result<u64, ValidationError> {
+fn validation_base_work(sizes: DeclaredSizes) -> Result<u64, ValidationError> {
     let calculation = ArithmeticKind::Work;
-    let mut total = checked_add(u64::from(sizes.token_count), sizes.token_bytes, calculation)?;
-    total = checked_add(total, LOGICAL_FIXED_SCALARS, calculation)?;
+    let mut total = checked_add(0, LOGICAL_FIXED_SCALARS, calculation)?;
     total = checked_add(total, BYTE_CLASS_TABLE_LEN as u64, calculation)?;
     total = checked_add(total, u64::from(sizes.lexer_states), calculation)?;
     total = checked_add(total, u64::from(sizes.lexer_cells), calculation)?;

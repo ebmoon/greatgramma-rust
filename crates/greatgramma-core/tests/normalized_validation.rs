@@ -402,3 +402,56 @@ fn rejects_limits_and_checked_cross_product_overflow() {
         })
     );
 }
+
+#[test]
+fn token_limits_stop_before_later_invalid_entries() {
+    // Fixed table validation costs 275 work units. The first token's entry and
+    // byte use the final two; charging the next entry must fail before reading
+    // its empty byte payload.
+    let work_limits = ValidationLimits {
+        max_work: 277,
+        ..ValidationLimits::default()
+    };
+    assert_eq!(
+        grammar_with(
+            vec![
+                TokenEntry::Bytes(b"a".to_vec()),
+                TokenEntry::Bytes(Vec::new()),
+                TokenEntry::Eos,
+            ],
+            valid_lexer(),
+            valid_lalr(),
+        )
+        .validate(work_limits),
+        Err(ValidationError::LimitExceeded {
+            limit: LimitKind::Work,
+            actual: 278,
+            maximum: 277,
+        })
+    );
+
+    // The first byte exhausts its own budget. The second valid byte must trip
+    // that limit before validation reaches the later empty entry.
+    let byte_limits = ValidationLimits {
+        max_token_bytes: 1,
+        ..ValidationLimits::default()
+    };
+    assert_eq!(
+        grammar_with(
+            vec![
+                TokenEntry::Bytes(b"a".to_vec()),
+                TokenEntry::Bytes(b"b".to_vec()),
+                TokenEntry::Bytes(Vec::new()),
+                TokenEntry::Eos,
+            ],
+            valid_lexer(),
+            valid_lalr(),
+        )
+        .validate(byte_limits),
+        Err(ValidationError::LimitExceeded {
+            limit: LimitKind::TokenBytes,
+            actual: 2,
+            maximum: 1,
+        })
+    );
+}
