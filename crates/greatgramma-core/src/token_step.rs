@@ -350,32 +350,8 @@ impl<'a> Budget<'a> {
     }
 
     fn charge(&mut self, kind: PreparationLimitKind, amount: u64) -> Result<(), PreparationError> {
-        let (counter, maximum) = match kind {
-            PreparationLimitKind::TrieNodes => (&mut self.trie_nodes, self.limits.max_trie_nodes),
-            PreparationLimitKind::TrieEdges => (&mut self.trie_edges, self.limits.max_trie_edges),
-            PreparationLimitKind::LogicalTokenBytes => (
-                &mut self.logical_token_bytes,
-                self.limits.max_logical_token_bytes,
-            ),
-            PreparationLimitKind::SourceTokenCells => (
-                &mut self.source_token_cells,
-                self.limits.max_source_token_cells,
-            ),
-            PreparationLimitKind::OutputPoolTerminals => (
-                &mut self.output_pool_terminals,
-                self.limits.max_output_pool_terminals,
-            ),
-            PreparationLimitKind::RowInterningWork => (
-                &mut self.row_interning_work,
-                self.limits.max_row_interning_work,
-            ),
-            PreparationLimitKind::OutputInterningWork => (
-                &mut self.output_interning_work,
-                self.limits.max_output_interning_work,
-            ),
-            PreparationLimitKind::Work => (&mut self.work, self.limits.max_work),
-        };
-        let actual = counter
+        let (current, maximum) = self.counter_and_limit(kind);
+        let actual = current
             .checked_add(amount)
             .ok_or(PreparationError::ArithmeticOverflow {
                 calculation: PreparationArithmeticKind::Counter,
@@ -387,11 +363,66 @@ impl<'a> Budget<'a> {
                 maximum,
             });
         }
-        *counter = actual;
-        if kind != PreparationLimitKind::Work {
-            self.charge(PreparationLimitKind::Work, amount)?;
+        if kind == PreparationLimitKind::Work {
+            self.work = actual;
+            return Ok(());
         }
+
+        let work_actual =
+            self.work
+                .checked_add(amount)
+                .ok_or(PreparationError::ArithmeticOverflow {
+                    calculation: PreparationArithmeticKind::Counter,
+                })?;
+        if work_actual > self.limits.max_work {
+            return Err(PreparationError::LimitExceeded {
+                limit: PreparationLimitKind::Work,
+                actual: work_actual,
+                maximum: self.limits.max_work,
+            });
+        }
+        self.set_counter(kind, actual);
+        self.work = work_actual;
         Ok(())
+    }
+
+    fn counter_and_limit(&self, kind: PreparationLimitKind) -> (u64, u64) {
+        match kind {
+            PreparationLimitKind::TrieNodes => (self.trie_nodes, self.limits.max_trie_nodes),
+            PreparationLimitKind::TrieEdges => (self.trie_edges, self.limits.max_trie_edges),
+            PreparationLimitKind::LogicalTokenBytes => (
+                self.logical_token_bytes,
+                self.limits.max_logical_token_bytes,
+            ),
+            PreparationLimitKind::SourceTokenCells => {
+                (self.source_token_cells, self.limits.max_source_token_cells)
+            }
+            PreparationLimitKind::OutputPoolTerminals => (
+                self.output_pool_terminals,
+                self.limits.max_output_pool_terminals,
+            ),
+            PreparationLimitKind::RowInterningWork => {
+                (self.row_interning_work, self.limits.max_row_interning_work)
+            }
+            PreparationLimitKind::OutputInterningWork => (
+                self.output_interning_work,
+                self.limits.max_output_interning_work,
+            ),
+            PreparationLimitKind::Work => (self.work, self.limits.max_work),
+        }
+    }
+
+    fn set_counter(&mut self, kind: PreparationLimitKind, value: u64) {
+        match kind {
+            PreparationLimitKind::TrieNodes => self.trie_nodes = value,
+            PreparationLimitKind::TrieEdges => self.trie_edges = value,
+            PreparationLimitKind::LogicalTokenBytes => self.logical_token_bytes = value,
+            PreparationLimitKind::SourceTokenCells => self.source_token_cells = value,
+            PreparationLimitKind::OutputPoolTerminals => self.output_pool_terminals = value,
+            PreparationLimitKind::RowInterningWork => self.row_interning_work = value,
+            PreparationLimitKind::OutputInterningWork => self.output_interning_work = value,
+            PreparationLimitKind::Work => self.work = value,
+        }
     }
 }
 
@@ -1079,5 +1110,29 @@ mod tests {
                 maximum: 0,
             })
         );
+    }
+
+    #[test]
+    fn cumulative_work_failure_does_not_commit_the_resource_charge() {
+        let limits = PreparationLimits {
+            max_work: 1,
+            ..PreparationLimits::default()
+        };
+        let mut budget = Budget::new(&limits);
+        budget
+            .charge(PreparationLimitKind::TrieNodes, 1)
+            .expect("first charge fits both limits");
+        assert_eq!(budget.trie_nodes, 1);
+        assert_eq!(budget.work, 1);
+        assert_eq!(
+            budget.charge(PreparationLimitKind::TrieEdges, 1),
+            Err(PreparationError::LimitExceeded {
+                limit: PreparationLimitKind::Work,
+                actual: 2,
+                maximum: 1,
+            })
+        );
+        assert_eq!(budget.trie_edges, 0);
+        assert_eq!(budget.work, 1);
     }
 }
