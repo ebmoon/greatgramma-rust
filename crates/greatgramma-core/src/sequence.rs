@@ -14,9 +14,9 @@ pub(crate) struct ValueRange {
 }
 
 #[derive(Clone, Copy)]
-struct ZeroEdge {
+struct Predecessor {
     source: usize,
-    destination: usize,
+    next: Option<usize>,
 }
 
 #[derive(Clone, Copy)]
@@ -37,6 +37,7 @@ pub(crate) struct SpannerBudget<'a> {
     limits: &'a SpannerLimits,
     singleton_edge_scans: u64,
     singleton_zero_edges: u64,
+    singleton_adjacency_state_cells: u64,
     singleton_visited: u64,
     singleton_facts: u64,
     singleton_propagation_work: u64,
@@ -57,6 +58,7 @@ impl<'a> SpannerBudget<'a> {
             limits,
             singleton_edge_scans: 0,
             singleton_zero_edges: 0,
+            singleton_adjacency_state_cells: 0,
             singleton_visited: 0,
             singleton_facts: 0,
             singleton_propagation_work: 0,
@@ -116,6 +118,10 @@ impl<'a> SpannerBudget<'a> {
                 self.singleton_zero_edges,
                 self.limits.max_singleton_zero_edges,
             ),
+            SpannerLimitKind::SingletonAdjacencyStateCells => (
+                self.singleton_adjacency_state_cells,
+                self.limits.max_singleton_adjacency_state_cells,
+            ),
             SpannerLimitKind::SingletonVisited => {
                 (self.singleton_visited, self.limits.max_singleton_visited)
             }
@@ -166,6 +172,9 @@ impl<'a> SpannerBudget<'a> {
         match kind {
             SpannerLimitKind::SingletonEdgeScans => self.singleton_edge_scans = value,
             SpannerLimitKind::SingletonZeroEdges => self.singleton_zero_edges = value,
+            SpannerLimitKind::SingletonAdjacencyStateCells => {
+                self.singleton_adjacency_state_cells = value;
+            }
             SpannerLimitKind::SingletonVisited => self.singleton_visited = value,
             SpannerLimitKind::SingletonFacts => self.singleton_facts = value,
             SpannerLimitKind::SingletonPropagationWork => {
@@ -199,6 +208,16 @@ impl SequenceTable {
                 calculation: SpannerArithmeticKind::SingletonFactCells,
             },
         )?;
+        let adjacency_state_cells =
+            source_count
+                .checked_mul(2)
+                .ok_or(SpannerPreparationError::ArithmeticOverflow {
+                    calculation: SpannerArithmeticKind::SingletonAdjacencyStateCells,
+                })?;
+        budget.charge(
+            SpannerLimitKind::SingletonAdjacencyStateCells,
+            count_as_u64(adjacency_state_cells)?,
+        )?;
         budget.charge(
             SpannerLimitKind::SingletonVisited,
             count_as_u64(fact_cells)?,
@@ -208,7 +227,21 @@ impl SequenceTable {
         reserve_exact(&mut fact_seen, fact_cells, SpannerStorage::SingletonVisited)?;
         fact_seen.resize(fact_cells, false);
         let mut facts = Vec::new();
-        let mut zero_edges = Vec::new();
+        let mut adjacency_seen = Vec::new();
+        reserve_exact(
+            &mut adjacency_seen,
+            source_count,
+            SpannerStorage::SingletonAdjacencySeen,
+        )?;
+        adjacency_seen.resize(source_count, None::<usize>);
+        let mut predecessor_heads = Vec::new();
+        reserve_exact(
+            &mut predecessor_heads,
+            source_count,
+            SpannerStorage::SingletonPredecessorHeads,
+        )?;
+        predecessor_heads.resize(source_count, None::<usize>);
+        let mut predecessors = Vec::new();
 
         let mut source = 0;
         while source < source_count {
@@ -240,12 +273,36 @@ impl SequenceTable {
                         let destination = source_row(grammar, destination).ok_or(
                             SpannerPreparationError::InvalidDerivedState { state: destination },
                         )?;
-                        budget.charge(SpannerLimitKind::SingletonZeroEdges, 1)?;
-                        reserve_exact(&mut zero_edges, 1, SpannerStorage::SingletonZeroEdges)?;
-                        zero_edges.push(ZeroEdge {
-                            source,
-                            destination,
-                        });
+                        let previous_source = *adjacency_seen.get(destination).ok_or(
+                            SpannerPreparationError::ArithmeticOverflow {
+                                calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
+                            },
+                        )?;
+                        if previous_source != Some(source) {
+                            let next = *predecessor_heads.get(destination).ok_or(
+                                SpannerPreparationError::ArithmeticOverflow {
+                                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
+                                },
+                            )?;
+                            budget.charge(SpannerLimitKind::SingletonZeroEdges, 1)?;
+                            reserve_exact(
+                                &mut predecessors,
+                                1,
+                                SpannerStorage::SingletonZeroEdges,
+                            )?;
+                            let predecessor = predecessors.len();
+                            predecessors.push(Predecessor { source, next });
+                            *predecessor_heads.get_mut(destination).ok_or(
+                                SpannerPreparationError::ArithmeticOverflow {
+                                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
+                                },
+                            )? = Some(predecessor);
+                            *adjacency_seen.get_mut(destination).ok_or(
+                                SpannerPreparationError::ArithmeticOverflow {
+                                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
+                                },
+                            )? = Some(source);
+                        }
                     }
                     Ok(LexerStep::Finished { .. }) => {}
                     Err(LexerError::InvalidState { state }) => {
@@ -275,30 +332,32 @@ impl SequenceTable {
                 .ok_or(SpannerPreparationError::ArithmeticOverflow {
                     calculation: SpannerArithmeticKind::FactIndex,
                 })?;
-            let mut edge_index = 0;
-            while edge_index < zero_edges.len() {
+            let terminal = TerminalId::new(u32::try_from(fact.terminal).map_err(|_| {
+                SpannerPreparationError::ArithmeticOverflow {
+                    calculation: SpannerArithmeticKind::CountConversion,
+                }
+            })?);
+            let mut predecessor_index = *predecessor_heads.get(fact.source).ok_or(
+                SpannerPreparationError::ArithmeticOverflow {
+                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
+                },
+            )?;
+            while let Some(index) = predecessor_index {
                 budget.charge(SpannerLimitKind::SingletonPropagationWork, 1)?;
-                let edge = *zero_edges.get(edge_index).ok_or(
+                let predecessor = *predecessors.get(index).ok_or(
                     SpannerPreparationError::ArithmeticOverflow {
-                        calculation: SpannerArithmeticKind::FactIndex,
+                        calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
                     },
                 )?;
-                if edge.destination == fact.source {
-                    let terminal = TerminalId::new(u32::try_from(fact.terminal).map_err(|_| {
-                        SpannerPreparationError::ArithmeticOverflow {
-                            calculation: SpannerArithmeticKind::CountConversion,
-                        }
-                    })?);
-                    add_fact(
-                        &mut fact_seen,
-                        &mut facts,
-                        edge.source,
-                        terminal,
-                        terminal_count,
-                        budget,
-                    )?;
-                }
-                edge_index = next_index(edge_index)?;
+                add_fact(
+                    &mut fact_seen,
+                    &mut facts,
+                    predecessor.source,
+                    terminal,
+                    terminal_count,
+                    budget,
+                )?;
+                predecessor_index = predecessor.next;
             }
             cursor = next_index(cursor)?;
         }
@@ -590,8 +649,8 @@ fn sequence_id(index: usize) -> Result<SequenceId, SpannerPreparationError> {
 mod tests {
     use super::*;
     use crate::{
-        Action, LalrDimensions, LalrTable, LexerDfa, ParserStateId, TokenEntry, UnvalidatedGrammar,
-        ValidationLimits,
+        Action, LalrDimensions, LalrTable, LexerDfa, ParserStateId, TokenEntry, TokenId,
+        UnvalidatedGrammar, ValidationLimits,
     };
 
     fn cyclic_fixture() -> ValidatedGrammar {
@@ -633,6 +692,78 @@ mod tests {
         )
         .validate(ValidationLimits::default())
         .expect("fixture validates")
+    }
+
+    fn two_state_cycle_fixture() -> ValidatedGrammar {
+        let mut classes = vec![0; 256];
+        classes[usize::from(b'a')] = 1;
+        classes[usize::from(b'b')] = 2;
+        classes[usize::from(b'c')] = 3;
+        let width = 4;
+        let mut transitions = vec![None; 4 * width];
+        transitions[1] = Some(DfaStateId::new(1));
+        transitions[width + 2] = Some(DfaStateId::new(2));
+        transitions[2 * width + 1] = Some(DfaStateId::new(1));
+        transitions[2 * width + 3] = Some(DfaStateId::new(3));
+        let lexer = LexerDfa::new(
+            4,
+            u32::try_from(width).expect("fixture width fits"),
+            classes,
+            transitions,
+            DfaStateId::new(0),
+            vec![None, None, None, Some(TerminalId::new(0))],
+        );
+        let lalr = LalrTable::new(
+            LalrDimensions::new(1, 2, 0),
+            ParserStateId::new(0),
+            TerminalId::new(1),
+            vec![Action::Error, Action::Accept],
+            Vec::new(),
+            Vec::new(),
+        );
+        UnvalidatedGrammar::new(
+            vec![TokenEntry::Bytes(b"a".to_vec()), TokenEntry::Eos],
+            lexer,
+            lalr,
+        )
+        .validate(ValidationLimits::default())
+        .expect("cycle fixture validates")
+    }
+
+    fn shared_destination_chain_fixture(state_count: u32) -> ValidatedGrammar {
+        let state_count_usize = usize::try_from(state_count).expect("fixture count fits");
+        let mut transitions = vec![None; state_count_usize];
+        let mut state = 0_u32;
+        while state + 1 < state_count {
+            transitions[usize::try_from(state).expect("fixture state fits")] =
+                Some(DfaStateId::new(state + 1));
+            state += 1;
+        }
+        let mut terminals = vec![None; state_count_usize];
+        terminals[state_count_usize - 1] = Some(TerminalId::new(0));
+        let lexer = LexerDfa::new(
+            state_count,
+            1,
+            vec![0; 256],
+            transitions,
+            DfaStateId::new(0),
+            terminals,
+        );
+        let lalr = LalrTable::new(
+            LalrDimensions::new(1, 2, 0),
+            ParserStateId::new(0),
+            TerminalId::new(1),
+            vec![Action::Error, Action::Accept],
+            Vec::new(),
+            Vec::new(),
+        );
+        UnvalidatedGrammar::new(
+            vec![TokenEntry::Bytes(vec![0]), TokenEntry::Eos],
+            lexer,
+            lalr,
+        )
+        .validate(ValidationLimits::default())
+        .expect("scale fixture validates")
     }
 
     fn insert_terminal(terminals: &mut Vec<TerminalId>, terminal: TerminalId) {
@@ -686,6 +817,76 @@ mod tests {
     }
 
     #[test]
+    fn singleton_fixed_point_closes_an_explicit_two_state_cycle_through_its_exit() {
+        let grammar = two_state_cycle_fixture();
+        let limits = SpannerLimits::default();
+        let mut budget = SpannerBudget::new(&limits);
+        let table =
+            SequenceTable::build_singletons(&grammar, &mut budget).expect("cycle closes exactly");
+        assert_eq!(table.singleton(0), Some(&[TerminalId::new(0)][..]));
+        assert_eq!(table.singleton(2), Some(&[TerminalId::new(0)][..]));
+        assert_eq!(table.singleton(3), Some(&[TerminalId::new(0)][..]));
+    }
+
+    #[test]
+    fn default_limits_prepare_two_thousand_shared_destination_states() {
+        let grammar = shared_destination_chain_fixture(2_000);
+        let limits = SpannerLimits::default();
+        let mut budget = SpannerBudget::new(&limits);
+        let singleton_table = SequenceTable::build_singletons(&grammar, &mut budget)
+            .expect("deduplicated predecessor closure fits default limits");
+        assert_eq!(budget.singleton_edge_scans, 512_256);
+        assert_eq!(budget.singleton_adjacency_state_cells, 4_002);
+        assert_eq!(budget.singleton_zero_edges, 2_000);
+        assert_eq!(budget.singleton_facts, 2_001);
+        assert_eq!(budget.singleton_propagation_work, 2_000);
+        assert_eq!(
+            singleton_table.singleton(0),
+            Some(&[TerminalId::new(0)][..])
+        );
+        let spanner = crate::prepare_spanner(&grammar, SpannerLimits::default())
+            .expect("deduplicated predecessor closure fits default limits");
+        assert_eq!(
+            spanner.singleton_terminals(LexerState::Start),
+            Ok(&[TerminalId::new(0)][..])
+        );
+        assert_eq!(
+            spanner.singleton_terminals(LexerState::Dfa(DfaStateId::new(0))),
+            Ok(&[TerminalId::new(0)][..])
+        );
+        assert_eq!(
+            spanner.singleton_terminals(LexerState::Dfa(DfaStateId::new(1_999))),
+            Ok(&[TerminalId::new(0)][..])
+        );
+        assert_eq!(spanner.sequence_count(), 2);
+        let mut singleton = None;
+        let mut doubled = None;
+        let mut index = 0;
+        while index < spanner.sequence_count() {
+            let sequence = SequenceId::new(u32::try_from(index).expect("fixture count fits"));
+            match spanner.sequence(sequence) {
+                Some(value) if value == [TerminalId::new(0)] => singleton = Some(sequence),
+                Some(value) if value == [TerminalId::new(0), TerminalId::new(0)] => {
+                    doubled = Some(sequence);
+                }
+                _ => {}
+            }
+            index += 1;
+        }
+        assert_eq!(
+            spanner.inverse_tokens(LexerState::Start, singleton.expect("singleton exists")),
+            Ok(&[TokenId::new(0)][..])
+        );
+        assert_eq!(
+            spanner.inverse_tokens(
+                LexerState::Dfa(DfaStateId::new(1_999)),
+                doubled.expect("doubled head exists"),
+            ),
+            Ok(&[TokenId::new(0)][..])
+        );
+    }
+
+    #[test]
     fn singleton_fixed_point_agrees_with_bounded_exhaustive_raw_byte_words() {
         let grammar = cyclic_fixture();
         let limits = SpannerLimits::default();
@@ -718,6 +919,20 @@ mod tests {
                 limit: SpannerLimitKind::SingletonVisited,
                 actual: 15,
                 maximum: 1,
+            })
+        );
+
+        let limits = SpannerLimits {
+            max_singleton_adjacency_state_cells: 0,
+            ..SpannerLimits::default()
+        };
+        let mut budget = SpannerBudget::new(&limits);
+        assert_eq!(
+            SequenceTable::build_singletons(&grammar, &mut budget).err(),
+            Some(SpannerPreparationError::LimitExceeded {
+                limit: SpannerLimitKind::SingletonAdjacencyStateCells,
+                actual: 10,
+                maximum: 0,
             })
         );
 

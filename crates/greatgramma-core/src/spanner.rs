@@ -14,6 +14,7 @@ use crate::token_step::{PreparedTokenExecution, PreparedTokenTable, prepare_toke
 pub enum SpannerLimitKind {
     SingletonEdgeScans,
     SingletonZeroEdges,
+    SingletonAdjacencyStateCells,
     SingletonVisited,
     SingletonFacts,
     SingletonPropagationWork,
@@ -35,6 +36,8 @@ pub enum SpannerArithmeticKind {
     CountConversion,
     Counter,
     SourceCount,
+    SingletonAdjacencyStateCells,
+    SingletonAdjacencyIndex,
     SingletonFactCells,
     FactIndex,
     ValueRange,
@@ -51,6 +54,8 @@ pub enum SpannerArithmeticKind {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum SpannerStorage {
     SingletonZeroEdges,
+    SingletonAdjacencySeen,
+    SingletonPredecessorHeads,
     SingletonVisited,
     SingletonFacts,
     SingletonRows,

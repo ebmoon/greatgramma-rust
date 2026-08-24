@@ -293,13 +293,14 @@ impl PreparedTokenTable {
 struct TrieNode {
     parent: Option<usize>,
     byte: u8,
+    first_edge: Option<usize>,
 }
 
 #[derive(Clone, Copy)]
 struct TrieEdge {
-    parent: usize,
     byte: u8,
     child: usize,
+    next: Option<usize>,
 }
 
 struct FlatByteTrie {
@@ -492,6 +493,7 @@ fn build_trie(
     trie.nodes.push(TrieNode {
         parent: None,
         byte: 0,
+        first_edge: None,
     });
     reserve(
         &mut trie.token_ends,
@@ -547,8 +549,15 @@ fn trie_child_or_insert(
     byte: u8,
     budget: &mut Budget<'_>,
 ) -> Result<usize, PreparationError> {
-    let mut edge_index = 0;
-    while edge_index < trie.edges.len() {
+    let mut previous = None;
+    let mut cursor = trie
+        .nodes
+        .get(parent)
+        .ok_or(PreparationError::ArithmeticOverflow {
+            calculation: PreparationArithmeticKind::CountConversion,
+        })?
+        .first_edge;
+    while let Some(edge_index) = cursor {
         budget.charge(PreparationLimitKind::Work, 1)?;
         let edge = *trie
             .edges
@@ -556,24 +565,50 @@ fn trie_child_or_insert(
             .ok_or(PreparationError::ArithmeticOverflow {
                 calculation: PreparationArithmeticKind::CountConversion,
             })?;
-        if edge.parent == parent && edge.byte == byte {
+        if edge.byte == byte {
             return Ok(edge.child);
         }
-        edge_index = next_index(edge_index)?;
+        if edge.byte > byte {
+            break;
+        }
+        previous = Some(edge_index);
+        cursor = edge.next;
     }
     budget.charge(PreparationLimitKind::TrieNodes, 1)?;
     budget.charge(PreparationLimitKind::TrieEdges, 1)?;
     let child = trie.nodes.len();
+    let edge_index = trie.edges.len();
     reserve(&mut trie.nodes, 1, PreparationStorage::TrieNodes)?;
     reserve(&mut trie.edges, 1, PreparationStorage::TrieEdges)?;
+    match previous {
+        Some(previous_edge) => {
+            let edge =
+                trie.edges
+                    .get_mut(previous_edge)
+                    .ok_or(PreparationError::ArithmeticOverflow {
+                        calculation: PreparationArithmeticKind::CountConversion,
+                    })?;
+            edge.next = Some(edge_index);
+        }
+        None => {
+            let node = trie
+                .nodes
+                .get_mut(parent)
+                .ok_or(PreparationError::ArithmeticOverflow {
+                    calculation: PreparationArithmeticKind::CountConversion,
+                })?;
+            node.first_edge = Some(edge_index);
+        }
+    }
     trie.nodes.push(TrieNode {
         parent: Some(parent),
         byte,
+        first_edge: None,
     });
     trie.edges.push(TrieEdge {
-        parent,
         byte,
         child,
+        next: cursor,
     });
     Ok(child)
 }
@@ -976,6 +1011,124 @@ mod tests {
         .expect("fixture validates")
     }
 
+    fn distinct_token_fixture(ordinary_count: u32) -> ValidatedGrammar {
+        let ordinary_count_usize = usize::try_from(ordinary_count).expect("fixture count fits");
+        let mut tokens = Vec::with_capacity(ordinary_count_usize + 1);
+        let mut index = 0_u32;
+        while index < ordinary_count {
+            tokens.push(TokenEntry::Bytes(vec![
+                u8::try_from((index >> 16) & 0xff).expect("fixture byte fits"),
+                u8::try_from((index >> 8) & 0xff).expect("fixture byte fits"),
+                u8::try_from(index & 0xff).expect("fixture byte fits"),
+            ]));
+            index += 1;
+        }
+        tokens.push(TokenEntry::Eos);
+        let lexer = LexerDfa::new(
+            1,
+            1,
+            vec![0; 256],
+            vec![Some(DfaStateId::new(0))],
+            DfaStateId::new(0),
+            vec![None],
+        );
+        let lalr = LalrTable::new(
+            LalrDimensions::new(1, 1, 0),
+            ParserStateId::new(0),
+            TerminalId::new(0),
+            vec![Action::Accept],
+            Vec::new(),
+            Vec::new(),
+        );
+        UnvalidatedGrammar::new(tokens, lexer, lalr)
+            .validate(ValidationLimits::default())
+            .expect("large fixture validates")
+    }
+
+    fn expected_three_byte_trie_nodes(ordinary_count: u32) -> usize {
+        let last = ordinary_count.checked_sub(1).expect("fixture is nonempty");
+        let first_byte_prefixes = usize::try_from((last >> 16) + 1).expect("fixture count fits");
+        let two_byte_prefixes = usize::try_from((last >> 8) + 1).expect("fixture count fits");
+        1 + first_byte_prefixes
+            + two_byte_prefixes
+            + usize::try_from(ordinary_count).expect("fixture count fits")
+    }
+
+    fn assert_trie_adjacency_invariants(trie: &FlatByteTrie) {
+        let mut visited_edges = 0;
+        let mut parent = 0;
+        while parent < trie.nodes.len() {
+            let mut cursor = trie.nodes[parent].first_edge;
+            let mut previous_byte = None;
+            let mut child_count = 0;
+            while let Some(edge_index) = cursor {
+                let edge = trie.edges[edge_index];
+                if let Some(previous) = previous_byte {
+                    assert!(previous < edge.byte, "siblings must be byte ordered");
+                }
+                let child = trie.nodes[edge.child];
+                assert_eq!(child.parent, Some(parent));
+                assert_eq!(child.byte, edge.byte);
+                assert!(parent < edge.child, "parents must precede children");
+                previous_byte = Some(edge.byte);
+                child_count += 1;
+                visited_edges += 1;
+                cursor = edge.next;
+            }
+            assert!(child_count <= 256);
+            parent += 1;
+        }
+        assert_eq!(visited_edges, trie.edges.len());
+    }
+
+    fn assert_large_preparation(ordinary_count: u32, inspect_trie: bool) {
+        let grammar = distinct_token_fixture(ordinary_count);
+        if inspect_trie {
+            let limits = PreparationLimits::default();
+            let mut budget = Budget::new(&limits);
+            let trie = build_trie(&grammar, &mut budget).expect("default trie budget suffices");
+            assert_eq!(
+                trie.nodes.len(),
+                expected_three_byte_trie_nodes(ordinary_count)
+            );
+            assert_eq!(trie.edges.len() + 1, trie.nodes.len());
+            assert_eq!(
+                trie.token_ends.len(),
+                usize::try_from(ordinary_count).expect("fixture count fits") + 1
+            );
+            assert_eq!(trie.token_ends.last(), Some(&None));
+            assert_trie_adjacency_invariants(&trie);
+            assert!(budget.work < 50_000_000);
+        }
+
+        let table = prepare_token_table(&grammar, PreparationLimits::default())
+            .expect("default direct-table budgets suffice");
+        assert_eq!(table.source_count(), 2);
+        let last = TokenId::new(ordinary_count - 1);
+        assert_eq!(
+            table.cell(0, last),
+            Some(PreparedTokenExecution::Continue {
+                state: LexerState::Dfa(DfaStateId::new(0)),
+                emitted: &[],
+            })
+        );
+        assert_eq!(
+            table.cell(1, last),
+            Some(PreparedTokenExecution::Continue {
+                state: LexerState::Dfa(DfaStateId::new(0)),
+                emitted: &[],
+            })
+        );
+        assert!(matches!(
+            table.cell(0, TokenId::new(ordinary_count)),
+            Some(PreparedTokenExecution::Finished { emitted: &[], .. })
+        ));
+        assert_eq!(
+            table.cell(1, TokenId::new(ordinary_count)),
+            Some(PreparedTokenExecution::Rejected)
+        );
+    }
+
     #[test]
     fn prepared_table_matches_direct_relation_for_every_source_and_token_id() {
         let grammar = fixture();
@@ -1132,5 +1285,15 @@ mod tests {
         );
         assert_eq!(budget.trie_edges, 0);
         assert_eq!(budget.work, 1);
+    }
+
+    #[test]
+    fn default_limits_prepare_fifty_thousand_distinct_tokens() {
+        assert_large_preparation(50_000, true);
+    }
+
+    #[test]
+    fn default_limits_prepare_one_hundred_twenty_eight_thousand_distinct_tokens() {
+        assert_large_preparation(128_000, false);
     }
 }
