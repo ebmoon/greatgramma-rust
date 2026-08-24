@@ -1,6 +1,6 @@
 # Phase 1 bootstrap execution
 
-**Source plan:** `/Users/kanghee/greatgramma-rust/superpowers/docs/plans/2026-08-24-110221-01-plan-greatgramma-rust.md`
+**Source plan:** `superpowers/docs/plans/2026-08-24-110221-01-plan-greatgramma-rust.md`
 
 **Session goal:** Begin Phase 1 by establishing a reproducible workspace, the unskippable normalized-table validation boundary, and the corrected lexer semantics. This is the first executable slice of Outcomes 1–3; it does not claim to complete Phase 1.
 
