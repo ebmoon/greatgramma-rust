@@ -226,6 +226,48 @@ fn rejects_out_of_range_lexer_classes_and_ids() {
 }
 
 #[test]
+fn rejects_accepting_lexer_start_as_an_empty_lexeme() {
+    let accepting_start = LexerDfa::new(
+        2,
+        1,
+        byte_classes(0),
+        vec![Some(DfaStateId::new(1)), None],
+        DfaStateId::new(0),
+        vec![Some(TerminalId::new(0)), Some(TerminalId::new(0))],
+    );
+
+    assert_eq!(
+        grammar_with(valid_tokens(), accepting_start, valid_lalr())
+            .validate(ValidationLimits::default()),
+        Err(ValidationError::AcceptingLexerStart {
+            state: DfaStateId::new(0),
+            terminal: TerminalId::new(0),
+        })
+    );
+}
+
+#[test]
+fn rejects_parser_eof_as_a_lexer_terminal() {
+    let eof_labeled_lexer = LexerDfa::new(
+        2,
+        1,
+        byte_classes(0),
+        vec![Some(DfaStateId::new(1)), None],
+        DfaStateId::new(0),
+        vec![None, Some(TerminalId::new(1))],
+    );
+
+    assert_eq!(
+        grammar_with(valid_tokens(), eof_labeled_lexer, valid_lalr())
+            .validate(ValidationLimits::default()),
+        Err(ValidationError::LexerTerminalIsParserEof {
+            state: DfaStateId::new(1),
+            terminal: TerminalId::new(1),
+        })
+    );
+}
+
+#[test]
 fn rejects_wrong_parser_lengths_and_referenced_ids() {
     let short_actions = LalrTable::new(
         LalrDimensions::new(2, 2, 1),

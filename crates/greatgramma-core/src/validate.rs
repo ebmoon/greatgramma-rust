@@ -1,6 +1,6 @@
 use crate::{
-    Action, ArithmeticKind, IdKind, LimitKind, ParserStateId, TerminalId, TokenEntry, TokenId,
-    UnvalidatedGrammar, ValidatedGrammar, ValidatedLalr, ValidatedLexer, ValidationError,
+    Action, ArithmeticKind, DfaStateId, IdKind, LimitKind, ParserStateId, TerminalId, TokenEntry,
+    TokenId, UnvalidatedGrammar, ValidatedGrammar, ValidatedLalr, ValidatedLexer, ValidationError,
     ValidationLimits, ValidationTable,
 };
 
@@ -196,6 +196,13 @@ pub(crate) fn validate(
                 terminal.get(),
                 lalr.dimensions.terminal_count,
             )?;
+            let state = DfaStateId::new(index_as_u32(index, ArithmeticKind::LexerCells)?);
+            if state == lexer.start_state {
+                return Err(ValidationError::AcceptingLexerStart { state, terminal });
+            }
+            if terminal == lalr.eof_terminal {
+                return Err(ValidationError::LexerTerminalIsParserEof { state, terminal });
+            }
         }
         index += 1;
     }

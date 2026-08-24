@@ -1,4 +1,4 @@
-use crate::{ParserStateId, TerminalId, TokenId};
+use crate::{DfaStateId, ParserStateId, TerminalId, TokenId};
 
 /// Identifies a normalized table or scalar field in a validation failure.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -81,6 +81,14 @@ pub enum ValidationError {
         byte: u8,
         class: u32,
         class_count: u32,
+    },
+    AcceptingLexerStart {
+        state: DfaStateId,
+        terminal: TerminalId,
+    },
+    LexerTerminalIsParserEof {
+        state: DfaStateId,
+        terminal: TerminalId,
     },
     AcceptOnNonEof {
         state: ParserStateId,
