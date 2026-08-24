@@ -39,3 +39,22 @@ impl Default for ValidationLimits {
         }
     }
 }
+
+/// Coarse bounds for derived preparation data and the work used to build it.
+///
+/// Both limits are intentionally representation-independent. Optimized
+/// backends may use different storage without changing this public contract.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct PreparationLimits {
+    pub max_items: usize,
+    pub max_work: usize,
+}
+
+impl Default for PreparationLimits {
+    fn default() -> Self {
+        Self {
+            max_items: 64_000_000,
+            max_work: 1_000_000_000,
+        }
+    }
+}

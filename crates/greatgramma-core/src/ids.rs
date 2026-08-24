@@ -6,7 +6,7 @@ macro_rules! define_id {
         pub struct $name(u32);
 
         impl $name {
-            /// Creates an ID whose table membership is checked during validation.
+            /// Creates an ID whose table membership is checked by its consuming API.
             #[must_use]
             pub const fn new(value: u32) -> Self {
                 Self(value)
@@ -44,4 +44,8 @@ define_id!(
 define_id!(
     ProductionId,
     "Identifies a production in the normalized LALR table."
+);
+define_id!(
+    SequenceId,
+    "Identifies an interned realizable terminal sequence head."
 );

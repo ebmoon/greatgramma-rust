@@ -1,0 +1,41 @@
+# Phase 1 token composition and spanner execution
+
+**Source plan:** `superpowers/docs/plans/2026-08-24-110221-01-plan-greatgramma-rust.md`
+
+**Session goal:** Continue Phase 1 through Outcomes 4 and 5 by implementing exact model-token/lexer composition, exact singleton-producible continuation terminals, realizable sequence heads, and the deterministic inverse token spanner. Parser preprocessing, runtime masking/advance, and Python integration remain later outcomes.
+
+## Global constraints
+
+- `greatgramma-core` remains dependency-free beyond `std`, keeps `#![forbid(unsafe_code)]`, and uses concrete Aeneas-oriented enums/structs, ordinary `Vec` rows, indexed loops, deterministic ordering, checked arithmetic/indexing, and structured errors. Do not add hash maps, randomized iteration, recursion without an explicit measure, panic paths for caller/derived data, or public unchecked constructors.
+- The validated ownership boundary stays closed: all execution and preparation consume `&ValidatedGrammar`; derived tables are privately constructed and cannot be supplied by callers. Token-byte normalization, lexer-DFA semantics, and LALR-table semantics are assumed correct only behind that boundary.
+- Logical `LexerState::Start` remains distinct from `LexerState::Dfa(dfa_start)`. Boundary bytes are reconsumed exactly once. EOS remains a separate semantic event and is never treated as a raw byte.
+- The proof-shaped direct relation is canonical. The first implementation stores its result directly; later optimized tables must refine it exactly. Speculative masking and definitive commit must ultimately share it. Rejection is explicit, and no failed execution partially mutates caller state.
+- Duplicate model-token IDs are preserved even when their bytes are equal. Repeated derived sequence heads may be interned deterministically by value.
+- Two representation-independent preparation limits bound logical collection sizes and cumulative work. Limits fail closed without truncating a relation; representation-specific budgets belong with later measured optimizations.
+- Caller-sized vector growth goes through two centralized fallible helpers. Allocation failure is one structured variant, not a representation-specific error hierarchy; the helper is an explicit seam for later Aeneas modeling.
+- A sequence head is `direct_emissions ++ [continuation_terminal]`, where the final terminal has an arbitrary finite raw-byte witness that makes the destination lexer emit exactly that one terminal. The final terminal is speculative preprocessing evidence and must never be committed by token advance.
+- Zero direct emissions and zero-output lexer cycles are valid. Singleton-head traversal must follow zero-output edges, collect exactly-one-output edges, stop after that first output, and terminate through a visited-state worklist rather than rejecting a cycle.
+- Production behavior is added test-first at public boundaries. All focused and workspace verification commands must pass before a task is reported complete.
+
+## Task 1: Implement exact model-token composition and deterministic preparation tables
+
+- Add red-first `greatgramma-core/tests/token_composition.rs` coverage for ordinary tokens with zero, one, and multiple direct terminal emissions; tokens crossing accepted lexeme boundaries; logical-start versus DFA-start behavior; duplicate ordinary byte spellings; NUL and non-UTF-8 bytes; all EOS aliases; unfinished and accepting residual EOS; ordinary rejection; and the boundary-spanning mask/commit regression shape.
+- Add `token_step.rs` with one public, pure direct relation over `&ValidatedGrammar`, a source `LexerState`, and `TokenId`. It must flatten exactly the stored normalized bytes and return either ordinary rejection, a continuing destination plus only the terminals emitted while consuming those bytes, or an EOS-finished result with the existing corrected EOS emissions. Invalid token/state input is a structured error rather than ordinary rejection.
+- Keep `LexerState::Start` as its own source row and derive one row for every DFA state. Store the public direct relation's `Option<TokenExecution>` result directly for every token ID; EOS cells remain separate and have no ordinary successor.
+- Build each row by calling the direct relation once per `(source, token)` pair. Do not add a trie, output pool, or row interning to the proof-shaped path before benchmarks justify one.
+- Keep the prepared table and builder crate-private until the owned `PreparedGrammar` public API is introduced by a later outcome; expose only stable relation/result/error/limit types needed at this stage.
+- Use `PreparationLimits { max_items, max_work }` and one `PreparationError` type for coarse bounds, allocation failure, and impossible validated-data states.
+- Test the public direct relation across relevant source states and token IDs, including duplicate IDs and EOS aliases. Because preparation invokes that relation directly, it has no separate optimized representation refinement to prove yet.
+- Verify with `cargo test -p greatgramma-core --test token_composition`, focused module tests, `cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets --all-features -- -D warnings`, and `cargo test --workspace --all-targets`.
+
+## Task 2: Implement exact sequence heads and deterministic inverse spanner
+
+- Add red-first `greatgramma-core/tests/spanner_semantics.rs` coverage for singleton heads reached directly and through multiple zero-output transitions, reconverging paths, zero-output cycles, one-output cycles, unreachable terminals, tokens with zero or multiple direct emissions, duplicate model-token IDs, logical-start separation, and the regression where the appended speculative terminal was accidentally committed.
+- Add `sequence.rs` with concrete IDs and deterministic finite pools for singleton-producible terminal sets and realizable sequence-head values. For each lexer destination `q`, compute exactly `SP(q) = { h | exists finite bytes w, executing w from q emits exactly [h] }` by a shared terminating worklist over lexer states and raw-byte transitions.
+- The worklist must traverse edges with zero emissions, collect the terminal from edges with exactly one emission, and stop that path after collection. It must deduplicate visited zero-output states and collected terminals deterministically. A cycle is handled, not treated as malformed input. The search operates on raw bytes directly, so it does not depend on model-vocabulary singleton-byte coverage.
+- For every successful ordinary direct token step from source `q` to destination `q'` with emissions `E`, form exactly one interned head `E ++ [h]` for every `h in SP(q')`. Equal head values may share a `SequenceId`; empty heads are impossible. EOS is excluded from ordinary continuation-head construction.
+- Preserve the direct/speculative boundary explicitly in derived membership records (or equivalent checked metadata): later commit is defined only by the Task 1 direct step, while parser preprocessing may inspect the whole head. Do not create an API that could accidentally return the speculative terminal as committed output.
+- Add `spanner.rs` with deterministic sparse `Vec` buckets keyed by `(source lexer row, SequenceId)`. Bucket members retain ascending `TokenId` order and preserve distinct IDs with duplicate spellings. Empty/nonrealizable `(source, sequence)` pairs return empty membership rather than fabricated successors.
+- Apply the same two coarse preparation limits to the singleton fact matrix, byte scans, sequence values, inverse members, and linear lookup work. Fail before a bounded logical growth step; do not truncate.
+- Differential-test singleton sets, interned sequence heads, and inverse buckets against an independent bounded exhaustive raw-byte enumerator on tiny DFAs. Also prove through tests that all inverse members satisfy `direct_emissions == drop_last(head)` and `last(head) in SP(destination)` and that advance-equivalent direct execution never commits `last(head)`.
+- Verify with `cargo test -p greatgramma-core --test spanner_semantics`, focused module tests, `cargo fmt --all -- --check`, `cargo clippy --workspace --all-targets --all-features -- -D warnings`, and `cargo test --workspace --all-targets`.
