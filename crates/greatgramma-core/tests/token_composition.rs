@@ -191,6 +191,30 @@ fn keeps_logical_start_distinct_and_finishes_every_eos_alias() {
 }
 
 #[test]
+fn composes_ordinary_tokens_from_accepting_and_unfinished_residuals() {
+    let grammar = grammar();
+    assert_eq!(
+        execute_token(
+            &grammar,
+            LexerState::Dfa(DfaStateId::new(1)),
+            TokenId::new(1),
+        ),
+        Ok(Some(TokenExecution::Continue {
+            state: LexerState::Dfa(DfaStateId::new(2)),
+            emitted: vec![A, A],
+        }))
+    );
+    assert_eq!(
+        execute_token(
+            &grammar,
+            LexerState::Dfa(DfaStateId::new(5)),
+            TokenId::new(0),
+        ),
+        Ok(None)
+    );
+}
+
+#[test]
 fn reports_invalid_token_and_source_without_treating_them_as_rejection() {
     let grammar = grammar();
     assert_eq!(

@@ -1,980 +1,327 @@
 use crate::{
-    DfaStateId, LexerError, LexerInput, LexerState, LexerStep, SequenceId, SpannerLimits,
-    TerminalId, ValidatedGrammar, lexer_step,
+    LexerError, LexerInput, LexerStep, PreparationError, PreparationLimits, SequenceId, TerminalId,
+    ValidatedGrammar, lexer_step,
 };
 
-use crate::spanner::{
-    SpannerArithmeticKind, SpannerLimitKind, SpannerPreparationError, SpannerStorage,
+use crate::token_step::{
+    WorkBudget, check_items, prepared_push, prepared_vec, source_at, source_count, source_index,
 };
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
-pub(crate) struct ValueRange {
-    pub(crate) start: usize,
-    pub(crate) len: usize,
-}
-
 #[derive(Clone, Copy)]
-struct Predecessor {
+struct Fact {
     source: usize,
-    next: Option<usize>,
+    terminal: TerminalId,
 }
 
-#[derive(Clone, Copy)]
-struct SingletonFact {
-    source: usize,
-    terminal: usize,
-}
-
-/// Exact singleton-terminal rows and deterministically interned sequence heads.
+/// Exact singleton terminals and plain, deterministically interned heads.
 pub(crate) struct SequenceTable {
-    singleton_rows: Vec<ValueRange>,
-    singleton_pool: Vec<TerminalId>,
-    sequences: Vec<ValueRange>,
-    sequence_pool: Vec<TerminalId>,
-}
-
-pub(crate) struct SpannerBudget<'a> {
-    limits: &'a SpannerLimits,
-    singleton_edge_scans: u64,
-    singleton_zero_edges: u64,
-    singleton_adjacency_state_cells: u64,
-    singleton_visited: u64,
-    singleton_facts: u64,
-    singleton_propagation_work: u64,
-    singleton_collection_work: u64,
-    collected_singletons: u64,
-    sequence_count: u64,
-    sequence_pool_terminals: u64,
-    sequence_interning_work: u64,
-    sequence_append_work: u64,
-    bucket_cross_product: u64,
-    inverse_members: u64,
-    bucket_membership_work: u64,
-}
-
-impl<'a> SpannerBudget<'a> {
-    pub(crate) fn new(limits: &'a SpannerLimits) -> Self {
-        Self {
-            limits,
-            singleton_edge_scans: 0,
-            singleton_zero_edges: 0,
-            singleton_adjacency_state_cells: 0,
-            singleton_visited: 0,
-            singleton_facts: 0,
-            singleton_propagation_work: 0,
-            singleton_collection_work: 0,
-            collected_singletons: 0,
-            sequence_count: 0,
-            sequence_pool_terminals: 0,
-            sequence_interning_work: 0,
-            sequence_append_work: 0,
-            bucket_cross_product: 0,
-            inverse_members: 0,
-            bucket_membership_work: 0,
-        }
-    }
-
-    pub(crate) fn charge(
-        &mut self,
-        kind: SpannerLimitKind,
-        amount: u64,
-    ) -> Result<(), SpannerPreparationError> {
-        let (current, maximum) = self.counter_and_limit(kind);
-        let actual =
-            current
-                .checked_add(amount)
-                .ok_or(SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::Counter,
-                })?;
-        if actual > maximum {
-            return Err(SpannerPreparationError::LimitExceeded {
-                limit: kind,
-                actual,
-                maximum,
-            });
-        }
-        self.set_counter(kind, actual);
-        Ok(())
-    }
-
-    pub(crate) fn check_sequence_length(&self, actual: u64) -> Result<(), SpannerPreparationError> {
-        if actual > self.limits.max_sequence_length {
-            return Err(SpannerPreparationError::LimitExceeded {
-                limit: SpannerLimitKind::SequenceLength,
-                actual,
-                maximum: self.limits.max_sequence_length,
-            });
-        }
-        Ok(())
-    }
-
-    fn counter_and_limit(&self, kind: SpannerLimitKind) -> (u64, u64) {
-        match kind {
-            SpannerLimitKind::SingletonEdgeScans => (
-                self.singleton_edge_scans,
-                self.limits.max_singleton_edge_scans,
-            ),
-            SpannerLimitKind::SingletonZeroEdges => (
-                self.singleton_zero_edges,
-                self.limits.max_singleton_zero_edges,
-            ),
-            SpannerLimitKind::SingletonAdjacencyStateCells => (
-                self.singleton_adjacency_state_cells,
-                self.limits.max_singleton_adjacency_state_cells,
-            ),
-            SpannerLimitKind::SingletonVisited => {
-                (self.singleton_visited, self.limits.max_singleton_visited)
-            }
-            SpannerLimitKind::SingletonFacts => {
-                (self.singleton_facts, self.limits.max_singleton_facts)
-            }
-            SpannerLimitKind::SingletonPropagationWork => (
-                self.singleton_propagation_work,
-                self.limits.max_singleton_propagation_work,
-            ),
-            SpannerLimitKind::SingletonCollectionWork => (
-                self.singleton_collection_work,
-                self.limits.max_singleton_collection_work,
-            ),
-            SpannerLimitKind::CollectedSingletons => (
-                self.collected_singletons,
-                self.limits.max_collected_singletons,
-            ),
-            SpannerLimitKind::Sequences => (self.sequence_count, self.limits.max_sequence_count),
-            SpannerLimitKind::SequencePoolTerminals => (
-                self.sequence_pool_terminals,
-                self.limits.max_sequence_pool_terminals,
-            ),
-            SpannerLimitKind::SequenceInterningWork => (
-                self.sequence_interning_work,
-                self.limits.max_sequence_interning_work,
-            ),
-            SpannerLimitKind::SequenceAppendWork => (
-                self.sequence_append_work,
-                self.limits.max_sequence_append_work,
-            ),
-            SpannerLimitKind::BucketCrossProduct => (
-                self.bucket_cross_product,
-                self.limits.max_bucket_cross_product,
-            ),
-            SpannerLimitKind::InverseMembers => {
-                (self.inverse_members, self.limits.max_inverse_members)
-            }
-            SpannerLimitKind::BucketMembershipWork => (
-                self.bucket_membership_work,
-                self.limits.max_bucket_membership_work,
-            ),
-            SpannerLimitKind::SequenceLength => (0, self.limits.max_sequence_length),
-        }
-    }
-
-    fn set_counter(&mut self, kind: SpannerLimitKind, value: u64) {
-        match kind {
-            SpannerLimitKind::SingletonEdgeScans => self.singleton_edge_scans = value,
-            SpannerLimitKind::SingletonZeroEdges => self.singleton_zero_edges = value,
-            SpannerLimitKind::SingletonAdjacencyStateCells => {
-                self.singleton_adjacency_state_cells = value;
-            }
-            SpannerLimitKind::SingletonVisited => self.singleton_visited = value,
-            SpannerLimitKind::SingletonFacts => self.singleton_facts = value,
-            SpannerLimitKind::SingletonPropagationWork => {
-                self.singleton_propagation_work = value;
-            }
-            SpannerLimitKind::SingletonCollectionWork => {
-                self.singleton_collection_work = value;
-            }
-            SpannerLimitKind::CollectedSingletons => self.collected_singletons = value,
-            SpannerLimitKind::Sequences => self.sequence_count = value,
-            SpannerLimitKind::SequencePoolTerminals => self.sequence_pool_terminals = value,
-            SpannerLimitKind::SequenceInterningWork => self.sequence_interning_work = value,
-            SpannerLimitKind::SequenceAppendWork => self.sequence_append_work = value,
-            SpannerLimitKind::BucketCrossProduct => self.bucket_cross_product = value,
-            SpannerLimitKind::InverseMembers => self.inverse_members = value,
-            SpannerLimitKind::BucketMembershipWork => self.bucket_membership_work = value,
-            SpannerLimitKind::SequenceLength => {}
-        }
-    }
+    singletons: Vec<Vec<TerminalId>>,
+    sequences: Vec<Vec<TerminalId>>,
+    sequence_items: usize,
 }
 
 impl SequenceTable {
     pub(crate) fn build_singletons(
         grammar: &ValidatedGrammar,
-        budget: &mut SpannerBudget<'_>,
-    ) -> Result<Self, SpannerPreparationError> {
-        let source_count = source_count(grammar)?;
-        let terminal_count = count_as_usize(u64::from(grammar.lalr().terminal_count()))?;
-        let fact_cells = source_count.checked_mul(terminal_count).ok_or(
-            SpannerPreparationError::ArithmeticOverflow {
-                calculation: SpannerArithmeticKind::SingletonFactCells,
-            },
-        )?;
-        let adjacency_state_cells =
-            source_count
-                .checked_mul(2)
-                .ok_or(SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::SingletonAdjacencyStateCells,
-                })?;
-        budget.charge(
-            SpannerLimitKind::SingletonAdjacencyStateCells,
-            count_as_u64(adjacency_state_cells)?,
-        )?;
-        budget.charge(
-            SpannerLimitKind::SingletonVisited,
-            count_as_u64(fact_cells)?,
-        )?;
+        limits: PreparationLimits,
+        work: &mut WorkBudget,
+    ) -> Result<Self, PreparationError> {
+        let sources = source_count(grammar)?;
+        let terminals = usize::try_from(grammar.lalr().terminal_count())
+            .map_err(|_| PreparationError::InvariantViolation)?;
+        let fact_cells = check_items(sources.checked_mul(terminals), limits)?;
+        let byte_steps = check_items(sources.checked_mul(256), limits)?;
+        work.charge(byte_steps)?;
 
-        let mut fact_seen = Vec::new();
-        reserve_exact(&mut fact_seen, fact_cells, SpannerStorage::SingletonVisited)?;
-        fact_seen.resize(fact_cells, false);
-        let mut facts = Vec::new();
-        let mut adjacency_seen = Vec::new();
-        reserve_exact(
-            &mut adjacency_seen,
-            source_count,
-            SpannerStorage::SingletonAdjacencySeen,
-        )?;
-        adjacency_seen.resize(source_count, None::<usize>);
-        let mut predecessor_heads = Vec::new();
-        reserve_exact(
-            &mut predecessor_heads,
-            source_count,
-            SpannerStorage::SingletonPredecessorHeads,
-        )?;
-        predecessor_heads.resize(source_count, None::<usize>);
-        let mut predecessors = Vec::new();
+        let mut seen = prepared_vec(fact_cells)?;
+        seen.resize(fact_cells, false);
 
-        let mut source = 0;
-        while source < source_count {
-            let lexer_source = row_source(source)?;
-            let mut byte = 0_u16;
-            while byte < 256 {
-                budget.charge(SpannerLimitKind::SingletonEdgeScans, 1)?;
-                let input = u8::try_from(byte).map_err(|_| {
-                    SpannerPreparationError::ArithmeticOverflow {
-                        calculation: SpannerArithmeticKind::CountConversion,
-                    }
-                })?;
-                match lexer_step(grammar, lexer_source, LexerInput::Byte(input)) {
-                    Ok(LexerStep::Continue {
-                        state: _,
-                        emitted: Some(terminal),
-                    }) => add_fact(
-                        &mut fact_seen,
-                        &mut facts,
-                        source,
-                        terminal,
-                        terminal_count,
-                        budget,
-                    )?,
-                    Ok(LexerStep::Continue {
-                        state: destination,
-                        emitted: None,
-                    }) => {
-                        let destination = source_row(grammar, destination).ok_or(
-                            SpannerPreparationError::InvalidDerivedState { state: destination },
-                        )?;
-                        let previous_source = *adjacency_seen.get(destination).ok_or(
-                            SpannerPreparationError::ArithmeticOverflow {
-                                calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
-                            },
-                        )?;
-                        if previous_source != Some(source) {
-                            let next = *predecessor_heads.get(destination).ok_or(
-                                SpannerPreparationError::ArithmeticOverflow {
-                                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
-                                },
-                            )?;
-                            budget.charge(SpannerLimitKind::SingletonZeroEdges, 1)?;
-                            reserve_exact(
-                                &mut predecessors,
-                                1,
-                                SpannerStorage::SingletonZeroEdges,
-                            )?;
-                            let predecessor = predecessors.len();
-                            predecessors.push(Predecessor { source, next });
-                            *predecessor_heads.get_mut(destination).ok_or(
-                                SpannerPreparationError::ArithmeticOverflow {
-                                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
-                                },
-                            )? = Some(predecessor);
-                            *adjacency_seen.get_mut(destination).ok_or(
-                                SpannerPreparationError::ArithmeticOverflow {
-                                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
-                                },
-                            )? = Some(source);
-                        }
-                    }
-                    Ok(LexerStep::Finished { .. }) => {}
-                    Err(LexerError::InvalidState { state }) => {
-                        return Err(SpannerPreparationError::InvalidDerivedState {
-                            state: LexerState::Dfa(state),
-                        });
-                    }
-                    Err(
-                        LexerError::CannotBeginLexeme { .. }
-                        | LexerError::ByteAfterUnfinishedResidual { .. }
-                        | LexerError::EosAfterUnfinishedResidual { .. },
-                    ) => {}
-                }
-                byte = byte
-                    .checked_add(1)
-                    .ok_or(SpannerPreparationError::ArithmeticOverflow {
-                        calculation: SpannerArithmeticKind::Counter,
-                    })?;
-            }
-            source = next_index(source)?;
+        let mut predecessors = prepared_vec(sources)?;
+        let mut predecessor_row = 0_usize;
+        while predecessor_row < sources {
+            predecessors.push(Vec::new());
+            predecessor_row += 1;
         }
 
-        let mut cursor = 0;
+        let mut facts = Vec::new();
+        let mut source = 0_usize;
+        while source < sources {
+            scan_source(
+                grammar,
+                source,
+                terminals,
+                &mut seen,
+                &mut facts,
+                &mut predecessors,
+                work,
+            )?;
+            source += 1;
+        }
+
+        let mut cursor = 0_usize;
         while cursor < facts.len() {
             let fact = *facts
                 .get(cursor)
-                .ok_or(SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::FactIndex,
-                })?;
-            let terminal = TerminalId::new(u32::try_from(fact.terminal).map_err(|_| {
-                SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::CountConversion,
-                }
-            })?);
-            let mut predecessor_index = *predecessor_heads.get(fact.source).ok_or(
-                SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
-                },
-            )?;
-            while let Some(index) = predecessor_index {
-                budget.charge(SpannerLimitKind::SingletonPropagationWork, 1)?;
-                let predecessor = *predecessors.get(index).ok_or(
-                    SpannerPreparationError::ArithmeticOverflow {
-                        calculation: SpannerArithmeticKind::SingletonAdjacencyIndex,
-                    },
-                )?;
-                add_fact(
-                    &mut fact_seen,
-                    &mut facts,
-                    predecessor.source,
-                    terminal,
-                    terminal_count,
-                    budget,
-                )?;
-                predecessor_index = predecessor.next;
-            }
-            cursor = next_index(cursor)?;
+                .ok_or(PreparationError::InvariantViolation)?;
+            propagate_fact(&predecessors, &mut seen, &mut facts, fact, terminals, work)?;
+            cursor += 1;
         }
 
-        let mut table = Self {
-            singleton_rows: Vec::new(),
-            singleton_pool: Vec::new(),
-            sequences: Vec::new(),
-            sequence_pool: Vec::new(),
-        };
-        reserve_exact(
-            &mut table.singleton_rows,
-            source_count,
-            SpannerStorage::SingletonRows,
-        )?;
+        let mut singletons = prepared_vec(sources)?;
         source = 0;
-        while source < source_count {
-            let start = table.singleton_pool.len();
-            let mut terminal = 0;
-            while terminal < terminal_count {
-                budget.charge(SpannerLimitKind::SingletonCollectionWork, 1)?;
-                let fact_index = fact_index(source, terminal, terminal_count)?;
-                if *fact_seen.get(fact_index).ok_or(
-                    SpannerPreparationError::ArithmeticOverflow {
-                        calculation: SpannerArithmeticKind::FactIndex,
-                    },
-                )? {
-                    budget.charge(SpannerLimitKind::CollectedSingletons, 1)?;
-                    reserve_exact(&mut table.singleton_pool, 1, SpannerStorage::SingletonPool)?;
-                    table
-                        .singleton_pool
-                        .push(TerminalId::new(u32::try_from(terminal).map_err(|_| {
-                            SpannerPreparationError::ArithmeticOverflow {
-                                calculation: SpannerArithmeticKind::CountConversion,
-                            }
-                        })?));
-                }
-                terminal = next_index(terminal)?;
-            }
-            table.singleton_rows.push(ValueRange {
-                start,
-                len: table.singleton_pool.len().checked_sub(start).ok_or(
-                    SpannerPreparationError::ArithmeticOverflow {
-                        calculation: SpannerArithmeticKind::ValueRange,
-                    },
-                )?,
-            });
-            source = next_index(source)?;
+        while source < sources {
+            work.charge(terminals)?;
+            singletons.push(collect_singletons(&seen, source, terminals)?);
+            source += 1;
         }
-        Ok(table)
+
+        Ok(Self {
+            singletons,
+            sequences: Vec::new(),
+            sequence_items: 0,
+        })
     }
 
     pub(crate) fn singleton(&self, source: usize) -> Option<&[TerminalId]> {
-        value(
-            self.singleton_rows.get(source).copied()?,
-            &self.singleton_pool,
-        )
+        self.singletons.get(source).map(Vec::as_slice)
     }
 
     pub(crate) fn sequence_count(&self) -> usize {
         self.sequences.len()
     }
 
-    pub(crate) fn sequence(&self, id: SequenceId) -> Option<&[TerminalId]> {
-        let index = usize::try_from(id.get()).ok()?;
-        value(self.sequences.get(index).copied()?, &self.sequence_pool)
+    pub(crate) fn sequence(&self, sequence: SequenceId) -> Option<&[TerminalId]> {
+        let index = usize::try_from(sequence.get()).ok()?;
+        self.sequences.get(index).map(Vec::as_slice)
     }
 
     pub(crate) fn intern_head(
         &mut self,
         direct: &[TerminalId],
-        terminal: TerminalId,
-        budget: &mut SpannerBudget<'_>,
-    ) -> Result<SequenceId, SpannerPreparationError> {
-        let len =
-            direct
-                .len()
-                .checked_add(1)
-                .ok_or(SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::SequenceLength,
-                })?;
-        let len_u64 = count_as_u64(len)?;
-        budget.check_sequence_length(len_u64)?;
-        let mut sequence_index = 0;
-        while sequence_index < self.sequences.len() {
-            budget.charge(SpannerLimitKind::SequenceInterningWork, 1)?;
-            let range = *self.sequences.get(sequence_index).ok_or(
-                SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::ValueRange,
-                },
-            )?;
-            if range.len == len
-                && head_equals(range, &self.sequence_pool, direct, terminal, budget)?
-            {
-                return sequence_id(sequence_index);
+        continuation: TerminalId,
+        limits: PreparationLimits,
+        work: &mut WorkBudget,
+    ) -> Result<SequenceId, PreparationError> {
+        let head_len = check_items(direct.len().checked_add(1), limits)?;
+        work.charge(direct.len())?;
+        let mut head = prepared_vec(head_len)?;
+        let mut direct_index = 0_usize;
+        while direct_index < direct.len() {
+            head.push(
+                *direct
+                    .get(direct_index)
+                    .ok_or(PreparationError::InvariantViolation)?,
+            );
+            direct_index += 1;
+        }
+        head.push(continuation);
+
+        let mut index = 0_usize;
+        while index < self.sequences.len() {
+            work.charge(head_len)?;
+            if self.sequences.get(index) == Some(&head) {
+                return sequence_id(index);
             }
-            sequence_index = next_index(sequence_index)?;
+            index += 1;
         }
 
-        budget.charge(SpannerLimitKind::Sequences, 1)?;
-        budget.charge(SpannerLimitKind::SequencePoolTerminals, len_u64)?;
-        budget.charge(SpannerLimitKind::SequenceAppendWork, len_u64)?;
-        let id = sequence_id(self.sequences.len())?;
-        reserve_exact(&mut self.sequences, 1, SpannerStorage::Sequences)?;
-        reserve_exact(&mut self.sequence_pool, len, SpannerStorage::SequencePool)?;
-        let start = self.sequence_pool.len();
-        let mut direct_index = 0;
-        while direct_index < direct.len() {
-            self.sequence_pool.push(*direct.get(direct_index).ok_or(
-                SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::SequenceLength,
-                },
-            )?);
-            direct_index = next_index(direct_index)?;
-        }
-        self.sequence_pool.push(terminal);
-        self.sequences.push(ValueRange { start, len });
-        Ok(id)
+        check_items(self.sequences.len().checked_add(1), limits)?;
+        let sequence = sequence_id(self.sequences.len())?;
+        let sequence_items = check_items(self.sequence_items.checked_add(head_len), limits)?;
+        prepared_push(&mut self.sequences, head)?;
+        self.sequence_items = sequence_items;
+        Ok(sequence)
     }
+}
+
+fn scan_source(
+    grammar: &ValidatedGrammar,
+    source: usize,
+    terminal_count: usize,
+    seen: &mut [bool],
+    facts: &mut Vec<Fact>,
+    predecessors: &mut [Vec<usize>],
+    work: &mut WorkBudget,
+) -> Result<(), PreparationError> {
+    let lexer_source = source_at(source).ok_or(PreparationError::InvariantViolation)?;
+    let mut destinations = prepared_vec(256)?;
+    let mut byte = 0_u16;
+    while byte < 256 {
+        let input = u8::try_from(byte).map_err(|_| PreparationError::InvariantViolation)?;
+        match lexer_step(grammar, lexer_source, LexerInput::Byte(input)) {
+            Ok(LexerStep::Continue {
+                emitted: Some(terminal),
+                ..
+            }) => add_fact(seen, facts, source, terminal, terminal_count)?,
+            Ok(LexerStep::Continue {
+                state: destination,
+                emitted: None,
+            }) => {
+                let destination = source_index(grammar, destination)
+                    .ok_or(PreparationError::InvariantViolation)?;
+                work.charge(destinations.len())?;
+                if !destinations.contains(&destination) {
+                    let row = predecessors
+                        .get_mut(destination)
+                        .ok_or(PreparationError::InvariantViolation)?;
+                    prepared_push(row, source)?;
+                    destinations.push(destination);
+                }
+            }
+            Ok(LexerStep::Finished { .. }) => {}
+            Err(LexerError::InvalidState { .. }) => {
+                return Err(PreparationError::InvariantViolation);
+            }
+            Err(
+                LexerError::CannotBeginLexeme { .. }
+                | LexerError::ByteAfterUnfinishedResidual { .. }
+                | LexerError::EosAfterUnfinishedResidual { .. },
+            ) => {}
+        }
+        byte += 1;
+    }
+    Ok(())
+}
+
+fn propagate_fact(
+    predecessors: &[Vec<usize>],
+    seen: &mut [bool],
+    facts: &mut Vec<Fact>,
+    fact: Fact,
+    terminal_count: usize,
+    work: &mut WorkBudget,
+) -> Result<(), PreparationError> {
+    let row = predecessors
+        .get(fact.source)
+        .ok_or(PreparationError::InvariantViolation)?;
+    work.charge(row.len())?;
+    let mut predecessor_index = 0_usize;
+    while predecessor_index < row.len() {
+        let predecessor = *row
+            .get(predecessor_index)
+            .ok_or(PreparationError::InvariantViolation)?;
+        add_fact(seen, facts, predecessor, fact.terminal, terminal_count)?;
+        predecessor_index += 1;
+    }
+    Ok(())
+}
+
+fn collect_singletons(
+    seen: &[bool],
+    source: usize,
+    terminal_count: usize,
+) -> Result<Vec<TerminalId>, PreparationError> {
+    let mut row = Vec::new();
+    let mut terminal = 0_usize;
+    while terminal < terminal_count {
+        let index = fact_index(source, terminal, terminal_count)?;
+        if *seen
+            .get(index)
+            .ok_or(PreparationError::InvariantViolation)?
+        {
+            prepared_push(
+                &mut row,
+                TerminalId::new(
+                    u32::try_from(terminal).map_err(|_| PreparationError::InvariantViolation)?,
+                ),
+            )?;
+        }
+        terminal += 1;
+    }
+    Ok(row)
 }
 
 fn add_fact(
     seen: &mut [bool],
-    facts: &mut Vec<SingletonFact>,
+    facts: &mut Vec<Fact>,
     source: usize,
     terminal: TerminalId,
     terminal_count: usize,
-    budget: &mut SpannerBudget<'_>,
-) -> Result<(), SpannerPreparationError> {
-    let terminal_index = usize::try_from(terminal.get()).map_err(|_| {
-        SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::CountConversion,
-        }
-    })?;
+) -> Result<(), PreparationError> {
+    let terminal_index =
+        usize::try_from(terminal.get()).map_err(|_| PreparationError::InvariantViolation)?;
     if terminal_index >= terminal_count {
-        return Err(SpannerPreparationError::InvalidDerivedTerminal { terminal });
+        return Err(PreparationError::InvariantViolation);
     }
     let index = fact_index(source, terminal_index, terminal_count)?;
-    let present = *seen
-        .get(index)
-        .ok_or(SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::FactIndex,
-        })?;
-    if present {
-        return Ok(());
-    }
-    budget.charge(SpannerLimitKind::SingletonFacts, 1)?;
-    reserve_exact(facts, 1, SpannerStorage::SingletonFacts)?;
-    *seen
+    let present = seen
         .get_mut(index)
-        .ok_or(SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::FactIndex,
-        })? = true;
-    facts.push(SingletonFact {
-        source,
-        terminal: terminal_index,
-    });
+        .ok_or(PreparationError::InvariantViolation)?;
+    if !*present {
+        *present = true;
+        prepared_push(facts, Fact { source, terminal })?;
+    }
     Ok(())
-}
-
-fn head_equals(
-    range: ValueRange,
-    pool: &[TerminalId],
-    direct: &[TerminalId],
-    terminal: TerminalId,
-    budget: &mut SpannerBudget<'_>,
-) -> Result<bool, SpannerPreparationError> {
-    let mut index = 0;
-    while index < direct.len() {
-        budget.charge(SpannerLimitKind::SequenceInterningWork, 1)?;
-        let pool_index =
-            range
-                .start
-                .checked_add(index)
-                .ok_or(SpannerPreparationError::ArithmeticOverflow {
-                    calculation: SpannerArithmeticKind::ValueRange,
-                })?;
-        if pool.get(pool_index) != direct.get(index) {
-            return Ok(false);
-        }
-        index = next_index(index)?;
-    }
-    budget.charge(SpannerLimitKind::SequenceInterningWork, 1)?;
-    let last = range.start.checked_add(direct.len()).ok_or(
-        SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::ValueRange,
-        },
-    )?;
-    Ok(pool.get(last) == Some(&terminal))
-}
-
-pub(crate) fn source_count(grammar: &ValidatedGrammar) -> Result<usize, SpannerPreparationError> {
-    count_as_usize(
-        u64::from(grammar.lexer().state_count())
-            .checked_add(1)
-            .ok_or(SpannerPreparationError::ArithmeticOverflow {
-                calculation: SpannerArithmeticKind::SourceCount,
-            })?,
-    )
-}
-
-pub(crate) fn source_row(grammar: &ValidatedGrammar, source: LexerState) -> Option<usize> {
-    match source {
-        LexerState::Start => Some(0),
-        LexerState::Dfa(state) if state.get() < grammar.lexer().state_count() => {
-            usize::try_from(state.get()).ok()?.checked_add(1)
-        }
-        LexerState::Dfa(_) => None,
-    }
-}
-
-fn row_source(row: usize) -> Result<LexerState, SpannerPreparationError> {
-    if row == 0 {
-        return Ok(LexerState::Start);
-    }
-    let state = row
-        .checked_sub(1)
-        .ok_or(SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::SourceCount,
-        })?;
-    Ok(LexerState::Dfa(DfaStateId::new(
-        u32::try_from(state).map_err(|_| SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::CountConversion,
-        })?,
-    )))
 }
 
 fn fact_index(
     source: usize,
     terminal: usize,
     terminal_count: usize,
-) -> Result<usize, SpannerPreparationError> {
+) -> Result<usize, PreparationError> {
     source
         .checked_mul(terminal_count)
         .and_then(|start| start.checked_add(terminal))
-        .ok_or(SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::FactIndex,
-        })
+        .ok_or(PreparationError::InvariantViolation)
 }
 
-fn value(range: ValueRange, pool: &[TerminalId]) -> Option<&[TerminalId]> {
-    pool.get(range.start..range.start.checked_add(range.len)?)
-}
-
-pub(crate) fn reserve_exact<T>(
-    values: &mut Vec<T>,
-    additional: usize,
-    storage: SpannerStorage,
-) -> Result<(), SpannerPreparationError> {
-    let requested = values.len().checked_add(additional).ok_or(
-        SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::AllocationSize,
-        },
-    )?;
-    values
-        .try_reserve_exact(additional)
-        .map_err(|_| SpannerPreparationError::AllocationFailure { storage, requested })
-}
-
-pub(crate) fn count_as_usize(value: u64) -> Result<usize, SpannerPreparationError> {
-    usize::try_from(value).map_err(|_| SpannerPreparationError::ArithmeticOverflow {
-        calculation: SpannerArithmeticKind::CountConversion,
-    })
-}
-
-pub(crate) fn count_as_u64(value: usize) -> Result<u64, SpannerPreparationError> {
-    u64::try_from(value).map_err(|_| SpannerPreparationError::ArithmeticOverflow {
-        calculation: SpannerArithmeticKind::CountConversion,
-    })
-}
-
-pub(crate) fn next_index(index: usize) -> Result<usize, SpannerPreparationError> {
-    index
-        .checked_add(1)
-        .ok_or(SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::CountConversion,
-        })
-}
-
-fn sequence_id(index: usize) -> Result<SequenceId, SpannerPreparationError> {
-    Ok(SequenceId::new(u32::try_from(index).map_err(|_| {
-        SpannerPreparationError::ArithmeticOverflow {
-            calculation: SpannerArithmeticKind::SequenceId,
-        }
-    })?))
+fn sequence_id(index: usize) -> Result<SequenceId, PreparationError> {
+    Ok(SequenceId::new(
+        u32::try_from(index).map_err(|_| PreparationError::InvariantViolation)?,
+    ))
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
-        Action, LalrDimensions, LalrTable, LexerDfa, ParserStateId, TokenEntry, TokenId,
-        UnvalidatedGrammar, ValidationLimits,
-    };
 
-    fn cyclic_fixture() -> ValidatedGrammar {
-        let mut classes = vec![0; 256];
-        classes[usize::from(b'a')] = 1;
-        classes[usize::from(b'x')] = 2;
-        classes[usize::from(b'y')] = 3;
-        let width = 4;
-        let mut transitions = vec![None; 4 * width];
-        transitions[1] = Some(DfaStateId::new(1));
-        transitions[2] = Some(DfaStateId::new(2));
-        transitions[2 * width + 2] = Some(DfaStateId::new(2));
-        transitions[2 * width + 3] = Some(DfaStateId::new(1));
-        let lexer = LexerDfa::new(
-            4,
-            u32::try_from(width).expect("fixture width fits"),
-            classes,
-            transitions,
-            DfaStateId::new(0),
-            vec![
-                None,
-                Some(TerminalId::new(0)),
-                None,
-                Some(TerminalId::new(1)),
-            ],
-        );
-        let lalr = LalrTable::new(
-            LalrDimensions::new(1, 3, 0),
-            ParserStateId::new(0),
-            TerminalId::new(2),
-            vec![Action::Error, Action::Error, Action::Accept],
-            Vec::new(),
-            Vec::new(),
-        );
-        UnvalidatedGrammar::new(
-            vec![TokenEntry::Bytes(b"a".to_vec()), TokenEntry::Eos],
-            lexer,
-            lalr,
-        )
-        .validate(ValidationLimits::default())
-        .expect("fixture validates")
-    }
-
-    fn two_state_cycle_fixture() -> ValidatedGrammar {
-        let mut classes = vec![0; 256];
-        classes[usize::from(b'a')] = 1;
-        classes[usize::from(b'b')] = 2;
-        classes[usize::from(b'c')] = 3;
-        let width = 4;
-        let mut transitions = vec![None; 4 * width];
-        transitions[1] = Some(DfaStateId::new(1));
-        transitions[width + 2] = Some(DfaStateId::new(2));
-        transitions[2 * width + 1] = Some(DfaStateId::new(1));
-        transitions[2 * width + 3] = Some(DfaStateId::new(3));
-        let lexer = LexerDfa::new(
-            4,
-            u32::try_from(width).expect("fixture width fits"),
-            classes,
-            transitions,
-            DfaStateId::new(0),
-            vec![None, None, None, Some(TerminalId::new(0))],
-        );
-        let lalr = LalrTable::new(
-            LalrDimensions::new(1, 2, 0),
-            ParserStateId::new(0),
-            TerminalId::new(1),
-            vec![Action::Error, Action::Accept],
-            Vec::new(),
-            Vec::new(),
-        );
-        UnvalidatedGrammar::new(
-            vec![TokenEntry::Bytes(b"a".to_vec()), TokenEntry::Eos],
-            lexer,
-            lalr,
-        )
-        .validate(ValidationLimits::default())
-        .expect("cycle fixture validates")
-    }
-
-    fn shared_destination_chain_fixture(state_count: u32) -> ValidatedGrammar {
-        let state_count_usize = usize::try_from(state_count).expect("fixture count fits");
-        let mut transitions = vec![None; state_count_usize];
-        let mut state = 0_u32;
-        while state + 1 < state_count {
-            transitions[usize::try_from(state).expect("fixture state fits")] =
-                Some(DfaStateId::new(state + 1));
-            state += 1;
-        }
-        let mut terminals = vec![None; state_count_usize];
-        terminals[state_count_usize - 1] = Some(TerminalId::new(0));
-        let lexer = LexerDfa::new(
-            state_count,
-            1,
-            vec![0; 256],
-            transitions,
-            DfaStateId::new(0),
-            terminals,
-        );
-        let lalr = LalrTable::new(
-            LalrDimensions::new(1, 2, 0),
-            ParserStateId::new(0),
-            TerminalId::new(1),
-            vec![Action::Error, Action::Accept],
-            Vec::new(),
-            Vec::new(),
-        );
-        UnvalidatedGrammar::new(
-            vec![TokenEntry::Bytes(vec![0]), TokenEntry::Eos],
-            lexer,
-            lalr,
-        )
-        .validate(ValidationLimits::default())
-        .expect("scale fixture validates")
-    }
-
-    fn insert_terminal(terminals: &mut Vec<TerminalId>, terminal: TerminalId) {
-        if terminals.contains(&terminal) {
-            return;
-        }
-        terminals.push(terminal);
-        terminals.sort();
-    }
-
-    fn exhaustive_raw_bytes(grammar: &ValidatedGrammar, source: LexerState) -> Vec<TerminalId> {
-        let mut terminals = Vec::new();
-        let mut first = 0_u16;
-        while first < 256 {
-            let first_byte = u8::try_from(first).expect("raw byte fits");
-            if let Ok(LexerStep::Continue { state, emitted }) =
-                lexer_step(grammar, source, LexerInput::Byte(first_byte))
-            {
-                if let Some(terminal) = emitted {
-                    insert_terminal(&mut terminals, terminal);
-                } else {
-                    let mut second = 0_u16;
-                    while second < 256 {
-                        let second_byte = u8::try_from(second).expect("raw byte fits");
-                        if let Ok(LexerStep::Continue {
-                            emitted: Some(terminal),
-                            ..
-                        }) = lexer_step(grammar, state, LexerInput::Byte(second_byte))
-                        {
-                            insert_terminal(&mut terminals, terminal);
-                        }
-                        second += 1;
-                    }
-                }
-            }
-            first += 1;
-        }
-        terminals
-    }
-
-    #[test]
-    fn singleton_fixed_point_crosses_zero_cycles_and_omits_unreachable_labels() {
-        let grammar = cyclic_fixture();
-        let limits = SpannerLimits::default();
-        let mut budget = SpannerBudget::new(&limits);
-        let table =
-            SequenceTable::build_singletons(&grammar, &mut budget).expect("fixed point terminates");
-        assert_eq!(table.singleton(0), Some(&[TerminalId::new(0)][..]));
-        assert_eq!(table.singleton(3), Some(&[TerminalId::new(0)][..]));
-        assert_eq!(table.singleton(4), Some(&[TerminalId::new(1)][..]));
-    }
-
-    #[test]
-    fn singleton_fixed_point_closes_an_explicit_two_state_cycle_through_its_exit() {
-        let grammar = two_state_cycle_fixture();
-        let limits = SpannerLimits::default();
-        let mut budget = SpannerBudget::new(&limits);
-        let table =
-            SequenceTable::build_singletons(&grammar, &mut budget).expect("cycle closes exactly");
-        assert_eq!(table.singleton(0), Some(&[TerminalId::new(0)][..]));
-        assert_eq!(table.singleton(2), Some(&[TerminalId::new(0)][..]));
-        assert_eq!(table.singleton(3), Some(&[TerminalId::new(0)][..]));
-    }
-
-    #[test]
-    fn default_limits_prepare_two_thousand_shared_destination_states() {
-        let grammar = shared_destination_chain_fixture(2_000);
-        let limits = SpannerLimits::default();
-        let mut budget = SpannerBudget::new(&limits);
-        let singleton_table = SequenceTable::build_singletons(&grammar, &mut budget)
-            .expect("deduplicated predecessor closure fits default limits");
-        assert_eq!(budget.singleton_edge_scans, 512_256);
-        assert_eq!(budget.singleton_adjacency_state_cells, 4_002);
-        assert_eq!(budget.singleton_zero_edges, 2_000);
-        assert_eq!(budget.singleton_facts, 2_001);
-        assert_eq!(budget.singleton_propagation_work, 2_000);
-        assert_eq!(
-            singleton_table.singleton(0),
-            Some(&[TerminalId::new(0)][..])
-        );
-        let spanner = crate::prepare_spanner(&grammar, SpannerLimits::default())
-            .expect("deduplicated predecessor closure fits default limits");
-        assert_eq!(
-            spanner.singleton_terminals(LexerState::Start),
-            Ok(&[TerminalId::new(0)][..])
-        );
-        assert_eq!(
-            spanner.singleton_terminals(LexerState::Dfa(DfaStateId::new(0))),
-            Ok(&[TerminalId::new(0)][..])
-        );
-        assert_eq!(
-            spanner.singleton_terminals(LexerState::Dfa(DfaStateId::new(1_999))),
-            Ok(&[TerminalId::new(0)][..])
-        );
-        assert_eq!(spanner.sequence_count(), 2);
-        let mut singleton = None;
-        let mut doubled = None;
-        let mut index = 0;
-        while index < spanner.sequence_count() {
-            let sequence = SequenceId::new(u32::try_from(index).expect("fixture count fits"));
-            match spanner.sequence(sequence) {
-                Some(value) if value == [TerminalId::new(0)] => singleton = Some(sequence),
-                Some(value) if value == [TerminalId::new(0), TerminalId::new(0)] => {
-                    doubled = Some(sequence);
-                }
-                _ => {}
-            }
-            index += 1;
-        }
-        assert_eq!(
-            spanner.inverse_tokens(LexerState::Start, singleton.expect("singleton exists")),
-            Ok(&[TokenId::new(0)][..])
-        );
-        assert_eq!(
-            spanner.inverse_tokens(
-                LexerState::Dfa(DfaStateId::new(1_999)),
-                doubled.expect("doubled head exists"),
-            ),
-            Ok(&[TokenId::new(0)][..])
-        );
-    }
-
-    #[test]
-    fn singleton_fixed_point_agrees_with_bounded_exhaustive_raw_byte_words() {
-        let grammar = cyclic_fixture();
-        let limits = SpannerLimits::default();
-        let mut budget = SpannerBudget::new(&limits);
-        let table =
-            SequenceTable::build_singletons(&grammar, &mut budget).expect("fixed point terminates");
-        let mut row = 0;
-        while row < source_count(&grammar).expect("fixture count fits") {
-            let source = row_source(row).expect("fixture row fits");
-            assert_eq!(
-                table.singleton(row),
-                Some(exhaustive_raw_bytes(&grammar, source).as_slice()),
-                "source row {row}",
-            );
-            row += 1;
+    fn empty_table() -> SequenceTable {
+        SequenceTable {
+            singletons: Vec::new(),
+            sequences: Vec::new(),
+            sequence_items: 0,
         }
     }
 
     #[test]
-    fn singleton_limits_fail_before_fact_matrix_or_worklist_growth() {
-        let grammar = cyclic_fixture();
-        let limits = SpannerLimits {
-            max_singleton_visited: 1,
-            ..SpannerLimits::default()
+    fn coarse_limits_bound_sequence_storage_and_lookup_work() {
+        let limits = PreparationLimits {
+            max_items: 2,
+            ..PreparationLimits::default()
         };
-        let mut budget = SpannerBudget::new(&limits);
+        let mut table = empty_table();
+        let mut work = WorkBudget::new(limits);
         assert_eq!(
-            SequenceTable::build_singletons(&grammar, &mut budget).err(),
-            Some(SpannerPreparationError::LimitExceeded {
-                limit: SpannerLimitKind::SingletonVisited,
-                actual: 15,
+            table.intern_head(&[TerminalId::new(0)], TerminalId::new(1), limits, &mut work,),
+            Ok(SequenceId::new(0))
+        );
+        assert_eq!(
+            table
+                .intern_head(&[TerminalId::new(1)], TerminalId::new(0), limits, &mut work,)
+                .err(),
+            Some(PreparationError::TooLarge {
+                required: 4,
+                maximum: 2,
+            })
+        );
+
+        let lookup_limits = PreparationLimits {
+            max_work: 1,
+            ..PreparationLimits::default()
+        };
+        let mut lookup_work = WorkBudget::new(lookup_limits);
+        assert_eq!(
+            table
+                .intern_head(
+                    &[TerminalId::new(0)],
+                    TerminalId::new(1),
+                    lookup_limits,
+                    &mut lookup_work,
+                )
+                .err(),
+            Some(PreparationError::TooLarge {
+                required: 3,
                 maximum: 1,
-            })
-        );
-
-        let limits = SpannerLimits {
-            max_singleton_adjacency_state_cells: 0,
-            ..SpannerLimits::default()
-        };
-        let mut budget = SpannerBudget::new(&limits);
-        assert_eq!(
-            SequenceTable::build_singletons(&grammar, &mut budget).err(),
-            Some(SpannerPreparationError::LimitExceeded {
-                limit: SpannerLimitKind::SingletonAdjacencyStateCells,
-                actual: 10,
-                maximum: 0,
-            })
-        );
-
-        let limits = SpannerLimits {
-            max_singleton_edge_scans: 0,
-            ..SpannerLimits::default()
-        };
-        let mut budget = SpannerBudget::new(&limits);
-        assert_eq!(
-            SequenceTable::build_singletons(&grammar, &mut budget).err(),
-            Some(SpannerPreparationError::LimitExceeded {
-                limit: SpannerLimitKind::SingletonEdgeScans,
-                actual: 1,
-                maximum: 0,
-            })
-        );
-
-        let limits = SpannerLimits {
-            max_singleton_propagation_work: 0,
-            ..SpannerLimits::default()
-        };
-        let mut budget = SpannerBudget::new(&limits);
-        assert_eq!(
-            SequenceTable::build_singletons(&grammar, &mut budget).err(),
-            Some(SpannerPreparationError::LimitExceeded {
-                limit: SpannerLimitKind::SingletonPropagationWork,
-                actual: 1,
-                maximum: 0,
-            })
-        );
-
-        let limits = SpannerLimits {
-            max_collected_singletons: 0,
-            ..SpannerLimits::default()
-        };
-        let mut budget = SpannerBudget::new(&limits);
-        assert_eq!(
-            SequenceTable::build_singletons(&grammar, &mut budget).err(),
-            Some(SpannerPreparationError::LimitExceeded {
-                limit: SpannerLimitKind::CollectedSingletons,
-                actual: 1,
-                maximum: 0,
             })
         );
     }

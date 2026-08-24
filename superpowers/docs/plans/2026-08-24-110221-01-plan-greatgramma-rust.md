@@ -56,8 +56,8 @@ The implementation critical path is Outcomes 1 through 7. Outcomes 8 and 9 integ
 
 ### Outcome 4: Model tokens compose exactly with the lexer
 
-- Work: Add `token_step.rs` and a safe flat raw-byte trie used during preparation to share work across token prefixes. For each relevant lexer state and ordinary token ID, derive a direct token step containing only the emitted terminal sequence and destination lexer state; derive EOS steps separately.
-- Work: Intern repeated terminal sequences and transition rows deterministically, preserve duplicate token IDs, and enforce preparation limits before growing a trie, row, or output pool. The proof-shaped implementation remains available as the oracle when later representations are optimized.
+- Work: Add `token_step.rs`. For each relevant lexer state and token ID, call the direct token relation and store its result in an ordinary nested `Vec`; ordinary steps contain only the emitted terminal sequence and destination lexer state, while EOS steps remain separate.
+- Work: Preserve duplicate token IDs, enforce two coarse representation-independent preparation limits, and centralize fallible vector growth behind one allocation seam. Keep this direct table as the proof-shaped implementation; trie prefix sharing, output pools, and row interning are Outcome 11 optimizations only after measurement.
 - Work: Expose one pure `execute_token` relation to both speculative masking and definitive commit. A failed token step returns no successor and leaves the caller's state unchanged.
 - Work: Test tokens that emit zero, one, or several terminals; merged tokens crossing lexeme boundaries; duplicate byte spellings; NUL/non-UTF-8 bytes; multiple EOS IDs; and the llguidance-style mask/commit boundary-spanning regression.
 - Verify: `cargo test -p greatgramma-core --test token_composition`
@@ -67,7 +67,7 @@ The implementation critical path is Outcomes 1 through 7. Outcomes 8 and 9 integ
 
 - Work: Add `sequence.rs` and `spanner.rs`. Compute exact singleton-producible terminal heads with a terminating shared worklist, then form each realizable sequence as a token's direct emissions followed by exactly one hypothetical continuation head.
 - Work: Make the continuation head explicitly speculative: parser preprocessing may inspect it to decide whether a partial lexeme can eventually finish, but `advance` commits only the direct emissions and lexer destination of the selected token.
-- Work: Intern finite sequence heads and build deterministic offset-based inverse buckets from `(source lexer state, sequence ID)` to token IDs. Detect zero-output cycles, excessive sequence growth, and empty/nonrealizable heads under explicit limits.
+- Work: Intern finite sequence heads with a direct deterministic scan and build sparse nested-`Vec` inverse buckets from `(source lexer state, sequence ID)` to token IDs. Close zero-output cycles with an append-only fact worklist, and reject excessive sequence/data growth under the same two coarse limits.
 - Work: Differential-test the worklist, sequence pool, and inverse buckets against a small exhaustive enumerator, including reconverging DFA paths, cycles, tokens with no direct emission, and the regression where an appended head was accidentally committed.
 - Verify: `cargo test -p greatgramma-core --test spanner_semantics`
 - Verify: `just aeneas-core`
