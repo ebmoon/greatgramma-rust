@@ -2,5 +2,16 @@
 
 #![forbid(unsafe_code)]
 
-/// Identifies this deliberately minimal Phase 1 bootstrap surface.
-pub const PHASE: &str = "phase-1-bootstrap";
+mod error;
+mod ids;
+mod limits;
+mod normalized;
+mod validate;
+
+pub use error::{ArithmeticKind, IdKind, LimitKind, ValidationError, ValidationTable};
+pub use ids::{DfaStateId, NonterminalId, ParserStateId, ProductionId, TerminalId, TokenId};
+pub use limits::ValidationLimits;
+pub use normalized::{
+    Action, LalrDimensions, LalrTable, LexerDfa, Production, TokenEntry, UnvalidatedGrammar,
+    ValidatedGrammar, ValidatedLalr, ValidatedLexer,
+};
