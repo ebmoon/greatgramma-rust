@@ -1,0 +1,19 @@
+[build-system]
+requires = ["maturin>=1.8,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "greatgramma"
+version = "0.1.0"
+description = "Exact grammar-constrained decoding"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+[tool.maturin]
+manifest-path = "crates/greatgramma-python/Cargo.toml"
+module-name = "greatgramma._native"
+bindings = "pyo3"
