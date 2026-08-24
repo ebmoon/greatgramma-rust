@@ -39,3 +39,31 @@ impl Default for ValidationLimits {
         }
     }
 }
+
+/// Finite resource limits for deterministic token-step preparation.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct PreparationLimits {
+    pub max_trie_nodes: u64,
+    pub max_trie_edges: u64,
+    pub max_logical_token_bytes: u64,
+    pub max_source_token_cells: u64,
+    pub max_output_pool_terminals: u64,
+    pub max_row_interning_work: u64,
+    pub max_output_interning_work: u64,
+    pub max_work: u64,
+}
+
+impl Default for PreparationLimits {
+    fn default() -> Self {
+        Self {
+            max_trie_nodes: 1_000_000,
+            max_trie_edges: 1_000_000,
+            max_logical_token_bytes: 1 << 30,
+            max_source_token_cells: 64_000_000,
+            max_output_pool_terminals: 64_000_000,
+            max_row_interning_work: 1_000_000_000,
+            max_output_interning_work: 1_000_000_000,
+            max_work: 1_000_000_000,
+        }
+    }
+}
