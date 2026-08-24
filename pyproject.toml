@@ -7,8 +7,8 @@ name = "greatgramma"
 version = "0.1.0"
 description = "Exact grammar-constrained decoding"
 requires-python = ">=3.10"
-license = { text = "Apache-2.0" }
 classifiers = [
+    "Private :: Do Not Upload",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
 ]

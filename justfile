@@ -12,6 +12,9 @@ lint:
 test:
     cargo test --workspace --all-targets
 
+metadata-check:
+    python3 scripts/check-publication-metadata.py
+
 aeneas-smoke:
     @scripts/aeneas-smoke.sh
 

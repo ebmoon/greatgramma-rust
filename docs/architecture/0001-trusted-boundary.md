@@ -33,7 +33,8 @@ rejects.
 - Rust for Charon: `nightly-2026-06-01`
 - Lean required by Aeneas backend: `leanprover/lean4:v4.31.0`
 - UCSD formalization snapshot:
-  `ucsd-formal/constrained-decoding-formalization@112af02`, which pins
+  `ucsd-formal/constrained-decoding-formalization@112af02fa29b3e50c1048c36b4b8d18975dee102`,
+  which pins
   `leanprover/lean4:v4.29.0-rc6`.
 
 The two Lean pins are incompatible. No `proofs/` Lake skeleton is created
