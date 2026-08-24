@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use crate::{
     DfaStateId, LexerError, LexerInput, LexerState, LexerStep, TerminalId, TokenEntry, TokenId,
     ValidatedGrammar, lexer_step,

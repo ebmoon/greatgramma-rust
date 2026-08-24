@@ -67,3 +67,50 @@ impl Default for PreparationLimits {
         }
     }
 }
+
+/// Finite resource limits for singleton-head and inverse-spanner preparation.
+///
+/// Direct token-table preparation has its own nested limits so unrelated
+/// stages never consume one ambiguous cumulative work counter.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct SpannerLimits {
+    pub token: PreparationLimits,
+    pub max_singleton_edge_scans: u64,
+    pub max_singleton_zero_edges: u64,
+    pub max_singleton_visited: u64,
+    pub max_singleton_facts: u64,
+    pub max_singleton_propagation_work: u64,
+    pub max_singleton_collection_work: u64,
+    pub max_collected_singletons: u64,
+    pub max_sequence_count: u64,
+    pub max_sequence_length: u64,
+    pub max_sequence_pool_terminals: u64,
+    pub max_sequence_interning_work: u64,
+    pub max_sequence_append_work: u64,
+    pub max_bucket_cross_product: u64,
+    pub max_inverse_members: u64,
+    pub max_bucket_membership_work: u64,
+}
+
+impl Default for SpannerLimits {
+    fn default() -> Self {
+        Self {
+            token: PreparationLimits::default(),
+            max_singleton_edge_scans: 256_000_256,
+            max_singleton_zero_edges: 64_000_000,
+            max_singleton_visited: 64_000_000,
+            max_singleton_facts: 64_000_000,
+            max_singleton_propagation_work: 1_000_000_000,
+            max_singleton_collection_work: 64_000_000,
+            max_collected_singletons: 64_000_000,
+            max_sequence_count: 64_000_000,
+            max_sequence_length: 1_000_000,
+            max_sequence_pool_terminals: 64_000_000,
+            max_sequence_interning_work: 1_000_000_000,
+            max_sequence_append_work: 1_000_000_000,
+            max_bucket_cross_product: 64_000_000,
+            max_inverse_members: 64_000_000,
+            max_bucket_membership_work: 1_000_000_000,
+        }
+    }
+}
