@@ -25,9 +25,14 @@ def torch_mask_scores(scores: object, packed: bytes, rows: int, vocab_size: int)
             "scores must be a Torch tensor",
         )
     tensor = cast(Any, scores)
-    if tensor.ndim != 2 or tuple(tensor.shape) != (rows, vocab_size):
+    if (
+        tensor.ndim != 2
+        or int(tensor.shape[0]) != rows
+        or int(tensor.shape[1]) < vocab_size
+    ):
         raise ConfigurationError(
-            "scores must have shape (rows, compiled vocabulary size)",
+            "scores must have one row per sequence and at least the compiled "
+            "vocabulary width",
         )
     if not tensor.is_floating_point():
         raise ConfigurationError(
@@ -48,6 +53,14 @@ def torch_mask_scores(scores: object, packed: bytes, rows: int, vocab_size: int)
     packed_tensor = torch.frombuffer(bytearray(packed), dtype=torch.uint8).to(device)
     allowed = packed_tensor.unsqueeze(1).bitwise_and(bit_values).ne(0)
     allowed = allowed.reshape(rows, -1)[:, :vocab_size]
+    model_vocab_size = int(tensor.shape[1])
+    if model_vocab_size > vocab_size:
+        suffix = torch.zeros(
+            (rows, model_vocab_size - vocab_size),
+            dtype=torch.bool,
+            device=device,
+        )
+        allowed = torch.cat((allowed, suffix), dim=1)
     masked = tensor.masked_fill(~allowed, float("-inf"))
     usable = (~torch.isneginf(masked) & ~torch.isnan(masked)).any(dim=1)
     if not bool(usable.all().item()):

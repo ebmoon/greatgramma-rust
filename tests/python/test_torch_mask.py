@@ -36,6 +36,23 @@ def test_torch_mask_rejects_an_exhausted_row() -> None:
     assert raised.value.row == 0
 
 
+def test_torch_mask_forbids_model_only_suffix_logits_per_row() -> None:
+    scores = torch.tensor(
+        [[1.0, 2.0, 3.0, 4.0, 5.0], [6.0, 7.0, 8.0, 9.0, 10.0]],
+        dtype=torch.float32,
+    )
+
+    result = cast(
+        Any,
+        torch_mask_scores(scores, _NonIterableBytes((0b101, 0b010)), 2, 3),
+    )
+
+    assert result.tolist() == [
+        [1.0, float("-inf"), 3.0, float("-inf"), float("-inf")],
+        [float("-inf"), 7.0, float("-inf"), float("-inf"), float("-inf")],
+    ]
+
+
 @pytest.mark.parametrize("dtype", (torch.float16, torch.bfloat16, torch.float32))
 def test_torch_mask_preserves_supported_cuda_dtype_when_available(dtype: object) -> None:
     if not torch.cuda.is_available():

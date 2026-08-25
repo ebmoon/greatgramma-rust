@@ -55,13 +55,7 @@ decoding token IDs independently; the caller is responsible for establishing
 that concatenating these entries equals authoritative whole-sequence decoding.
 
 ```python
-import torch
-from transformers import (
-    GenerationConfig,
-    GPT2Config,
-    GPT2LMHeadModel,
-    LogitsProcessorList,
-)
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from greatgramma import (
     GreatGrammaLogitsProcessor,
@@ -70,79 +64,53 @@ from greatgramma import (
     compile,
 )
 
-manifest = TokenizerManifest(
-    token_bytes=(b"a", b""),
-    eos_token_ids=frozenset({1}),
-)
+model_id = "microsoft/phi-2"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+input_ids = tokenizer(
+    "Answer yes or no: Is two plus two four?\nAnswer:",
+    return_tensors="pt",
+).input_ids
 
 compiled = compile(
-    """
-    %token ITEM
-    %%
-    S: ITEM;
-    """,
+    "%token ANSWER\n%%\nS: ANSWER;\n",
     start_rule="S",
-    terminals=[Terminal("ITEM", "a")],
-    tokenizer=manifest,
+    terminals=[Terminal("ANSWER", " (yes|no)")],
+    tokenizer=TokenizerManifest.from_transformers(
+        tokenizer,
+        eos_token_ids={tokenizer.eos_token_id},
+    ),
 )
-
-model = GPT2LMHeadModel(
-    GPT2Config(
-        vocab_size=2,
-        n_positions=8,
-        n_embd=8,
-        n_layer=1,
-        n_head=1,
-        bos_token_id=0,
-        eos_token_id=1,
-        pad_token_id=1,
-    )
-)
-model.eval()
 
 # The prompt is a boundary and is not parsed by the grammar.
-input_ids = torch.tensor([[0]], dtype=torch.long)
-generation_config = GenerationConfig(
-    max_new_tokens=2,
-    do_sample=False,
-    eos_token_id=1,
-    pad_token_id=1,
-)
-processor = GreatGrammaLogitsProcessor(
-    compiled,
-    input_ids,
-    pad_token_id=1,
-)
+processor = GreatGrammaLogitsProcessor(compiled, input_ids)
 
 output = model.generate(
-    input_ids=input_ids,
-    generation_config=generation_config,
-    # Keep GreatGramma last so no later processor can re-enable invalid tokens.
-    logits_processor=LogitsProcessorList([processor]),
-)
-
-# The mask forces ITEM (`a`) and then EOS, regardless of the model's logits.
-assert output.tolist() == [[0, 0, 1]]
-```
-
-For normal Transformers generation, prefer the checked wrapper, which creates
-and appends the processor after validating the model and generation settings:
-
-```python
-# Use a fresh `compiled` value created as above for each generation session.
-output = compiled.generate(
-    model,
     input_ids,
-    generation_config=generation_config,
+    max_new_tokens=5,
+    logits_processor=[processor],
+)
+print(
+    tokenizer.decode(
+        output[0],
+        skip_special_tokens=True,
+        clean_up_tokenization_spaces=False,
+    )
 )
 ```
+
+The first run downloads about 5.6 GB of Phi-2 weights. Phi-2 exposes 51,200
+model logits for a 50,295-entry tokenizer; GreatGramma masks every model-only
+suffix logit to `-inf`. Keep GreatGramma last when supplying other custom logits
+processors so no later processor can re-enable an invalid token.
 
 As an alternative to a caller-audited manifest,
 `TokenizerManifest.from_transformers(tokenizer, eos_token_ids=...)` reads only
 `backend_tokenizer.to_str()` and accepts the restricted dense ByteLevel JSON
 profile. It never derives bytes with per-token `decode()`.
 
-`compiled.generate(...)` is the supported wrapper. Direct
+`compiled.generate(...)` is the checked wrapper for callers that already own a
+resolved `GenerationConfig`. Direct
 `GreatGrammaLogitsProcessor(...)` or `compiled.logits_processor(...)`
 construction is an advanced API: it requires a fixed row order, the exact
 initial prompt on the first callback, and exactly one new token per row on each

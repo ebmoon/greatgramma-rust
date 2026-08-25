@@ -141,7 +141,11 @@ def test_real_generation_config_rejects_append_breaking_modes() -> None:
 
 
 @pytest.mark.parametrize("do_sample", (False, True))
-def test_real_transformers_generate_respects_grammar_and_eos(do_sample: bool) -> None:
+@pytest.mark.parametrize("model_vocab_size", (2, 4))
+def test_real_transformers_generate_respects_grammar_and_eos(
+    do_sample: bool,
+    model_vocab_size: int,
+) -> None:
     torch = pytest.importorskip("torch")
     transformers = pytest.importorskip("transformers", minversion="5.14")
     from greatgramma import Terminal, TokenizerManifest, compile as compile_grammar
@@ -149,7 +153,7 @@ def test_real_transformers_generate_respects_grammar_and_eos(do_sample: bool) ->
     torch.manual_seed(0)
     model = transformers.GPT2LMHeadModel(
         transformers.GPT2Config(
-            vocab_size=2,
+            vocab_size=model_vocab_size,
             n_positions=8,
             n_embd=8,
             n_layer=1,

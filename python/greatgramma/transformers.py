@@ -124,6 +124,7 @@ class GreatGrammaLogitsProcessor:
         self._masker = _masker or torch_mask_scores
         self._trusted_fixed_append = _trusted_fixed_append
         self._previous_width: int | None = None
+        self._score_vocab_size: int | None = None
         self._lock = threading.Lock()
         self._poisoned = False
         for row_index, row in enumerate(prompt_rows):
@@ -162,9 +163,14 @@ class GreatGrammaLogitsProcessor:
             raise SequenceDiscontinuityError(
                 "the generation row count changed",
             )
-        if score_rows != len(self._prompt) or score_vocab != self._vocab_size:
+        if score_rows != len(self._prompt) or score_vocab < self._vocab_size:
             raise ConfigurationError(
-                "scores do not match the fixed batch and compiled vocabulary",
+                "scores do not match the fixed batch or are narrower than the "
+                "compiled vocabulary",
+            )
+        if self._score_vocab_size is not None and score_vocab != self._score_vocab_size:
+            raise ConfigurationError(
+                "scores vocabulary width changed during generation",
             )
 
         try:
@@ -242,6 +248,7 @@ class GreatGrammaLogitsProcessor:
                     "the logits processor history invariant was violated",
                 )
             self._previous = parsed_rows
+        self._score_vocab_size = score_vocab
         return result
 
 

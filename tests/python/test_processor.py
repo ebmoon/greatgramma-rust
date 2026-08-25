@@ -288,6 +288,27 @@ def test_wrong_score_shape_fails_before_native_state_changes() -> None:
     assert compiled.batch.initial_calls == 0
 
 
+def test_padded_score_vocabulary_is_stable_and_keeps_compiled_mask_width() -> None:
+    calls: list[tuple[bytes, int, int]] = []
+    compiled = FakeCompiled(5, b"\x1f")
+    processor = GreatGrammaLogitsProcessor(
+        compiled,
+        [[1]],
+        _masker=recording_masker(calls),
+    )
+
+    processor([[1]], Scores((1, 8)))
+    processor([[1, 2]], Scores((1, 8)))
+
+    assert calls == [(b"\x1f", 1, 5), (b"\x1f", 1, 5)]
+    assert compiled.batch.advance_calls == [[2]]
+
+    with pytest.raises(ConfigurationError, match="width"):
+        processor([[1, 2, 3]], Scores((1, 9)))
+
+    assert compiled.batch.advance_calls == [[2]]
+
+
 def test_concurrent_use_is_rejected() -> None:
     entered = threading.Event()
     release = threading.Event()
