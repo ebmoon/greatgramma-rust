@@ -36,7 +36,10 @@ fn valid_lalr() -> LalrTable {
         vec![
             Action::Shift(ParserStateId::new(1)),
             Action::Error,
-            Action::Error,
+            Action::Reduce {
+                production: ProductionId::new(0),
+                rank: 7,
+            },
             Action::Accept,
         ],
         vec![None, None],
@@ -94,6 +97,9 @@ fn validates_owned_tables_and_exposes_only_checked_read_access() {
     assert_eq!(lalr.production_count(), 1);
     assert_eq!(lalr.start_state(), ParserStateId::new(0));
     assert_eq!(lalr.eof_terminal(), TerminalId::new(1));
+    assert_eq!(lalr.is_ignored(TerminalId::new(0)), Some(false));
+    assert_eq!(lalr.is_ignored(TerminalId::new(1)), Some(false));
+    assert_eq!(lalr.is_ignored(TerminalId::new(2)), None);
     assert_eq!(
         lalr.action(ParserStateId::new(0), TerminalId::new(0)),
         Some(Action::Shift(ParserStateId::new(1)))
@@ -101,6 +107,13 @@ fn validates_owned_tables_and_exposes_only_checked_read_access() {
     assert_eq!(
         lalr.action(ParserStateId::new(1), TerminalId::new(1)),
         Some(Action::Accept)
+    );
+    assert_eq!(
+        lalr.action(ParserStateId::new(1), TerminalId::new(0)),
+        Some(Action::Reduce {
+            production: ProductionId::new(0),
+            rank: 7,
+        })
     );
     assert_eq!(
         lalr.goto(ParserStateId::new(0), NonterminalId::new(0)),
@@ -317,7 +330,10 @@ fn rejects_wrong_parser_lengths_and_referenced_ids() {
         ParserStateId::new(0),
         TerminalId::new(1),
         vec![
-            Action::Reduce(ProductionId::new(1)),
+            Action::Reduce {
+                production: ProductionId::new(1),
+                rank: 7,
+            },
             Action::Error,
             Action::Error,
             Action::Accept,
@@ -334,6 +350,107 @@ fn rejects_wrong_parser_lengths_and_referenced_ids() {
             kind: IdKind::Production,
             id: 1,
             count: 1,
+        })
+    );
+}
+
+#[test]
+fn validates_ignored_terminals_and_exposes_checked_membership() {
+    let lalr = valid_lalr().with_ignored_terminals(vec![TerminalId::new(0), TerminalId::new(0)]);
+    let grammar = grammar_with(valid_tokens(), valid_lexer(), lalr)
+        .validate(ValidationLimits::default())
+        .expect("non-EOF ignored terminal should validate");
+
+    assert_eq!(grammar.lalr().is_ignored(TerminalId::new(0)), Some(true));
+    assert_eq!(grammar.lalr().is_ignored(TerminalId::new(1)), Some(false));
+    assert_eq!(grammar.lalr().is_ignored(TerminalId::new(2)), None);
+}
+
+#[test]
+fn rejects_invalid_and_eof_ignored_terminals() {
+    let invalid = valid_lalr().with_ignored_terminals(vec![TerminalId::new(2)]);
+    assert_eq!(
+        grammar_with(valid_tokens(), valid_lexer(), invalid).validate(ValidationLimits::default()),
+        Err(ValidationError::IdOutOfRange {
+            table: ValidationTable::ParserIgnoredTerminals,
+            index: Some(0),
+            kind: IdKind::Terminal,
+            id: 2,
+            count: 2,
+        })
+    );
+
+    let eof = valid_lalr().with_ignored_terminals(vec![TerminalId::new(1)]);
+    assert_eq!(
+        grammar_with(valid_tokens(), valid_lexer(), eof).validate(ValidationLimits::default()),
+        Err(ValidationError::IgnoredTerminalIsParserEof {
+            index: 0,
+            terminal: TerminalId::new(1),
+        })
+    );
+}
+
+#[test]
+fn charges_ranked_action_storage_and_ignored_entries_to_limits() {
+    // Ranked action cells occupy twelve logical bytes rather than the previous
+    // eight. This minimal grammar therefore requires 1,142 logical bytes.
+    let action_bytes_limit = ValidationLimits {
+        max_logical_bytes: 1_141,
+        ..ValidationLimits::default()
+    };
+    assert_eq!(
+        valid_grammar().validate(action_bytes_limit),
+        Err(ValidationError::LimitExceeded {
+            limit: LimitKind::LogicalBytes,
+            actual: 1_142,
+            maximum: 1_141,
+        })
+    );
+
+    // The wider action cells also add one work unit per action cell.
+    let action_work_limit = ValidationLimits {
+        max_work: 284,
+        ..ValidationLimits::default()
+    };
+    assert_eq!(
+        valid_grammar().validate(action_work_limit),
+        Err(ValidationError::LimitExceeded {
+            limit: LimitKind::Work,
+            actual: 285,
+            maximum: 284,
+        })
+    );
+
+    // One ignored terminal adds four logical bytes and one work unit.
+    let ignored = || {
+        grammar_with(
+            valid_tokens(),
+            valid_lexer(),
+            valid_lalr().with_ignored_terminals(vec![TerminalId::new(0)]),
+        )
+    };
+    let ignored_bytes_limit = ValidationLimits {
+        max_logical_bytes: 1_145,
+        ..ValidationLimits::default()
+    };
+    assert_eq!(
+        ignored().validate(ignored_bytes_limit),
+        Err(ValidationError::LimitExceeded {
+            limit: LimitKind::LogicalBytes,
+            actual: 1_146,
+            maximum: 1_145,
+        })
+    );
+    let ignored_work_limit = ValidationLimits {
+        max_work: 285,
+        ..ValidationLimits::default()
+    };
+    assert_eq!(
+        ignored().validate(ignored_work_limit),
+        Err(ValidationError::LimitExceeded {
+            limit: LimitKind::Work,
+            actual: 286,
+            maximum: 285,
         })
     );
 }
@@ -447,11 +564,11 @@ fn rejects_limits_and_checked_cross_product_overflow() {
 
 #[test]
 fn token_limits_stop_before_later_invalid_entries() {
-    // Fixed table validation costs 275 work units. The first token's entry and
+    // Fixed table validation costs 279 work units. The first token's entry and
     // byte use the final two; charging the next entry must fail before reading
     // its empty byte payload.
     let work_limits = ValidationLimits {
-        max_work: 277,
+        max_work: 281,
         ..ValidationLimits::default()
     };
     assert_eq!(
@@ -467,8 +584,8 @@ fn token_limits_stop_before_later_invalid_entries() {
         .validate(work_limits),
         Err(ValidationError::LimitExceeded {
             limit: LimitKind::Work,
-            actual: 278,
-            maximum: 277,
+            actual: 282,
+            maximum: 281,
         })
     );
 

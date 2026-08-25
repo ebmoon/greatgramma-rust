@@ -6,7 +6,8 @@ use crate::{
 
 const BYTE_CLASS_TABLE_LEN: usize = 256;
 const LOGICAL_ID_BYTES: u64 = 4;
-const LOGICAL_ACTION_BYTES: u64 = 8;
+const LOGICAL_ACTION_BYTES: u64 = 12;
+const LOGICAL_ACTION_WORK: u64 = 2;
 const LOGICAL_PRODUCTION_BYTES: u64 = 8;
 const LOGICAL_FIXED_SCALARS: u64 = 8;
 
@@ -19,6 +20,7 @@ struct DeclaredSizes {
     parser_action_cells: u32,
     parser_goto_cells: u32,
     production_count: u32,
+    ignored_terminal_count: u32,
 }
 
 pub(crate) fn validate(
@@ -63,6 +65,10 @@ pub(crate) fn validate(
         limits.max_nonterminals,
     )?;
     let production_count = checked_len(lalr.productions.len(), ArithmeticKind::ProductionCount)?;
+    let ignored_terminal_count = checked_len(
+        lalr.ignored_terminals.len(),
+        ArithmeticKind::IgnoredTerminalCount,
+    )?;
     check_limit(
         LimitKind::Productions,
         u64::from(production_count),
@@ -108,6 +114,7 @@ pub(crate) fn validate(
         parser_action_cells,
         parser_goto_cells,
         production_count,
+        ignored_terminal_count,
     };
     let base_work = validation_base_work(sizes_without_tokens)?;
     check_limit(LimitKind::Work, base_work, limits.max_work)?;
@@ -170,6 +177,11 @@ pub(crate) fn validate(
         IdKind::Terminal,
         lalr.eof_terminal.get(),
         lalr.dimensions.terminal_count,
+    )?;
+    validate_ignored_terminals(
+        &lalr.ignored_terminals,
+        lalr.dimensions.terminal_count,
+        lalr.eof_terminal,
     )?;
 
     validate_byte_classes(&lexer.byte_classes, lexer.class_count)?;
@@ -240,12 +252,47 @@ pub(crate) fn validate(
         index += 1;
     }
 
+    let ignored_terminals =
+        build_ignored_terminal_table(&lalr.ignored_terminals, lalr.dimensions.terminal_count)?;
+
     Ok(ValidatedGrammar::from_parts(
         token_count,
         tokens,
         ValidatedLexer::from_unvalidated(lexer),
-        ValidatedLalr::from_unvalidated(lalr, production_count),
+        ValidatedLalr::from_unvalidated(lalr, production_count, ignored_terminals),
     ))
+}
+
+fn build_ignored_terminal_table(
+    ignored_terminals: &[TerminalId],
+    terminal_count: u32,
+) -> Result<Vec<u8>, ValidationError> {
+    let requested = count_as_usize(terminal_count, ArithmeticKind::IgnoredTerminalCount)?;
+    let mut table = Vec::new();
+    table
+        .try_reserve_exact(requested)
+        .map_err(|_| ValidationError::AllocationFailure {
+            table: ValidationTable::ParserIgnoredTerminals,
+            requested,
+        })?;
+    table.resize(requested, 0);
+
+    let mut index = 0_usize;
+    while index < ignored_terminals.len() {
+        let terminal = usize::try_from(ignored_terminals[index].get()).map_err(|_| {
+            ValidationError::ArithmeticOverflow {
+                calculation: ArithmeticKind::IgnoredTerminalCount,
+            }
+        })?;
+        let ignored = table
+            .get_mut(terminal)
+            .ok_or(ValidationError::ArithmeticOverflow {
+                calculation: ArithmeticKind::IgnoredTerminalCount,
+            })?;
+        *ignored = 1;
+        index += 1;
+    }
+    Ok(table)
 }
 
 fn validate_tokens(
@@ -332,7 +379,10 @@ fn validate_actions(
                 destination.get(),
                 state_count,
             )?,
-            Action::Reduce(production) => validate_id(
+            Action::Reduce {
+                production,
+                rank: _,
+            } => validate_id(
                 ValidationTable::ParserActions,
                 Some(index),
                 IdKind::Production,
@@ -354,6 +404,29 @@ fn validate_actions(
                     });
                 }
             }
+        }
+        index += 1;
+    }
+    Ok(())
+}
+
+fn validate_ignored_terminals(
+    ignored_terminals: &[TerminalId],
+    terminal_count: u32,
+    eof_terminal: TerminalId,
+) -> Result<(), ValidationError> {
+    let mut index = 0;
+    while index < ignored_terminals.len() {
+        let terminal = ignored_terminals[index];
+        validate_id(
+            ValidationTable::ParserIgnoredTerminals,
+            Some(index),
+            IdKind::Terminal,
+            terminal.get(),
+            terminal_count,
+        )?;
+        if terminal == eof_terminal {
+            return Err(ValidationError::IgnoredTerminalIsParserEof { index, terminal });
         }
         index += 1;
     }
@@ -477,11 +550,20 @@ fn logical_bytes(sizes: DeclaredSizes) -> Result<u64, ValidationError> {
         )?,
         calculation,
     )?;
-    checked_add(
+    total = checked_add(
         total,
         checked_mul(
             u64::from(sizes.production_count),
             LOGICAL_PRODUCTION_BYTES,
+            calculation,
+        )?,
+        calculation,
+    )?;
+    checked_add(
+        total,
+        checked_mul(
+            u64::from(sizes.ignored_terminal_count),
+            LOGICAL_ID_BYTES,
             calculation,
         )?,
         calculation,
@@ -494,7 +576,16 @@ fn validation_base_work(sizes: DeclaredSizes) -> Result<u64, ValidationError> {
     total = checked_add(total, BYTE_CLASS_TABLE_LEN as u64, calculation)?;
     total = checked_add(total, u64::from(sizes.lexer_states), calculation)?;
     total = checked_add(total, u64::from(sizes.lexer_cells), calculation)?;
-    total = checked_add(total, u64::from(sizes.parser_action_cells), calculation)?;
+    total = checked_add(
+        total,
+        checked_mul(
+            u64::from(sizes.parser_action_cells),
+            LOGICAL_ACTION_WORK,
+            calculation,
+        )?,
+        calculation,
+    )?;
     total = checked_add(total, u64::from(sizes.parser_goto_cells), calculation)?;
-    checked_add(total, u64::from(sizes.production_count), calculation)
+    total = checked_add(total, u64::from(sizes.production_count), calculation)?;
+    checked_add(total, u64::from(sizes.ignored_terminal_count), calculation)
 }

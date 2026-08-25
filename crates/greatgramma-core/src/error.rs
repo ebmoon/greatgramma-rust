@@ -12,6 +12,7 @@ pub enum ValidationTable {
     ParserGotos,
     ParserStart,
     ParserEof,
+    ParserIgnoredTerminals,
     Productions,
 }
 
@@ -31,6 +32,7 @@ pub enum ArithmeticKind {
     TokenCount,
     TokenBytes,
     ProductionCount,
+    IgnoredTerminalCount,
     LexerCells,
     ParserActionCells,
     ParserGotoCells,
@@ -88,6 +90,10 @@ pub enum ValidationError {
     },
     LexerTerminalIsParserEof {
         state: DfaStateId,
+        terminal: TerminalId,
+    },
+    IgnoredTerminalIsParserEof {
+        index: usize,
         terminal: TerminalId,
     },
     AcceptOnNonEof {
