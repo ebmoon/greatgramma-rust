@@ -51,6 +51,10 @@ impl WorkBudget {
         self.used = check_limit(self.used.checked_add(amount), self.maximum)?;
         Ok(())
     }
+
+    pub(crate) fn remaining(&self) -> usize {
+        self.maximum.saturating_sub(self.used)
+    }
 }
 
 /// Composes exactly one normalized model token with the corrected lexer.
@@ -284,13 +288,13 @@ fn token_push(values: &mut Vec<TerminalId>, value: TerminalId) -> Result<(), Tok
     Ok(())
 }
 
-fn reserved_vec<T>(capacity: usize) -> Result<Vec<T>, usize> {
+pub(crate) fn reserved_vec<T>(capacity: usize) -> Result<Vec<T>, usize> {
     let mut values = Vec::new();
     values.try_reserve_exact(capacity).map_err(|_| capacity)?;
     Ok(values)
 }
 
-fn reserve_one<T>(values: &mut Vec<T>) -> Result<(), usize> {
+pub(crate) fn reserve_one<T>(values: &mut Vec<T>) -> Result<(), usize> {
     if values.len() == values.capacity() {
         let requested = match values.len().checked_add(1) {
             Some(requested) => requested,

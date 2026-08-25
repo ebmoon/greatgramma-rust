@@ -81,7 +81,7 @@ impl LalrDimensions {
 pub enum Action {
     Error,
     Shift(ParserStateId),
-    Reduce(ProductionId),
+    Reduce { production: ProductionId, rank: u32 },
     Accept,
 }
 
@@ -118,6 +118,7 @@ pub struct LalrTable {
     pub(crate) actions: Vec<Action>,
     pub(crate) gotos: Vec<Option<ParserStateId>>,
     pub(crate) productions: Vec<Production>,
+    pub(crate) ignored_terminals: Vec<TerminalId>,
 }
 
 impl LalrTable {
@@ -137,7 +138,14 @@ impl LalrTable {
             actions,
             gotos,
             productions,
+            ignored_terminals: Vec::new(),
         }
+    }
+
+    #[must_use]
+    pub fn with_ignored_terminals(mut self, ignored_terminals: Vec<TerminalId>) -> Self {
+        self.ignored_terminals = ignored_terminals;
+        self
     }
 }
 
@@ -296,10 +304,15 @@ pub struct ValidatedLalr {
     gotos: Vec<Option<ParserStateId>>,
     production_count: u32,
     productions: Vec<Production>,
+    ignored_terminals: Vec<u8>,
 }
 
 impl ValidatedLalr {
-    pub(crate) fn from_unvalidated(lalr: LalrTable, production_count: u32) -> Self {
+    pub(crate) fn from_unvalidated(
+        lalr: LalrTable,
+        production_count: u32,
+        ignored_terminals: Vec<u8>,
+    ) -> Self {
         Self {
             dimensions: lalr.dimensions,
             start_state: lalr.start_state,
@@ -308,6 +321,7 @@ impl ValidatedLalr {
             gotos: lalr.gotos,
             production_count,
             productions: lalr.productions,
+            ignored_terminals,
         }
     }
 
@@ -339,6 +353,14 @@ impl ValidatedLalr {
     #[must_use]
     pub const fn eof_terminal(&self) -> TerminalId {
         self.eof_terminal
+    }
+
+    /// Returns `None` for an invalid terminal and whether a checked terminal
+    /// is a parser no-op otherwise.
+    #[must_use]
+    pub fn is_ignored(&self, terminal: TerminalId) -> Option<bool> {
+        let ignored = self.ignored_terminals.get(self.terminal_index(terminal)?)?;
+        Some(*ignored != 0)
     }
 
     #[must_use]

@@ -2,9 +2,10 @@
 ///
 /// Counts and cell budgets are logical limits, independent of platform object
 /// layout. `max_logical_bytes` charges one byte per token tag, every raw token
-/// byte, four bytes per ID/count/class cell, eight bytes per action/production,
-/// and all fixed table scalars. `max_work` bounds the logical entries and bytes
-/// inspected during validation.
+/// byte, four bytes per ID/count/class cell, twelve bytes per ranked action,
+/// eight bytes per production, four bytes per ignored terminal, and all fixed
+/// table scalars. `max_work` bounds the logical entries and bytes inspected
+/// during validation.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct ValidationLimits {
     pub max_tokens: u64,
