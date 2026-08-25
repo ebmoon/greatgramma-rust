@@ -30,18 +30,49 @@ ancestry, encoder-decoder models, assisted generation, serialized prepared
 grammars, and longer-context lexer rollback are not supported. The complete
 contract is in the [v1 compatibility profile](docs/compatibility/v1.md).
 
-## Python example
+## Setup
+
+The Python package is not published. Build it from a local checkout with
+Python 3.10 or newer, [Rustup](https://rustup.rs/), and
+[`uv`](https://docs.astral.sh/uv/):
+
+```bash
+git clone https://github.com/ebmoon/greatgramma-rust.git
+cd greatgramma-rust
+rustup toolchain install 1.98.0
+uv sync --locked --group dev --extra transformers --no-install-project
+uv run --frozen --no-sync maturin develop --release
+```
+
+The `transformers` extra installs the pinned Torch and Transformers versions
+used by the Python generation integration. Run Python commands in the prepared
+environment with `uv run --frozen --no-sync python ...`.
+
+## Python generation example
 
 The tokenizer manifest contains exact token-local bytes. Do not build it by
 decoding token IDs independently; the caller is responsible for establishing
 that concatenating these entries equals authoritative whole-sequence decoding.
 
 ```python
-from greatgramma import Terminal, TokenizerManifest, compile
+import torch
+from transformers import (
+    GenerationConfig,
+    GPT2Config,
+    GPT2LMHeadModel,
+    LogitsProcessorList,
+)
+
+from greatgramma import (
+    GreatGrammaLogitsProcessor,
+    Terminal,
+    TokenizerManifest,
+    compile,
+)
 
 manifest = TokenizerManifest(
-    token_bytes=(b"i", b"ii", b""),
-    eos_token_ids=frozenset({2}),
+    token_bytes=(b"a", b""),
+    eos_token_ids=frozenset({1}),
 )
 
 compiled = compile(
@@ -51,12 +82,54 @@ compiled = compile(
     S: ITEM;
     """,
     start_rule="S",
-    terminals=[Terminal("ITEM", "i+", priority=0)],
+    terminals=[Terminal("ITEM", "a")],
     tokenizer=manifest,
 )
 
-# `model`, `input_ids`, and this resolved config must use exactly the same
-# three-entry vocabulary. The prompt is a boundary and is not parsed.
+model = GPT2LMHeadModel(
+    GPT2Config(
+        vocab_size=2,
+        n_positions=8,
+        n_embd=8,
+        n_layer=1,
+        n_head=1,
+        bos_token_id=0,
+        eos_token_id=1,
+        pad_token_id=1,
+    )
+)
+model.eval()
+
+# The prompt is a boundary and is not parsed by the grammar.
+input_ids = torch.tensor([[0]], dtype=torch.long)
+generation_config = GenerationConfig(
+    max_new_tokens=2,
+    do_sample=False,
+    eos_token_id=1,
+    pad_token_id=1,
+)
+processor = GreatGrammaLogitsProcessor(
+    compiled,
+    input_ids,
+    pad_token_id=1,
+)
+
+output = model.generate(
+    input_ids=input_ids,
+    generation_config=generation_config,
+    # Keep GreatGramma last so no later processor can re-enable invalid tokens.
+    logits_processor=LogitsProcessorList([processor]),
+)
+
+# The mask forces ITEM (`a`) and then EOS, regardless of the model's logits.
+assert output.tolist() == [[0, 0, 1]]
+```
+
+For normal Transformers generation, prefer the checked wrapper, which creates
+and appends the processor after validating the model and generation settings:
+
+```python
+# Use a fresh `compiled` value created as above for each generation session.
 output = compiled.generate(
     model,
     input_ids,
@@ -70,14 +143,16 @@ As an alternative to a caller-audited manifest,
 profile. It never derives bytes with per-token `decode()`.
 
 `compiled.generate(...)` is the supported wrapper. Direct
-`compiled.logits_processor(...)` construction is an advanced API: it requires a
-fixed row order, the exact initial prompt on the first callback, and exactly one
-new token per row on each later callback. One `CompiledGrammar` creates one
-generation session.
+`GreatGrammaLogitsProcessor(...)` or `compiled.logits_processor(...)`
+construction is an advanced API: it requires a fixed row order, the exact
+initial prompt on the first callback, and exactly one new token per row on each
+later callback. Do not use it with beam search, multiple return sequences,
+assisted generation, or another mode that can reorder or extend rows by more
+than one token. One `CompiledGrammar` creates one generation session.
 
 Multirow generation requires an in-vocabulary pad token distinct from every EOS
-token. The wrapper currently rejects `pad_token_id == eos_token_id` because it
-does not accept an explicit attention mask.
+token. The wrapper rejects that ambiguous padding configuration for multirow
+generation because it does not accept an explicit attention mask.
 
 ## Rust example
 
