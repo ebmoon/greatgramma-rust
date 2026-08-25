@@ -309,8 +309,33 @@ fn rejects_all_complement_class_spellings() {
 }
 
 #[test]
-fn rejects_both_word_boundary_assertions() {
-    for pattern in [r"a\b", r"a\B"] {
+fn accepts_literal_anchor_characters_but_rejects_assertions() {
+    for (pattern, byte) in [(r"[$]", b'$'), (r"\$", b'$'), (r"[\^]", b'^')] {
+        let literal = source(
+            "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+            vec![terminal("ITEM", pattern, 0)],
+        );
+        let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(vec![byte]), TokenSpec::Eos]);
+        let prepared = compile(literal, tokens, CompileLimits::default())
+            .unwrap_or_else(|error| panic!("literal pattern {pattern:?} was rejected: {error}"));
+        let mut matcher = prepared.into_matcher(1).expect("matcher");
+        let mut mask = [0_u8];
+
+        matcher.mask(0, &mut mask).expect("mask literal token");
+        assert_eq!(mask, [0b0000_0001], "literal pattern {pattern:?}");
+        assert_eq!(
+            matcher.advance(0, TokenId::new(0)).expect("match literal"),
+            AdvanceResult::Continue
+        );
+        matcher.mask(0, &mut mask).expect("mask eos");
+        assert_eq!(mask, [0b0000_0010], "literal pattern {pattern:?}");
+        assert_eq!(
+            matcher.advance(0, TokenId::new(1)).expect("finish match"),
+            AdvanceResult::Accepted
+        );
+    }
+
+    for pattern in [r"^a", r"a$", r"a\b", r"a\B"] {
         let boundary = source(
             "%start S\n%token ITEM\n%%\nS: ITEM;\n",
             vec![terminal("ITEM", pattern, 0)],

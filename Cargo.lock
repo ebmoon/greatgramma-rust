@@ -113,6 +113,7 @@ dependencies = [
  "cfgrammar",
  "derivre",
  "greatgramma-core",
+ "regex-syntax",
  "serde_json",
 ]
 

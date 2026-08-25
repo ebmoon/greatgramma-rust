@@ -1,5 +1,6 @@
 use derivre::{Regex, RegexBuilder};
 use greatgramma_core::TerminalId;
+use regex_syntax::ParserBuilder as SyntaxParserBuilder;
 
 use crate::{CompileError, grammar::ResolvedTerminal};
 
@@ -104,10 +105,12 @@ fn unsupported_feature(pattern: &str) -> Option<&'static str> {
     {
         return Some("complement character classes");
     }
-    if pattern.contains('^')
-        || pattern.contains('$')
-        || pattern.contains(r"\b")
-        || pattern.contains(r"\B")
+    let mut parser = SyntaxParserBuilder::new();
+    parser.unicode(false).utf8(false);
+    if parser
+        .build()
+        .parse(pattern)
+        .is_ok_and(|expression| !expression.properties().look_set().is_empty())
     {
         return Some("anchors or boundary assertions");
     }
