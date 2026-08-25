@@ -54,39 +54,43 @@ pub fn lexer_step(
     }
 }
 
-fn byte_step(lexer: &ValidatedLexer, state: LexerState, byte: u8) -> Result<LexerStep, LexerError> {
+fn byte_step(
+    lexer_table: &ValidatedLexer,
+    state: LexerState,
+    byte: u8,
+) -> Result<LexerStep, LexerError> {
     match state {
-        LexerState::Start => begin_lexeme(lexer, byte, None),
-        LexerState::Dfa(source) => match lexer.transition(source, byte) {
+        LexerState::Start => begin_lexeme(lexer_table, byte, None),
+        LexerState::Dfa(source) => match lexer_table.transition(source, byte) {
             None => Err(LexerError::InvalidState { state: source }),
             Some(Some(destination)) => Ok(LexerStep::Continue {
                 state: LexerState::Dfa(destination),
                 emitted: None,
             }),
-            Some(None) => finish_or_reject_residual(lexer, source, byte),
+            Some(None) => finish_or_reject_residual(lexer_table, source, byte),
         },
     }
 }
 
 fn finish_or_reject_residual(
-    lexer: &ValidatedLexer,
+    lexer_table: &ValidatedLexer,
     state: DfaStateId,
     byte: u8,
 ) -> Result<LexerStep, LexerError> {
-    match lexer.terminal(state) {
+    match lexer_table.terminal(state) {
         None => Err(LexerError::InvalidState { state }),
         Some(None) => Err(LexerError::ByteAfterUnfinishedResidual { state, byte }),
-        Some(Some(terminal)) => begin_lexeme(lexer, byte, Some(terminal)),
+        Some(Some(terminal)) => begin_lexeme(lexer_table, byte, Some(terminal)),
     }
 }
 
 fn begin_lexeme(
-    lexer: &ValidatedLexer,
+    lexer_table: &ValidatedLexer,
     byte: u8,
     emitted: Option<TerminalId>,
 ) -> Result<LexerStep, LexerError> {
-    let start = lexer.start_state();
-    match lexer.transition(start, byte) {
+    let start = lexer_table.start_state();
+    match lexer_table.transition(start, byte) {
         None => Err(LexerError::InvalidState { state: start }),
         Some(None) => Err(LexerError::CannotBeginLexeme { byte }),
         Some(Some(destination)) => Ok(LexerStep::Continue {

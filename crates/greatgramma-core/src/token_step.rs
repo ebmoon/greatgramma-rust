@@ -100,27 +100,53 @@ fn execute_bytes(
 ) -> Result<Option<TokenExecution>, TokenStepError> {
     let mut state = source;
     let mut emitted = Vec::new();
+    let mut rejected = false;
+    let mut error = None;
 
     let mut index = 0_usize;
-    while index < bytes.len() {
-        let byte = bytes[index];
-        match lexer_step(grammar, state, LexerInput::Byte(byte)) {
-            Ok(LexerStep::Continue {
-                state: destination,
-                emitted: terminal,
-            }) => {
-                if let Some(terminal) = terminal {
-                    token_push(&mut emitted, terminal)?;
-                }
-                state = destination;
-            }
-            Ok(LexerStep::Finished { .. }) => return Ok(None),
-            Err(error) => return map_lexer_rejection(error),
+    while index < bytes.len() && !rejected && error.is_none() {
+        match execute_byte(grammar, state, bytes[index], &mut emitted) {
+            Ok(Some(destination)) => state = destination,
+            Ok(None) => rejected = true,
+            Err(byte_error) => error = Some(byte_error),
         }
         index += 1;
     }
 
-    Ok(Some(TokenExecution::Continue { state, emitted }))
+    match error {
+        Some(error) => Err(error),
+        None => {
+            if rejected {
+                Ok(None)
+            } else {
+                Ok(Some(TokenExecution::Continue { state, emitted }))
+            }
+        }
+    }
+}
+
+fn execute_byte(
+    grammar: &ValidatedGrammar,
+    state: LexerState,
+    byte: u8,
+    emitted: &mut Vec<TerminalId>,
+) -> Result<Option<LexerState>, TokenStepError> {
+    match lexer_step(grammar, state, LexerInput::Byte(byte)) {
+        Ok(LexerStep::Continue {
+            state: destination,
+            emitted: terminal,
+        }) => {
+            if let Some(terminal) = terminal {
+                token_push(emitted, terminal)?;
+            }
+            Ok(Some(destination))
+        }
+        Ok(LexerStep::Finished { .. }) => Ok(None),
+        Err(error) => match map_lexer_rejection(error) {
+            Ok(_) => Ok(None),
+            Err(error) => Err(error),
+        },
+    }
 }
 
 fn execute_eos(
@@ -175,23 +201,56 @@ pub(crate) fn prepare_token_table(
     let cells = check_items(sources.checked_mul(tokens), limits)?;
     work.charge(cells)?;
 
-    let mut rows = prepared_vec(sources)?;
     let mut emitted_items = 0_usize;
-    let mut source_index = 0_usize;
-    while source_index < sources {
-        let source = source_at(source_index).ok_or(PreparationError::InvariantViolation)?;
-        rows.push(build_token_row(
-            grammar,
-            source,
-            tokens,
-            limits,
-            work,
-            &mut emitted_items,
-        )?);
-        source_index += 1;
-    }
+    let rows = build_token_rows(grammar, sources, tokens, limits, work, &mut emitted_items)?;
 
     Ok(PreparedTokenTable { rows })
+}
+
+fn build_token_rows(
+    grammar: &ValidatedGrammar,
+    source_count: usize,
+    token_count: usize,
+    limits: PreparationLimits,
+    work: &mut WorkBudget,
+    emitted_items: &mut usize,
+) -> Result<Vec<Vec<Option<TokenExecution>>>, PreparationError> {
+    let mut rows = prepared_vec(source_count)?;
+    let mut error = None;
+    let mut source_index = 0_usize;
+    while source_index < source_count && error.is_none() {
+        error = match build_token_table_row(
+            grammar,
+            source_index,
+            token_count,
+            limits,
+            work,
+            emitted_items,
+        ) {
+            Ok(row) => {
+                rows.push(row);
+                None
+            }
+            Err(row_error) => Some(row_error),
+        };
+        source_index += 1;
+    }
+    match error {
+        Some(error) => Err(error),
+        None => Ok(rows),
+    }
+}
+
+fn build_token_table_row(
+    grammar: &ValidatedGrammar,
+    source_index: usize,
+    token_count: usize,
+    limits: PreparationLimits,
+    work: &mut WorkBudget,
+    emitted_items: &mut usize,
+) -> Result<Vec<Option<TokenExecution>>, PreparationError> {
+    let source = source_at(source_index).ok_or(PreparationError::InvariantViolation)?;
+    build_token_row(grammar, source, token_count, limits, work, emitted_items)
 }
 
 fn build_token_row(
@@ -203,30 +262,55 @@ fn build_token_row(
     emitted_items: &mut usize,
 ) -> Result<Vec<Option<TokenExecution>>, PreparationError> {
     let mut row = prepared_vec(token_count)?;
+    let mut error = None;
     let mut token_index = 0_usize;
-    while token_index < token_count {
-        let token = TokenId::new(
-            u32::try_from(token_index).map_err(|_| PreparationError::InvariantViolation)?,
-        );
-        let entry = grammar
-            .token(token)
-            .ok_or(PreparationError::InvariantViolation)?;
-        let token_work = match entry {
-            TokenEntry::Bytes(bytes) => check_items(Some(bytes.len()), limits)?,
-            TokenEntry::Eos => 1,
-        };
-        work.charge(token_work)?;
-        let execution = execute_entry(grammar, source, entry).map_err(preparation_token_error)?;
-        let emitted = match &execution {
-            Some(TokenExecution::Continue { emitted, .. })
-            | Some(TokenExecution::Finished { emitted, .. }) => emitted.len(),
-            None => 0,
-        };
-        *emitted_items = check_items((*emitted_items).checked_add(emitted), limits)?;
-        row.push(execution);
+    while token_index < token_count && error.is_none() {
+        error = append_token_cell(
+            grammar,
+            source,
+            token_index,
+            limits,
+            work,
+            emitted_items,
+            &mut row,
+        )
+        .err();
         token_index += 1;
     }
-    Ok(row)
+    match error {
+        Some(error) => Err(error),
+        None => Ok(row),
+    }
+}
+
+fn append_token_cell(
+    grammar: &ValidatedGrammar,
+    source: LexerState,
+    token_index: usize,
+    limits: PreparationLimits,
+    work: &mut WorkBudget,
+    emitted_items: &mut usize,
+    row: &mut Vec<Option<TokenExecution>>,
+) -> Result<(), PreparationError> {
+    let token =
+        TokenId::new(u32::try_from(token_index).map_err(|_| PreparationError::InvariantViolation)?);
+    let entry = grammar
+        .token(token)
+        .ok_or(PreparationError::InvariantViolation)?;
+    let token_work = match entry {
+        TokenEntry::Bytes(bytes) => check_items(Some(bytes.len()), limits)?,
+        TokenEntry::Eos => 1,
+    };
+    work.charge(token_work)?;
+    let execution = execute_entry(grammar, source, entry).map_err(preparation_token_error)?;
+    let emitted = match &execution {
+        Some(TokenExecution::Continue { emitted, .. }) => emitted.len(),
+        Some(TokenExecution::Finished { emitted, .. }) => emitted.len(),
+        None => 0,
+    };
+    *emitted_items = check_items((*emitted_items).checked_add(emitted), limits)?;
+    row.push(execution);
+    Ok(())
 }
 
 pub(crate) fn source_count(grammar: &ValidatedGrammar) -> Result<usize, PreparationError> {

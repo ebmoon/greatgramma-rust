@@ -4,6 +4,7 @@ members = [
     "crates/greatgramma-compile",
     "crates/greatgramma-python",
 ]
+exclude = ["fuzz"]
 resolver = "3"
 
 [workspace.package]
@@ -13,3 +14,6 @@ repository = "https://github.com/ebmoon/greatgramma-rust"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
+
+[profile.release]
+panic = "unwind"

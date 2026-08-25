@@ -1,0 +1,26 @@
+from typing import final
+
+@final
+class NativeError(Exception): ...
+
+@final
+class NativeGrammar:
+    @property
+    def vocab_size(self) -> int: ...
+    def new_batch(self, rows: int, pad_token_id: int | None) -> NativeBatch: ...
+
+@final
+class NativeBatch:
+    @property
+    def mask_bytes(self) -> int: ...
+    def initial_masks(self) -> bytes: ...
+    def advance_and_masks(self, tokens: list[int]) -> bytes: ...
+
+def _compile_yacc(
+    yacc: str,
+    terminals: list[tuple[str, str, int]],
+    tokens: list[bytes | None],
+    ignored: list[str],
+) -> NativeGrammar: ...
+
+def _token_bytes_from_json(json: str, eos_token_ids: list[int]) -> list[bytes]: ...

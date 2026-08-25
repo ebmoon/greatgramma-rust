@@ -1,31 +1,161 @@
 # GreatGramma Rust
 
-GreatGramma Rust is a Phase 1 bootstrap for exact grammar-constrained decoding.
-The production workspace targets Rust 1.98.0 and keeps the semantic kernel
-dependency-free and free of unsafe Rust.
+GreatGramma Rust is an exact grammar-constrained decoding engine with a small
+Rust semantic kernel, a restricted Yacc/byte-regex compiler, and a Python
+`LogitsProcessor` integration.
 
-This repository is not formally verified. The intended claim for the eventual
-release is “Aeneas-translatable; Lean proof in progress” until the separately
-audited Lean theorem and assumptions inventory exist.
+> Target Phase 1 label: **Aeneas-translatable; Lean proof in progress.**
+
+This is not a formal-verification claim. The pinned source-built Charon/Aeneas
+gate now translates the complete core, elaborates the generated Lean module,
+and checks byte-for-byte drift against the reviewed baseline. No Lean soundness
+or completeness theorem has been proved. See the
+[trusted-boundary ADR](docs/architecture/0001-trusted-boundary.md).
+
+## What is implemented
+
+- `greatgramma-core`: dependency-free, `unsafe`-free normalized-table
+  validation, lexer/token composition, LALR execution, preprocessing, packed
+  masks, and atomic fixed-row advancement.
+- `greatgramma-compile`: action-free original-Yacc parsing, bounded byte-regex
+  product-DFA generation with `derivre`, an owned bounded conflict-free SLR(1)
+  table generator over `cfgrammar` grammars, and exact token-manifest
+  normalization.
+- `greatgramma`: a typed Python facade and private PyO3 module, plus a strict
+  fixed-row Transformers-compatible processor. Torch is imported only when a
+  mask is applied.
+
+The supported surface is intentionally narrow. In particular, tokenizer
+introspection outside the strict fast-tokenizer ByteLevel JSON profile, beam
+ancestry, encoder-decoder models, assisted generation, serialized prepared
+grammars, and longer-context lexer rollback are not supported. The complete
+contract is in the [v1 compatibility profile](docs/compatibility/v1.md).
+
+## Python example
+
+The tokenizer manifest contains exact token-local bytes. Do not build it by
+decoding token IDs independently; the caller is responsible for establishing
+that concatenating these entries equals authoritative whole-sequence decoding.
+
+```python
+from greatgramma import Terminal, TokenizerManifest, compile
+
+manifest = TokenizerManifest(
+    token_bytes=(b"i", b"ii", b""),
+    eos_token_ids=frozenset({2}),
+)
+
+compiled = compile(
+    """
+    %token ITEM
+    %%
+    S: ITEM;
+    """,
+    start_rule="S",
+    terminals=[Terminal("ITEM", "i+", priority=0)],
+    tokenizer=manifest,
+)
+
+# `model`, `input_ids`, and this resolved config must use exactly the same
+# three-entry vocabulary. The prompt is a boundary and is not parsed.
+output = compiled.generate(
+    model,
+    input_ids,
+    generation_config=generation_config,
+)
+```
+
+As an alternative to a caller-audited manifest,
+`TokenizerManifest.from_transformers(tokenizer, eos_token_ids=...)` reads only
+`backend_tokenizer.to_str()` and accepts the restricted dense ByteLevel JSON
+profile. It never derives bytes with per-token `decode()`.
+
+`compiled.generate(...)` is the supported wrapper. Direct
+`compiled.logits_processor(...)` construction is an advanced API: it requires a
+fixed row order, the exact initial prompt on the first callback, and exactly one
+new token per row on each later callback. One `CompiledGrammar` creates one
+generation session.
+
+Multirow generation requires an in-vocabulary pad token distinct from every EOS
+token. The wrapper currently rejects `pad_token_id == eos_token_id` because it
+does not accept an explicit attention mask.
+
+## Rust example
+
+The compiler is the ordinary Rust entry point:
+
+```rust
+use greatgramma_compile::{
+    CompileLimits, SourceGrammar, TerminalSpec, TokenSpec, TokenizerManifest,
+    compile,
+};
+use greatgramma_core::TokenId;
+
+let source = SourceGrammar::new(
+    "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+    vec![TerminalSpec::new("ITEM", "i+", 0)],
+);
+let tokens = TokenizerManifest::new(vec![
+    TokenSpec::Bytes(b"i".to_vec()),
+    TokenSpec::Bytes(b"ii".to_vec()),
+    TokenSpec::Eos,
+]);
+let prepared = compile(source, tokens, CompileLimits::default()).unwrap();
+let mut matcher = prepared.into_matcher(1).unwrap();
+let mut mask = vec![0; matcher.mask_bytes()];
+
+matcher.mask(0, &mut mask).unwrap();
+assert_eq!(mask[0] & 0b11, 0b11);
+matcher.advance(0, TokenId::new(1)).unwrap();
+matcher.advance(0, TokenId::new(2)).unwrap();
+assert!(matcher.is_completed(0).unwrap());
+```
+
+For callers that already own semantically correct normalized tables, see the
+[manual normalized-table example](docs/rust-api.md).
+
+## Development checks
+
+The workspace targets Rust 1.98.0.
+
+```bash
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets --all-features -- -D warnings
+cargo test --workspace --all-targets --all-features
+python3 scripts/check-publication-metadata.py
+scripts/conformance-oracle.sh
+scripts/fuzz-smoke.sh
+scripts/leak-check.sh
+uv run --frozen --no-sync pytest tests/python -q
+uv run --frozen --no-sync pyright
+scripts/package-check.sh
+```
+
+CI runs Rust checks, the independent conformance oracle, bounded normalized-input
+fuzzing, Python tests and strict typing across Python 3.10 and 3.14 on Linux,
+macOS, and Windows, plus host sdist/abi3-wheel smoke tests. Local benchmark and
+100,000-step leak harnesses are also available. A retained frozen-upstream
+comparison, a selected project license, and green final-commit CI are still
+required before a Phase 1 tag. The
+[benchmark protocol](docs/benchmarks/protocol-v1.md) separates implemented
+measurements from performance claims that have not yet earned release status.
+
+## Error and trust contracts
+
+Every failure is fail-closed: malformed input, unsupported syntax, exhausted
+limits, invalid history, and an empty legal-token set produce an error rather
+than unconstrained logits. Python errors expose stable codes documented in the
+[error reference](docs/errors.md).
+
+The compiler and Python integration are outside the planned theorem boundary.
+The core structurally validates normalized tables but assumes their
+language-level token-byte, lexer-DFA, and LALR semantics are correct.
 
 ## Licensing and distribution
 
 No license has been selected for this project. Do not publish or distribute
 source or built artifacts until the repository owner selects a license and the
-publication guards are intentionally removed. The Rust crates set
-`publish = false`; the Python metadata uses PyPI's
-`Private :: Do Not Upload` classifier. Upstream licenses recorded in
-`THIRD_PARTY_NOTICES.md` apply to those upstream projects, not to this project.
-
-## Bootstrap checks
-
-```bash
-cargo fmt --all -- --check
-cargo clippy --workspace --all-targets --all-features -- -D warnings
-cargo test --workspace --all-targets
-python3 scripts/check-publication-metadata.py
-```
-
-`just aeneas-smoke` is deliberately fail-closed. It reports the missing
-pinned Aeneas/Charon toolchain rather than claiming translation succeeded.
-See the trusted-boundary ADR for the exact pins and current blocker.
+publication guards are intentionally removed. Rust crates use `publish = false`
+and Python metadata uses `Private :: Do Not Upload`. Upstream licenses in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) license those dependencies and
+references, not this project.

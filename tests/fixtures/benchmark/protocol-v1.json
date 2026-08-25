@@ -1,0 +1,82 @@
+{
+  "schema": "greatgramma.synthetic-benchmark-protocol.v1",
+  "result_schema": "greatgramma.python-benchmark.v1",
+  "corpus_schema": "greatgramma.synthetic-exact-byte-corpus.v1",
+  "python_isolated_mode_required": true,
+  "candidate_rust_toolchain": "1.98.0",
+  "release_sampling": {
+    "compile_samples": 7,
+    "operation_samples": 1000,
+    "warmup_count": 10
+  },
+  "benchmark_environment": {
+    "allowed_names": [
+      "GREATGRAMMA_BENCHMARK_SANITIZED",
+      "HOME",
+      "LANG",
+      "LC_ALL",
+      "PATH",
+      "TMPDIR",
+      "__CF_USER_TEXT_ENCODING"
+    ],
+    "required_names": [
+      "GREATGRAMMA_BENCHMARK_SANITIZED",
+      "HOME",
+      "LANG",
+      "LC_ALL",
+      "PATH",
+      "TMPDIR"
+    ],
+    "required_values": {
+      "GREATGRAMMA_BENCHMARK_SANITIZED": "1",
+      "LANG": "C",
+      "LC_ALL": "C"
+    }
+  },
+  "upstream": {
+    "implementation": "greatgramma-upstream-python",
+    "source_pin": "4c21981386fc6d457efa381d1eb1863623d50fa1",
+    "python_dependencies": {
+      "Cython": "3.0.11",
+      "interegular": "0.3.3",
+      "lark": "1.2.2",
+      "llguidance": "0.6.27",
+      "torch": "2.5.1",
+      "transformers": "4.46.2"
+    }
+  },
+  "language": "one or more arbitrary bytes followed by EOS",
+  "grammar": {
+    "start_rule": "S",
+    "source": "%token ITEM\n%%\nS: ITEM;\n",
+    "terminals": [
+      {
+        "name": "ITEM",
+        "pattern": "[\\x00-\\xFF]+",
+        "priority": 0
+      }
+    ],
+    "ignored_terminals": []
+  },
+  "upstream_grammar": {
+    "format": "lark-lalr",
+    "source": "start: ITEM\nITEM: /[\\x00-\\xFF]+/\n",
+    "byte_mapping": "each exact byte is mapped bijectively to the same-code-point Latin-1 character"
+  },
+  "token_generator": {
+    "algorithm": "singleton-then-tagged-le32-v1",
+    "seed": 0,
+    "ordinary_token_count": "vocab_size - 1",
+    "ids_0_through_255": "one byte equal to the token id",
+    "ids_256_and_above": "0xA5 followed by the token id as unsigned little-endian 32-bit",
+    "eos": "the final token id, represented by an empty manifest entry"
+  },
+  "operations": {
+    "compile_prepare": "Python facade through PyO3 source compilation and preparation; manifest construction excluded",
+    "compile_prepare_peak_rss": "peak resident set size in a clean child process after one source compilation and preparation",
+    "engine_initial_mask": "candidate NativeBatch.initial_masks or frozen-upstream initial CFGMonitor acceptance",
+    "engine_advance_and_mask": "candidate NativeBatch.advance_and_masks or frozen-upstream CFGMonitor feed_token plus acceptance for one row",
+    "processor_advance_and_mask": "trusted fixed-append GreatGrammaLogitsProcessor call with a dependency-free no-op masker that reads the packed buffer"
+  },
+  "default_vocab_sizes": [257, 4096, 32000, 50000, 128000]
+}
