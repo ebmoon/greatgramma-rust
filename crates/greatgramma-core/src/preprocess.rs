@@ -60,6 +60,7 @@ pub fn classify_sequence_head(
 }
 
 /// Builds the direct parser-state by interned-sequence classification table.
+/// Logical rows and classification cells both count toward preparation limits.
 pub fn prepare_parser(
     grammar: &ValidatedGrammar,
     spanner: &PreparedSpanner,
@@ -68,9 +69,13 @@ pub fn prepare_parser(
     let state_count = usize::try_from(grammar.lalr().state_count())
         .map_err(|_| PreparationError::InvariantViolation)?;
     let sequence_count = spanner.sequence_count();
-    check_items(state_count.checked_mul(sequence_count), limits)?;
+    let table_items = state_count
+        .checked_mul(sequence_count)
+        .and_then(|cells| cells.checked_add(state_count));
+    check_items(table_items, limits)?;
 
     let mut work = WorkBudget::new(limits);
+    work.charge(state_count)?;
     let mut rows = prepared_vec(state_count)?;
     let mut state_index = 0_usize;
     while state_index < state_count {

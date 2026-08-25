@@ -149,6 +149,32 @@ fn one_sequence_grammar() -> greatgramma_core::ValidatedGrammar {
     .expect("one-sequence fixture validates")
 }
 
+fn empty_sequence_grammar() -> greatgramma_core::ValidatedGrammar {
+    let lexer = LexerDfa::new(
+        1,
+        1,
+        vec![0; 256],
+        vec![None],
+        DfaStateId::new(0),
+        vec![None],
+    );
+    let lalr = LalrTable::new(
+        LalrDimensions::new(3, 1, 0),
+        state(0),
+        TerminalId::new(0),
+        vec![Action::Error; 3],
+        Vec::new(),
+        Vec::new(),
+    );
+    UnvalidatedGrammar::new(
+        vec![TokenEntry::Bytes(b"x".to_vec()), TokenEntry::Eos],
+        lexer,
+        lalr,
+    )
+    .validate(ValidationLimits::default())
+    .expect("empty-sequence fixture validates")
+}
+
 fn find_sequence(
     spanner: &greatgramma_core::PreparedSpanner,
     expected: &[TerminalId],
@@ -342,27 +368,28 @@ fn prepared_classification_queries_check_ids() {
 }
 
 #[test]
-fn preparation_limits_cover_cells_and_symbolic_action_work() {
+fn preparation_limits_cover_rows_cells_and_symbolic_action_work() {
     let grammar = grammar();
     let spanner = prepare_spanner(&grammar, PreparationLimits::default()).expect("spanner");
-    let cells = usize::try_from(grammar.lalr().state_count())
-        .expect("fixture count fits")
+    let states = usize::try_from(grammar.lalr().state_count()).expect("fixture state count fits");
+    let items = states
         .checked_mul(spanner.sequence_count())
-        .expect("fixture cells fit");
+        .and_then(|cells| cells.checked_add(states))
+        .expect("fixture table items fit");
 
     assert_eq!(
         prepare_parser(
             &grammar,
             &spanner,
             PreparationLimits {
-                max_items: cells - 1,
+                max_items: items - 1,
                 ..PreparationLimits::default()
             },
         )
         .err(),
         Some(PreparationError::TooLarge {
-            required: cells,
-            maximum: cells - 1,
+            required: items,
+            maximum: items - 1,
         })
     );
     assert_eq!(
@@ -376,8 +403,62 @@ fn preparation_limits_cover_cells_and_symbolic_action_work() {
         )
         .err(),
         Some(PreparationError::TooLarge {
-            required: 1,
+            required: states,
             maximum: 0,
+        })
+    );
+}
+
+#[test]
+fn empty_sequence_tables_still_charge_parser_rows() {
+    let grammar = empty_sequence_grammar();
+    let spanner = prepare_spanner(&grammar, PreparationLimits::default()).expect("spanner");
+    assert_eq!(spanner.sequence_count(), 0);
+
+    assert_eq!(
+        prepare_parser(
+            &grammar,
+            &spanner,
+            PreparationLimits {
+                max_items: 2,
+                ..PreparationLimits::default()
+            },
+        )
+        .err(),
+        Some(PreparationError::TooLarge {
+            required: 3,
+            maximum: 2,
+        })
+    );
+    assert_eq!(
+        prepare_parser(
+            &grammar,
+            &spanner,
+            PreparationLimits {
+                max_items: 3,
+                max_work: 0,
+            },
+        )
+        .err(),
+        Some(PreparationError::TooLarge {
+            required: 3,
+            maximum: 0,
+        })
+    );
+
+    let parser = prepare_parser(
+        &grammar,
+        &spanner,
+        PreparationLimits {
+            max_items: 3,
+            max_work: 3,
+        },
+    )
+    .expect("three empty rows fit exactly");
+    assert_eq!(
+        parser.classification(state(2), SequenceId::new(0)),
+        Err(ParserError::InvalidSequence {
+            sequence: SequenceId::new(0),
         })
     );
 }
@@ -393,14 +474,14 @@ fn preparation_work_is_cumulative_and_stops_at_the_exact_boundary() {
             &grammar,
             &spanner,
             PreparationLimits {
-                max_items: 3,
+                max_items: 5,
                 ..PreparationLimits::default()
             },
         )
         .err(),
         Some(PreparationError::TooLarge {
-            required: 4,
-            maximum: 3,
+            required: 6,
+            maximum: 5,
         })
     );
     assert_eq!(
@@ -408,7 +489,7 @@ fn preparation_work_is_cumulative_and_stops_at_the_exact_boundary() {
             &grammar,
             &spanner,
             PreparationLimits {
-                max_items: 4,
+                max_items: 6,
                 max_work: 4,
             },
         )
@@ -423,8 +504,8 @@ fn preparation_work_is_cumulative_and_stops_at_the_exact_boundary() {
             &grammar,
             &spanner,
             PreparationLimits {
-                max_items: 4,
-                max_work: 16,
+                max_items: 6,
+                max_work: 18,
             },
         )
         .is_ok()
