@@ -19,9 +19,9 @@ claim.
   masks; atomic fixed-row batch advancement; and explicit EOS acceptance.
 - A Rust compiler for action-free original Yacc, named restricted byte-regex
   terminals, exact token manifests and the supported strict `tokenizer.json`
-  profile. It constructs prioritized product DFAs and bounded conflict-free
-  SLR(1) tables, lowers them to the normalized ranked parser schema, then
-  validates and prepares them through the core boundary.
+  profile. It lowers llguidance's derivre-backed shared regex vector and
+  lrtable's Pager LALR tables into the normalized ranked schema, then validates
+  and prepares them through the core boundary.
 - A typed Python package and private PyO3 extension with stable public error
   codes, an exact-manifest compiler entry point, a fixed-row Transformers
   `LogitsProcessor`, and an intentionally narrow decoder-only `generate`
