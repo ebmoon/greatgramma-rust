@@ -240,12 +240,11 @@ fn current_rss_kib() -> Result<u64, String> {
             .lines()
             .find(|line| line.starts_with("VmRSS:"))
             .ok_or("VmRSS is absent from /proc/self/status")?;
-        return line
-            .split_whitespace()
+        line.split_whitespace()
             .nth(1)
             .ok_or_else(|| "VmRSS has no numeric value".to_owned())?
             .parse()
-            .map_err(|error| format!("parse VmRSS: {error}"));
+            .map_err(|error| format!("parse VmRSS: {error}"))
     }
 
     #[cfg(not(target_os = "linux"))]
