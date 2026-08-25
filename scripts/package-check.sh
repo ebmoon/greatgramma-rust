@@ -42,7 +42,15 @@ venv=$scratch/venv
 mkdir -p "$dist"
 
 cd "$repo_root"
-python=${PYTHON:-python3}
+python_command=${PYTHON:-python3}
+if ! python=$("$python_command" -I -c 'import os, sys; print(os.path.abspath(sys.executable), end="")'); then
+    echo "package check could not run configured Python: $python_command" >&2
+    exit 2
+fi
+if [ -z "$python" ]; then
+    echo "configured Python returned an empty executable path: $python_command" >&2
+    exit 2
+fi
 pinned_rust=$(sed -n 's/^[[:space:]]*channel[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' rust-toolchain.toml | head -n 1)
 if [ -z "$pinned_rust" ]; then
     echo "rust-toolchain.toml does not declare a pinned channel" >&2
