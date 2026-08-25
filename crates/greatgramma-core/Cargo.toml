@@ -8,3 +8,7 @@ publish = false
 
 [lints]
 workspace = true
+
+[[bench]]
+name = "phase1"
+harness = false

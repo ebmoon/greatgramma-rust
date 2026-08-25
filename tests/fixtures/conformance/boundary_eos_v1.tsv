@@ -1,0 +1,18 @@
+# GreatGramma Phase 1 conformance fixture v1.
+# Columns: case name, comma-separated token IDs, expected final observation.
+# Observations use zero-based token positions for rejection/completion.
+name	tokens	expected
+boundary_reconsume_first_eos	2,3	accepted
+boundary_reconsume_second_eos	2,4	accepted
+split_boundary_first_eos	0,1,3	accepted
+split_boundary_second_eos	0,1,4	accepted
+clean_first_eos	3	rejected@0
+clean_second_eos	4	rejected@0
+eos_after_accepted_item	0,3	rejected@1
+eos_after_unfinished_residual	7,3	rejected@1
+unfinished_residual_then_finish	7,0,1,3	accepted
+nul_byte_token	5,1,3	accepted
+non_utf8_byte_token	6,1,4	accepted
+wrong_initial_terminal	1	rejected@0
+byte_outside_lexer	9	rejected@0
+accepted_state_is_terminal	2,3,4	completed@2

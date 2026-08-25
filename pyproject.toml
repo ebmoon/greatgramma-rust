@@ -1,5 +1,5 @@
 [build-system]
-requires = ["maturin>=1.8,<2.0"]
+requires = ["maturin==1.14.1"]
 build-backend = "maturin"
 
 [project]
@@ -13,7 +13,29 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
 ]
 
+[project.optional-dependencies]
+transformers = [
+    "torch>=2.13,<2.14",
+    "transformers>=5.14,<5.15",
+]
+
+[dependency-groups]
+dev = [
+    "maturin==1.14.1",
+    "pyright==1.1.411",
+    "pytest==9.1.1",
+]
+
 [tool.maturin]
 manifest-path = "crates/greatgramma-python/Cargo.toml"
+python-source = "python"
 module-name = "greatgramma._native"
 bindings = "pyo3"
+
+[tool.pyright]
+include = ["python/greatgramma", "tests/python"]
+pythonVersion = "3.10"
+typeCheckingMode = "strict"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/python"]

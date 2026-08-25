@@ -1,0 +1,25 @@
+{
+  "schema": "greatgramma.python-benchmark-thresholds.v1",
+  "baseline_source_pin": "4c21981386fc6d457efa381d1eb1863623d50fa1",
+  "protocol_sha256": "b6ee2df0850bfaf4de81def7358e39bab000dfd36728a7f8b91985dea6b2b7f2",
+  "comparisons": [
+    {
+      "corpus_id": "synthetic-exact-byte-v1-vocab-128000",
+      "operation": "compile_prepare",
+      "metric": "p95_ns",
+      "max_candidate_over_baseline": 0.5
+    },
+    {
+      "corpus_id": "synthetic-exact-byte-v1-vocab-128000",
+      "operation": "engine_advance_and_mask",
+      "metric": "p95_ns",
+      "max_candidate_over_baseline": 0.5
+    },
+    {
+      "corpus_id": "synthetic-exact-byte-v1-vocab-128000",
+      "operation": "compile_prepare_peak_rss",
+      "metric": "peak_rss_bytes",
+      "max_candidate_over_baseline": 0.5
+    }
+  ]
+}

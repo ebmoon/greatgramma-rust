@@ -3,7 +3,7 @@ use crate::{
     ValidatedLalr,
 };
 
-use crate::token_step::{reserve_one, reserved_vec};
+use crate::token_step::reserve_one;
 
 /// The result of executing a complete terminal slice against the LALR table.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -51,21 +51,18 @@ pub enum ParserError {
     InvariantViolation,
 }
 
-/// Internal result used by preprocessing from a symbolic one-state stack.
-///
-/// `Dependent` arises only when a reduction would pop the symbolic base. All
-/// other variants have the same meaning as their concrete public counterpart.
-#[derive(Debug, Eq, PartialEq)]
-pub(crate) enum RunOutcome {
+/// Allocation-free result for parser execution into caller-owned storage.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) enum RunDecision {
     Rejected,
-    Continue { stack: Vec<ParserStateId> },
+    Continue,
     Accepted,
     Dependent,
 }
 
 /// Internal bounded-execution result used during preparation.
 pub(crate) enum RunStatus {
-    Complete { outcome: RunOutcome, work: usize },
+    Complete { decision: RunDecision, work: usize },
     WorkLimitExceeded { required: usize },
 }
 
@@ -92,11 +89,12 @@ pub fn execute_terminals(
     terminals: &[TerminalId],
 ) -> Result<Option<ParserExecution>, ParserError> {
     validate_inputs(grammar.lalr(), stack, terminals)?;
-    match execute_terminals_concrete_checked(grammar.lalr(), stack, terminals)? {
-        RunOutcome::Rejected => Ok(None),
-        RunOutcome::Continue { stack } => Ok(Some(ParserExecution::Continue { stack })),
-        RunOutcome::Accepted => Ok(Some(ParserExecution::Accepted)),
-        RunOutcome::Dependent => Err(ParserError::InvariantViolation),
+    let mut destination = Vec::new();
+    match execute_terminals_concrete_into(grammar.lalr(), stack, terminals, &mut destination)? {
+        RunDecision::Rejected => Ok(None),
+        RunDecision::Continue => Ok(Some(ParserExecution::Continue { stack: destination })),
+        RunDecision::Accepted => Ok(Some(ParserExecution::Accepted)),
+        RunDecision::Dependent => Err(ParserError::InvariantViolation),
     }
 }
 
@@ -105,42 +103,73 @@ pub fn execute_terminals(
 /// Unlike concrete execution, popping the supplied base returns `Dependent`:
 /// the action can only be decided with parser states below that base.
 pub(crate) fn execute_terminals_symbolic(
-    lalr: &ValidatedLalr,
+    parser_table: &ValidatedLalr,
     stack: &[ParserStateId],
     terminals: &[TerminalId],
-) -> Result<RunOutcome, ParserError> {
-    validate_inputs(lalr, stack, terminals)?;
-    unbounded_outcome(run_validated(
-        lalr,
+) -> Result<RunDecision, ParserError> {
+    validate_inputs(parser_table, stack, terminals)?;
+    let mut destination = Vec::new();
+    let status = run_validated_into(
+        parser_table,
         stack,
         terminals,
         UnderflowMode::Dependent,
         None,
-    )?)
+        &mut destination,
+    )?;
+    unbounded_decision(status)
 }
 
 pub(crate) fn execute_terminals_symbolic_checked_with_limit(
-    lalr: &ValidatedLalr,
+    parser_table: &ValidatedLalr,
     stack: &[ParserStateId],
     terminals: &[TerminalId],
     maximum_work: usize,
 ) -> Result<RunStatus, ParserError> {
-    run_validated(
-        lalr,
+    let mut destination = Vec::new();
+    let status = run_validated_into(
+        parser_table,
         stack,
         terminals,
         UnderflowMode::Dependent,
         Some(maximum_work),
-    )
+        &mut destination,
+    )?;
+    match status {
+        DecisionStatus::Complete { decision, work } => Ok(RunStatus::Complete { decision, work }),
+        DecisionStatus::WorkLimitExceeded { required } => {
+            Ok(RunStatus::WorkLimitExceeded { required })
+        }
+    }
 }
 
-pub(crate) fn execute_terminals_concrete_checked(
-    lalr: &ValidatedLalr,
+/// Executes concrete parser actions into reusable caller-owned stack storage.
+/// The destination is overwritten even when parsing rejects or reports an
+/// error, while the source stack is never modified.
+pub(crate) fn execute_terminals_concrete_into(
+    parser_table: &ValidatedLalr,
     stack: &[ParserStateId],
     terminals: &[TerminalId],
-) -> Result<RunOutcome, ParserError> {
-    unbounded_outcome(run_validated(
-        lalr,
+    destination: &mut Vec<ParserStateId>,
+) -> Result<RunDecision, ParserError> {
+    unbounded_decision(run_validated_into(
+        parser_table,
+        stack,
+        terminals,
+        UnderflowMode::Error,
+        None,
+        destination,
+    )?)
+}
+
+/// Continues concrete parser execution directly in caller-owned stack storage.
+pub(crate) fn execute_terminals_concrete_in_place(
+    parser_table: &ValidatedLalr,
+    stack: &mut Vec<ParserStateId>,
+    terminals: &[TerminalId],
+) -> Result<RunDecision, ParserError> {
+    unbounded_decision(run_validated_in_place(
+        parser_table,
         stack,
         terminals,
         UnderflowMode::Error,
@@ -149,7 +178,7 @@ pub(crate) fn execute_terminals_concrete_checked(
 }
 
 pub(crate) fn validate_inputs(
-    lalr: &ValidatedLalr,
+    parser_table: &ValidatedLalr,
     stack: &[ParserStateId],
     terminals: &[TerminalId],
 ) -> Result<(), ParserError> {
@@ -157,43 +186,83 @@ pub(crate) fn validate_inputs(
         return Err(ParserError::EmptyStack);
     }
 
+    let mut error = None;
     let mut stack_index = 0_usize;
     while stack_index < stack.len() {
-        let state = *stack
-            .get(stack_index)
-            .ok_or(ParserError::InvariantViolation)?;
-        if state.get() >= lalr.state_count() {
-            return Err(ParserError::InvalidState { state });
+        if error.is_none() {
+            error = match stack.get(stack_index).copied() {
+                Some(state) if state.get() >= parser_table.state_count() => {
+                    Some(ParserError::InvalidState { state })
+                }
+                Some(_) => None,
+                None => Some(ParserError::InvariantViolation),
+            };
         }
         stack_index += 1;
     }
 
-    let mut terminal_index = 0_usize;
-    while terminal_index < terminals.len() {
-        let terminal = *terminals
-            .get(terminal_index)
-            .ok_or(ParserError::InvariantViolation)?;
-        if terminal.get() >= lalr.terminal_count() {
-            return Err(ParserError::InvalidTerminal { terminal });
+    match error {
+        Some(error) => Err(error),
+        None => {
+            let mut terminal_error = None;
+            let mut terminal_index = 0_usize;
+            while terminal_index < terminals.len() {
+                if terminal_error.is_none() {
+                    terminal_error = match terminals.get(terminal_index).copied() {
+                        Some(terminal) if terminal.get() >= parser_table.terminal_count() => {
+                            Some(ParserError::InvalidTerminal { terminal })
+                        }
+                        Some(_) => None,
+                        None => Some(ParserError::InvariantViolation),
+                    };
+                }
+                terminal_index += 1;
+            }
+            match terminal_error {
+                Some(error) => Err(error),
+                None => Ok(()),
+            }
         }
-        terminal_index += 1;
     }
-
-    Ok(())
 }
 
-fn run_validated(
-    lalr: &ValidatedLalr,
+fn run_validated_into(
+    parser_table: &ValidatedLalr,
     initial_stack: &[ParserStateId],
     terminals: &[TerminalId],
     underflow_mode: UnderflowMode,
     maximum_work: Option<usize>,
-) -> Result<RunStatus, ParserError> {
+    stack: &mut Vec<ParserStateId>,
+) -> Result<DecisionStatus, ParserError> {
     let mut work = RunWork::new(maximum_work);
     if !work.charge(initial_stack.len())? {
         return Ok(work.exceeded());
     }
-    let mut stack = copy_stack(initial_stack)?;
+    copy_stack_into(initial_stack, stack)?;
+    run_initialized(parser_table, stack, terminals, underflow_mode, work)
+}
+
+fn run_validated_in_place(
+    parser_table: &ValidatedLalr,
+    stack: &mut Vec<ParserStateId>,
+    terminals: &[TerminalId],
+    underflow_mode: UnderflowMode,
+    maximum_work: Option<usize>,
+) -> Result<DecisionStatus, ParserError> {
+    let mut work = RunWork::new(maximum_work);
+    if !work.charge(stack.len())? {
+        return Ok(work.exceeded());
+    }
+    run_initialized(parser_table, stack, terminals, underflow_mode, work)
+}
+
+fn run_initialized(
+    parser_table: &ValidatedLalr,
+    stack: &mut Vec<ParserStateId>,
+    terminals: &[TerminalId],
+    underflow_mode: UnderflowMode,
+    mut work: RunWork,
+) -> Result<DecisionStatus, ParserError> {
     let mut terminal_index = 0_usize;
 
     while terminal_index < terminals.len() {
@@ -203,64 +272,98 @@ fn run_validated(
         if !work.charge(1)? {
             return Ok(work.exceeded());
         }
-        let ignored = lalr
+        let ignored = parser_table
             .is_ignored(terminal)
             .ok_or(ParserError::InvariantViolation)?;
-        if ignored {
-            terminal_index += 1;
-            continue;
-        }
-
-        let mut previous_reduction = None;
-        loop {
-            let state = stack_top(&stack)?;
-            if !work.charge(1)? {
-                return Ok(work.exceeded());
-            }
-            let action = lalr
-                .action(state, terminal)
-                .ok_or(ParserError::InvariantViolation)?;
-            match action {
-                Action::Error => return Ok(work.complete(RunOutcome::Rejected)),
-                Action::Shift(destination) => {
-                    if !work.charge(1)? {
-                        return Ok(work.exceeded());
-                    }
-                    parser_push(&mut stack, destination)?;
-                    break;
-                }
-                Action::Reduce { production, rank } => {
-                    check_reduction_progress(previous_reduction, rank, state, terminal)?;
-                    let applied =
-                        apply_reduction(lalr, &mut stack, production, underflow_mode, &mut work)?;
-                    let pop_len = match applied {
-                        ReductionResult::Applied { pop_len } => pop_len,
-                        ReductionResult::Dependent => {
-                            return Ok(work.complete(RunOutcome::Dependent));
-                        }
-                        ReductionResult::WorkLimitExceeded => return Ok(work.exceeded()),
-                    };
-                    previous_reduction = Some(PreviousReduction { rank, pop_len });
-                }
-                Action::Accept => {
-                    if terminal_index.checked_add(1) != Some(terminals.len()) {
-                        return Err(ParserError::AcceptBeforeEnd { terminal_index });
-                    }
-                    return Ok(work.complete(RunOutcome::Accepted));
-                }
+        if !ignored {
+            match run_terminal(
+                parser_table,
+                stack,
+                terminal,
+                terminal_index,
+                terminals.len(),
+                underflow_mode,
+                &mut work,
+            )? {
+                TerminalRun::Shifted => {}
+                TerminalRun::Complete(decision) => return Ok(work.complete(decision)),
+                TerminalRun::WorkLimitExceeded => return Ok(work.exceeded()),
             }
         }
         terminal_index += 1;
     }
 
-    Ok(work.complete(RunOutcome::Continue { stack }))
+    Ok(work.complete(RunDecision::Continue))
 }
 
-fn unbounded_outcome(status: RunStatus) -> Result<RunOutcome, ParserError> {
-    match status {
-        RunStatus::Complete { outcome, .. } => Ok(outcome),
-        RunStatus::WorkLimitExceeded { .. } => Err(ParserError::InvariantViolation),
+enum TerminalRun {
+    Shifted,
+    Complete(RunDecision),
+    WorkLimitExceeded,
+}
+
+fn run_terminal(
+    parser_table: &ValidatedLalr,
+    stack: &mut Vec<ParserStateId>,
+    terminal: TerminalId,
+    terminal_index: usize,
+    terminal_count: usize,
+    underflow_mode: UnderflowMode,
+    work: &mut RunWork,
+) -> Result<TerminalRun, ParserError> {
+    let mut previous_reduction = None;
+    loop {
+        let state = stack_top(stack)?;
+        if !work.charge(1)? {
+            return Ok(TerminalRun::WorkLimitExceeded);
+        }
+        let action = parser_table
+            .action(state, terminal)
+            .ok_or(ParserError::InvariantViolation)?;
+        match action {
+            Action::Error => return Ok(TerminalRun::Complete(RunDecision::Rejected)),
+            Action::Shift(destination) => {
+                if !work.charge(1)? {
+                    return Ok(TerminalRun::WorkLimitExceeded);
+                }
+                parser_push(stack, destination)?;
+                return Ok(TerminalRun::Shifted);
+            }
+            Action::Reduce { production, rank } => {
+                check_reduction_progress(previous_reduction, rank, state, terminal)?;
+                let applied =
+                    apply_reduction(parser_table, stack, production, underflow_mode, work)?;
+                let pop_len = match applied {
+                    ReductionResult::Applied { pop_len } => pop_len,
+                    ReductionResult::Dependent => {
+                        return Ok(TerminalRun::Complete(RunDecision::Dependent));
+                    }
+                    ReductionResult::WorkLimitExceeded => {
+                        return Ok(TerminalRun::WorkLimitExceeded);
+                    }
+                };
+                previous_reduction = Some(PreviousReduction { rank, pop_len });
+            }
+            Action::Accept => {
+                if terminal_index.checked_add(1) != Some(terminal_count) {
+                    return Err(ParserError::AcceptBeforeEnd { terminal_index });
+                }
+                return Ok(TerminalRun::Complete(RunDecision::Accepted));
+            }
+        }
     }
+}
+
+fn unbounded_decision(status: DecisionStatus) -> Result<RunDecision, ParserError> {
+    match status {
+        DecisionStatus::Complete { decision, .. } => Ok(decision),
+        DecisionStatus::WorkLimitExceeded { .. } => Err(ParserError::InvariantViolation),
+    }
+}
+
+enum DecisionStatus {
+    Complete { decision: RunDecision, work: usize },
+    WorkLimitExceeded { required: usize },
 }
 
 struct RunWork {
@@ -284,15 +387,15 @@ impl RunWork {
         Ok(self.used <= maximum)
     }
 
-    fn complete(self, outcome: RunOutcome) -> RunStatus {
-        RunStatus::Complete {
-            outcome,
+    fn complete(self, decision: RunDecision) -> DecisionStatus {
+        DecisionStatus::Complete {
+            decision,
             work: self.used,
         }
     }
 
-    fn exceeded(self) -> RunStatus {
-        RunStatus::WorkLimitExceeded {
+    fn exceeded(self) -> DecisionStatus {
+        DecisionStatus::WorkLimitExceeded {
             required: self.used,
         }
     }
@@ -305,7 +408,7 @@ enum ReductionResult {
 }
 
 fn apply_reduction(
-    lalr: &ValidatedLalr,
+    parser_table: &ValidatedLalr,
     stack: &mut Vec<ParserStateId>,
     production_id: ProductionId,
     underflow_mode: UnderflowMode,
@@ -314,7 +417,7 @@ fn apply_reduction(
     if !work.charge(1)? {
         return Ok(ReductionResult::WorkLimitExceeded);
     }
-    let production = lalr
+    let production = parser_table
         .production(production_id)
         .ok_or(ParserError::InvariantViolation)?;
     let pop_len =
@@ -345,7 +448,7 @@ fn apply_reduction(
     if !work.charge(1)? {
         return Ok(ReductionResult::WorkLimitExceeded);
     }
-    let destination = match lalr.goto(source, production.lhs()) {
+    let destination = match parser_table.goto(source, production.lhs()) {
         None => return Err(ParserError::InvariantViolation),
         Some(None) => {
             return Err(ParserError::MissingGoto {
@@ -382,11 +485,20 @@ fn check_reduction_progress(
     Err(ParserError::InvalidReductionProgress { state, terminal })
 }
 
-fn copy_stack(stack: &[ParserStateId]) -> Result<Vec<ParserStateId>, ParserError> {
-    let mut copied = reserved_vec(stack.len())
-        .map_err(|requested| ParserError::AllocationFailure { requested })?;
-    copied.extend_from_slice(stack);
-    Ok(copied)
+fn copy_stack_into(
+    source: &[ParserStateId],
+    destination: &mut Vec<ParserStateId>,
+) -> Result<(), ParserError> {
+    destination.clear();
+    if destination.capacity() < source.len() {
+        destination.try_reserve_exact(source.len()).map_err(|_| {
+            ParserError::AllocationFailure {
+                requested: source.len(),
+            }
+        })?;
+    }
+    destination.extend_from_slice(source);
+    Ok(())
 }
 
 fn parser_push(stack: &mut Vec<ParserStateId>, state: ParserStateId) -> Result<(), ParserError> {

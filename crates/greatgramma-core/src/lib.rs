@@ -2,12 +2,14 @@
 
 #![forbid(unsafe_code)]
 
+mod engine;
 mod error;
 mod ids;
 mod lalr;
 mod lalr_reference;
 mod lexer;
 mod limits;
+mod mask;
 mod normalized;
 mod preprocess;
 mod sequence;
@@ -15,6 +17,7 @@ mod spanner;
 mod token_step;
 mod validate;
 
+pub use engine::{AdvanceResult, EngineError, Matcher, PreparedGrammar, prepare};
 pub use error::{ArithmeticKind, IdKind, LimitKind, ValidationError, ValidationTable};
 pub use ids::{
     DfaStateId, NonterminalId, ParserStateId, ProductionId, SequenceId, TerminalId, TokenId,

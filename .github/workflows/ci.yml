@@ -4,16 +4,129 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   rust:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@1.98.0
         with:
           components: rustfmt, clippy
       - run: cargo fmt --all -- --check
       - run: cargo clippy --workspace --all-targets --all-features -- -D warnings
-      - run: cargo test --workspace --all-targets
+      - run: cargo test --workspace --all-targets --all-features
+      - run: cargo doc --workspace --no-deps --all-features
+        env:
+          RUSTDOCFLAGS: -D warnings
+      - run: scripts/conformance-oracle.sh
+      - run: scripts/leak-check.sh
+      - run: scripts/benchmark-python.sh --self-test
+      - run: scripts/benchmark-compare.sh --self-test
       - run: python3 scripts/check-publication-metadata.py
+
+  fuzz:
+    name: Bounded normalized-input fuzz smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          toolchain: nightly-2026-06-01
+          components: rustfmt, clippy
+      - name: Check fuzz-target formatting
+        run: cargo +nightly-2026-06-01 fmt --manifest-path fuzz/Cargo.toml -- --check
+      - name: Lint fuzz target
+        run: cargo +nightly-2026-06-01 clippy --manifest-path fuzz/Cargo.toml --all-targets --all-features -- -D warnings
+      - name: Install pinned cargo-fuzz
+        run: cargo install cargo-fuzz --version 0.13.2 --locked
+      - name: Run deterministic bounded fuzz smoke
+        env:
+          FUZZ_RUNS: "1000"
+          FUZZ_MAX_LEN: "2048"
+          FUZZ_SEED: "424242"
+          FUZZ_TIMEOUT_SECONDS: "5"
+        run: scripts/fuzz-smoke.sh
+
+  python:
+    name: Python ${{ matrix.python-version }} / ${{ matrix.os }} / Transformers=${{ matrix.transformers }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python-version: "3.10"
+            transformers: true
+          - os: ubuntu-latest
+            python-version: "3.14"
+            transformers: false
+          - os: macos-latest
+            python-version: "3.10"
+            transformers: false
+          - os: macos-latest
+            python-version: "3.14"
+            transformers: false
+          - os: windows-latest
+            python-version: "3.10"
+            transformers: false
+          - os: windows-latest
+            python-version: "3.14"
+            transformers: false
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: astral-sh/setup-uv@v10.0.1
+        with:
+          version: "0.11.7"
+          enable-cache: true
+      - uses: dtolnay/rust-toolchain@1.98.0
+      - name: Sync base test environment
+        if: ${{ matrix.transformers == false }}
+        run: uv sync --locked --group dev --no-install-project --python ${{ matrix.python-version }}
+      - name: Sync optional Transformers environment
+        if: ${{ matrix.transformers }}
+        run: uv sync --locked --group dev --extra transformers --no-install-project --python ${{ matrix.python-version }}
+      - run: uv run --frozen --no-sync --python ${{ matrix.python-version }} maturin develop --release --features panic-test-hook
+      - run: uv run --frozen --no-sync --python ${{ matrix.python-version }} pytest tests/python -q
+      - run: uv run --frozen --no-sync --python ${{ matrix.python-version }} pyright
+
+  package:
+    name: Host abi3 wheel and sdist / ${{ matrix.os }}
+    needs: [rust, fuzz, python]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - uses: astral-sh/setup-uv@v10.0.1
+        with:
+          version: "0.11.7"
+          enable-cache: true
+      - uses: dtolnay/rust-toolchain@1.98.0
+      - name: Build and smoke-test distributions
+        shell: bash
+        env:
+          PACKAGE_CHECK_DIR: package-check-output
+          PYTHON: python
+        run: scripts/package-check.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: greatgramma-${{ runner.os }}-distributions
+          path: package-check-output/dist/*
+          if-no-files-found: error

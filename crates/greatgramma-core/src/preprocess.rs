@@ -4,7 +4,7 @@ use crate::{
 };
 
 use crate::lalr::{
-    RunOutcome, RunStatus, execute_terminals_symbolic,
+    RunDecision, RunStatus, execute_terminals_symbolic,
     execute_terminals_symbolic_checked_with_limit,
 };
 use crate::token_step::{WorkBudget, check_items, prepared_vec};
@@ -55,52 +55,97 @@ pub fn classify_sequence_head(
         return Err(ParserError::EmptySequenceHead);
     }
     let initial_stack = [state];
-    let outcome = execute_terminals_symbolic(grammar.lalr(), &initial_stack, sequence_head)?;
-    Ok(classify_outcome(outcome))
+    let decision = execute_terminals_symbolic(grammar.lalr(), &initial_stack, sequence_head)?;
+    Ok(classify_decision(decision))
 }
 
 /// Builds the direct parser-state by interned-sequence classification table.
 /// Logical rows and classification cells both count toward preparation limits.
 pub fn prepare_parser(
     grammar: &ValidatedGrammar,
-    spanner: &PreparedSpanner,
+    prepared_spanner: &PreparedSpanner,
     limits: PreparationLimits,
+) -> Result<PreparedParser, PreparationError> {
+    let mut work = WorkBudget::new(limits);
+    prepare_parser_with_budget(grammar, prepared_spanner, limits, &mut work)
+}
+
+pub(crate) fn prepare_parser_with_budget(
+    grammar: &ValidatedGrammar,
+    prepared_spanner: &PreparedSpanner,
+    limits: PreparationLimits,
+    work: &mut WorkBudget,
 ) -> Result<PreparedParser, PreparationError> {
     let state_count = usize::try_from(grammar.lalr().state_count())
         .map_err(|_| PreparationError::InvariantViolation)?;
-    let sequence_count = spanner.sequence_count();
+    let sequence_count = prepared_spanner.sequence_count();
     let table_items = state_count
         .checked_mul(sequence_count)
         .and_then(|cells| cells.checked_add(state_count));
     check_items(table_items, limits)?;
 
-    let mut work = WorkBudget::new(limits);
     work.charge(state_count)?;
     let mut rows = prepared_vec(state_count)?;
+    let mut error = None;
     let mut state_index = 0_usize;
-    while state_index < state_count {
-        let state = ParserStateId::new(
-            u32::try_from(state_index).map_err(|_| PreparationError::InvariantViolation)?,
-        );
-        let mut row = prepared_vec(sequence_count)?;
-        let mut sequence_index = 0_usize;
-        while sequence_index < sequence_count {
-            let sequence = SequenceId::new(
-                u32::try_from(sequence_index).map_err(|_| PreparationError::InvariantViolation)?,
-            );
-            let head = spanner
-                .sequence(sequence)
-                .ok_or(PreparationError::InvariantViolation)?;
-            let classification =
-                classify_sequence_head_with_budget(grammar, state, head, &mut work)?;
-            row.push(classification);
-            sequence_index += 1;
-        }
-        rows.push(row);
+    while state_index < state_count && error.is_none() {
+        error = match u32::try_from(state_index) {
+            Ok(raw_state) => {
+                let state = ParserStateId::new(raw_state);
+                match prepare_parser_row(grammar, prepared_spanner, state, sequence_count, work) {
+                    Ok(row) => {
+                        rows.push(row);
+                        None
+                    }
+                    Err(row_error) => Some(row_error),
+                }
+            }
+            Err(_) => Some(PreparationError::InvariantViolation),
+        };
         state_index += 1;
     }
 
-    Ok(PreparedParser { rows })
+    match error {
+        Some(error) => Err(error),
+        None => Ok(PreparedParser { rows }),
+    }
+}
+
+fn prepare_parser_row(
+    grammar: &ValidatedGrammar,
+    prepared_spanner: &PreparedSpanner,
+    state: ParserStateId,
+    sequence_count: usize,
+    work: &mut WorkBudget,
+) -> Result<Vec<SequenceClassification>, PreparationError> {
+    let mut row = prepared_vec(sequence_count)?;
+    let mut error = None;
+    let mut sequence_index = 0_usize;
+    while sequence_index < sequence_count && error.is_none() {
+        error = match u32::try_from(sequence_index) {
+            Ok(raw_sequence) => {
+                let sequence = SequenceId::new(raw_sequence);
+                match prepared_spanner.sequence(sequence) {
+                    Some(head) => {
+                        match classify_sequence_head_with_budget(grammar, state, head, work) {
+                            Ok(classification) => {
+                                row.push(classification);
+                                None
+                            }
+                            Err(classification_error) => Some(classification_error),
+                        }
+                    }
+                    None => Some(PreparationError::InvariantViolation),
+                }
+            }
+            Err(_) => Some(PreparationError::InvariantViolation),
+        };
+        sequence_index += 1;
+    }
+    match error {
+        Some(error) => Err(error),
+        None => Ok(row),
+    }
 }
 
 fn classify_sequence_head_with_budget(
@@ -123,11 +168,11 @@ fn classify_sequence_head_with_budget(
     .map_err(map_parser_preparation_error)?;
     match status {
         RunStatus::Complete {
-            outcome,
+            decision,
             work: inspected,
         } => {
             work.charge(inspected)?;
-            Ok(classify_outcome(outcome))
+            Ok(classify_decision(decision))
         }
         RunStatus::WorkLimitExceeded { required } => match work.charge(required) {
             Err(error) => Err(error),
@@ -136,13 +181,11 @@ fn classify_sequence_head_with_budget(
     }
 }
 
-fn classify_outcome(outcome: RunOutcome) -> SequenceClassification {
-    match outcome {
-        RunOutcome::Rejected => SequenceClassification::Rejected,
-        RunOutcome::Dependent => SequenceClassification::Dependent,
-        RunOutcome::Continue { .. } | RunOutcome::Accepted => {
-            SequenceClassification::AlwaysReadable
-        }
+fn classify_decision(decision: RunDecision) -> SequenceClassification {
+    match decision {
+        RunDecision::Rejected => SequenceClassification::Rejected,
+        RunDecision::Dependent => SequenceClassification::Dependent,
+        RunDecision::Continue | RunDecision::Accepted => SequenceClassification::AlwaysReadable,
     }
 }
 

@@ -1,0 +1,8 @@
+# Every deliberate semantic mutation must change its named fixture trace.
+mutation	witness
+drop-boundary-reconsume	boundary_reconsume_first_eos
+drop-eos-flush	boundary_reconsume_first_eos
+only-first-eos	boundary_reconsume_second_eos
+accept-clean-eos	clean_first_eos
+nul-terminator	nul_byte_token
+utf8-lossy	non_utf8_byte_token
