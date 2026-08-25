@@ -22,12 +22,12 @@ Masks, allowance queries, and atomic advancement share the same token and
 parser relations. Empty legal sets and invariant failures are errors, never a
 request to decode without constraints.
 
-The compiler is implemented but remains outside the theorem. It uses derivre
-to build a restricted priority-labeled byte DFA, parses source with cfgrammar,
-and uses an owned bounded conflict-free SLR(1) table generator. It lowers the
-result into the core's normalized ranked LALR schema. The compiler must fail
-closed on unsupported source features; core validation does not make compiler
-semantic correctness part of the theorem.
+The compiler is implemented but remains outside the theorem. It uses
+llguidance's derivre-backed `RegexVec` to build a restricted priority-labeled
+byte DFA, parses source with cfgrammar, and uses lrtable's Pager LALR generator.
+It lowers those library outputs into the core's normalized ranked schema. The
+compiler must fail closed on unsupported source features; core validation does
+not make compiler semantic correctness part of the theorem.
 
 The PyO3 module, Python facade, tokenizer-manifest provenance, Torch mask
 expansion, Transformers mode checks, packaging, and serialization are also

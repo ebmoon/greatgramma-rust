@@ -3,11 +3,16 @@ use greatgramma_core::{
 };
 
 use crate::{
-    CompileError, SourceGrammar, TokenizerManifest, dfa::build_product_dfa, grammar::parse_source,
+    CompileError, SourceGrammar, TokenizerManifest, dfa::build_lexer_dfa, grammar::parse_source,
     lr::lower_lalr, regex::compile_regexes, tokenizer::normalize_manifest,
 };
 
-/// Resource limits for compiler-owned tables and core validation/preparation.
+/// Resource limits for compiler-owned outputs and core validation/preparation.
+///
+/// The source and grammar-dimension limits are checked before invoking third-party
+/// generators. `lrtable` does not expose cancellable Pager construction, so parser
+/// state, cell, and work limits are enforced when its generated tables are copied
+/// into the normalized representation, not while `lrtable` builds its temporaries.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct CompileLimits {
     pub validation: ValidationLimits,
@@ -18,10 +23,10 @@ pub struct CompileLimits {
     pub max_ignored_terminals: usize,
     /// Total pattern bytes across all terminal specifications.
     pub max_regex_bytes: usize,
-    /// Total memory reported by the compiled `derivre` regexes.
+    /// Total memory reported by the compiled llguidance/derivre regex vector.
     pub max_regex_output_bytes: usize,
     pub max_dfa_states: usize,
-    /// Shared `derivre` work budget across every terminal, not a per-regex budget.
+    /// Shared regex-construction budget across every terminal.
     pub max_regex_fuel: u64,
 }
 
@@ -51,7 +56,7 @@ pub fn normalize(
     let tokens = normalize_manifest(tokenizer, limits.validation)?;
     let parsed = parse_source(source, limits.max_terminal_specs)?;
     let lalr = lower_lalr(&parsed, limits.validation)?;
-    let lexer = build_product_dfa(
+    let lexer = build_lexer_dfa(
         compile_regexes(
             parsed.terminals,
             limits.max_regex_fuel,

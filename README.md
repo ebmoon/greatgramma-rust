@@ -17,10 +17,9 @@ or completeness theorem has been proved. See the
 - `greatgramma-core`: dependency-free, `unsafe`-free normalized-table
   validation, lexer/token composition, LALR execution, preprocessing, packed
   masks, and atomic fixed-row advancement.
-- `greatgramma-compile`: action-free original-Yacc parsing, bounded byte-regex
-  product-DFA generation with `derivre`, an owned bounded conflict-free SLR(1)
-  table generator over `cfgrammar` grammars, and exact token-manifest
-  normalization.
+- `greatgramma-compile`: action-free original-Yacc parsing, shared compressed
+  byte-regex vectors through `llguidance`/`derivre`, Pager LALR table generation
+  through `lrtable`, and exact token-manifest normalization.
 - `greatgramma`: a typed Python facade and private PyO3 module, plus a strict
   fixed-row Transformers-compatible processor. Torch is imported only when a
   mask is applied.

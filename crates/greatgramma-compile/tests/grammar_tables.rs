@@ -28,6 +28,23 @@ fn item_close_tokens() -> TokenizerManifest {
     ])
 }
 
+fn many_distinct_terminals(count: usize) -> SourceGrammar {
+    let names = (0..count)
+        .map(|index| format!("T{index:03}"))
+        .collect::<Vec<_>>();
+    let yacc = format!(
+        "%start S\n%token {}\n%%\nS: {};\n",
+        names.join(" "),
+        names[0]
+    );
+    let terminals = names
+        .into_iter()
+        .enumerate()
+        .map(|(index, name)| terminal(&name, &format!("x{index:03}"), 0))
+        .collect();
+    source(&yacc, terminals)
+}
+
 fn compile_error(source: SourceGrammar, limits: CompileLimits) -> CompileError {
     match compile(source, item_close_tokens(), limits) {
         Ok(_) => panic!("compilation unexpectedly succeeded"),
@@ -175,16 +192,116 @@ fn rejects_equal_priority_overlap_and_dfa_growth() {
 
 #[test]
 fn enforces_dfa_cell_limit_during_normalization() {
+    let probe = normalize(
+        item_close_source(),
+        item_close_tokens(),
+        CompileLimits::default(),
+    )
+    .expect("normalize")
+    .validate(CompileLimits::default().validation)
+    .expect("validate");
+    let required = u64::from(probe.lexer().state_count())
+        .saturating_mul(u64::from(probe.lexer().class_count()));
     let mut limits = CompileLimits::default();
-    limits.validation.max_dfa_cells = 255;
+    limits.validation.max_dfa_cells = required - 1;
 
     assert_eq!(
         normalize(item_close_source(), item_close_tokens(), limits).unwrap_err(),
         CompileError::Validation(ValidationError::LimitExceeded {
             limit: LimitKind::DfaCells,
-            actual: 256,
-            maximum: 255,
+            actual: required,
+            maximum: required - 1,
         })
+    );
+
+    limits.validation.max_dfa_cells = required;
+    assert!(normalize(item_close_source(), item_close_tokens(), limits).is_ok());
+}
+
+#[test]
+fn exports_shared_compressed_lexer_byte_classes() {
+    let range = source(
+        "%start S\n%token RANGE\n%%\nS: RANGE;\n",
+        vec![terminal("RANGE", "[a-c]", 0)],
+    );
+    let tokens = TokenizerManifest::new(vec![
+        TokenSpec::Bytes(b"a".to_vec()),
+        TokenSpec::Bytes(b"b".to_vec()),
+        TokenSpec::Bytes(b"c".to_vec()),
+        TokenSpec::Eos,
+    ]);
+    let grammar = normalize(range.clone(), tokens.clone(), CompileLimits::default())
+        .expect("normalize")
+        .validate(CompileLimits::default().validation)
+        .expect("validate");
+    let lexer = grammar.lexer();
+
+    assert!(lexer.class_count() < 256);
+    assert_eq!(lexer.byte_class(b'a'), lexer.byte_class(b'b'));
+    assert_eq!(lexer.byte_class(b'b'), lexer.byte_class(b'c'));
+
+    let prepared = compile(range, tokens, CompileLimits::default()).expect("compile byte range");
+    let mut matcher = prepared.into_matcher(3).expect("matcher rows");
+    for (row, token) in [0_u32, 1, 2].into_iter().enumerate() {
+        assert_eq!(
+            matcher
+                .advance(row, TokenId::new(token))
+                .expect("range byte"),
+            AdvanceResult::Continue
+        );
+        assert_eq!(
+            matcher.advance(row, TokenId::new(3)).expect("eos"),
+            AdvanceResult::Accepted
+        );
+    }
+}
+
+#[test]
+fn checks_regex_output_limit_before_dfa_work_budget_exhaustion() {
+    let long_regex = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "a{100}", 0)],
+    );
+    let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(vec![b'a'; 100]), TokenSpec::Eos]);
+    let limits = CompileLimits {
+        max_regex_output_bytes: 0,
+        validation: greatgramma_core::ValidationLimits {
+            max_work: 100,
+            ..CompileLimits::default().validation
+        },
+        ..CompileLimits::default()
+    };
+
+    let result = normalize(long_regex, tokens, limits);
+    assert!(
+        matches!(
+            result,
+            Err(CompileError::RegexOutputLimit {
+                required,
+                maximum: 0,
+            }) if required > 0
+        ),
+        "expected regex output limit, got {result:?}"
+    );
+}
+
+#[test]
+fn meters_linear_lexeme_registration_scans() {
+    let limits = CompileLimits {
+        max_regex_fuel: 4_000,
+        ..CompileLimits::default()
+    };
+
+    let result = normalize(many_distinct_terminals(96), item_close_tokens(), limits);
+    assert!(
+        matches!(
+            result,
+            Err(CompileError::CompilerWorkLimit {
+                required,
+                maximum: 4_000,
+            }) if required > 4_000
+        ),
+        "expected lexeme-registration work limit, got {result:?}"
     );
 }
 
@@ -196,14 +313,14 @@ fn enforces_dfa_work_limit_during_normalization() {
     );
     let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(vec![b'a'; 100]), TokenSpec::Eos]);
     let mut limits = CompileLimits::default();
-    limits.validation.max_work = 10_000;
+    limits.validation.max_work = 100;
 
     assert!(matches!(
         normalize(long_product, tokens, limits).unwrap_err(),
         CompileError::CompilerWorkLimit {
             required,
-            maximum: 10_000,
-        } if required > 10_000
+            maximum: 100,
+        } if required > 100
     ));
 }
 
@@ -255,6 +372,64 @@ fn rejects_lalr_conflicts_and_precedence_declarations() {
             feature: "precedence declarations".to_owned(),
         }
     );
+}
+
+#[test]
+fn maps_accept_reduce_conflicts_to_grammar_conflict() {
+    let recursive_start = source(
+        "%start S\n%token A\n%%\nS: S | A;\n",
+        vec![terminal("A", "a", 0)],
+    );
+
+    assert_eq!(
+        compile_error(recursive_start, CompileLimits::default()),
+        CompileError::GrammarConflict {
+            shift_reduce: 1,
+            reduce_reduce: 0,
+        }
+    );
+}
+
+#[test]
+fn accepts_lalr_grammar_that_is_not_slr() {
+    let grammar = source(
+        "%start S\n%token A B C D\n%%\nS: N A | B N C | D C | B D A;\nN: D;\n",
+        vec![
+            terminal("A", "a", 0),
+            terminal("B", "b", 0),
+            terminal("C", "c", 0),
+            terminal("D", "d", 0),
+        ],
+    );
+    let tokens = TokenizerManifest::new(vec![
+        TokenSpec::Bytes(b"a".to_vec()),
+        TokenSpec::Bytes(b"b".to_vec()),
+        TokenSpec::Bytes(b"c".to_vec()),
+        TokenSpec::Bytes(b"d".to_vec()),
+        TokenSpec::Eos,
+    ]);
+
+    let prepared = compile(grammar, tokens, CompileLimits::default())
+        .expect("Pager LALR accepts a grammar whose SLR follow set conflicts");
+    let sequences: [&[u32]; 4] = [&[3, 0], &[3, 2], &[1, 3, 2], &[1, 3, 0]];
+    let mut matcher = prepared
+        .into_matcher(sequences.len())
+        .expect("matcher rows");
+
+    for (row, sequence) in sequences.into_iter().enumerate() {
+        for &token in sequence {
+            assert_eq!(
+                matcher
+                    .advance(row, TokenId::new(token))
+                    .expect("grammar token"),
+                AdvanceResult::Continue
+            );
+        }
+        assert_eq!(
+            matcher.advance(row, TokenId::new(4)).expect("eos"),
+            AdvanceResult::Accepted
+        );
+    }
 }
 
 #[test]
@@ -348,7 +523,7 @@ fn accepts_literal_anchor_characters_but_rejects_assertions() {
 }
 
 #[test]
-fn enforces_parser_cell_and_work_limits_during_state_construction() {
+fn enforces_parser_cell_and_work_limits_when_lowering_generated_tables() {
     let mut cell_limits = CompileLimits::default();
     cell_limits.validation.max_parser_cells = 1;
     assert_eq!(
@@ -405,7 +580,7 @@ fn computes_follow_through_nullable_suffixes() {
         TokenSpec::Eos,
     ]);
     let prepared = compile(nullable_suffix, tokens, CompileLimits::default())
-        .expect("SLR follow sets include FIRST after nullable symbols");
+        .expect("Pager LALR handles a nullable suffix");
     let mut matcher = prepared.into_matcher(1).expect("matcher");
     assert_eq!(
         matcher.allows(0, greatgramma_core::TokenId::new(0)),
@@ -436,6 +611,23 @@ fn resolves_priority_and_accepts_declared_parser_noop_terminals() {
     );
     let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(b"if".to_vec()), TokenSpec::Eos]);
     assert!(compile(priority, tokens, CompileLimits::default()).is_ok());
+
+    let aliases = source(
+        "%start S\n%token WINNER LOSER\n%%\nS: WINNER;\n",
+        vec![terminal("WINNER", "x", 0), terminal("LOSER", "[x]", 1)],
+    );
+    let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(b"x".to_vec()), TokenSpec::Eos]);
+    let prepared = compile(aliases, tokens, CompileLimits::default())
+        .expect("deduplicated regex aliases retain explicit priority");
+    let mut matcher = prepared.into_matcher(1).expect("matcher");
+    assert_eq!(
+        matcher.advance(0, TokenId::new(0)).expect("winner"),
+        AdvanceResult::Continue
+    );
+    assert_eq!(
+        matcher.advance(0, TokenId::new(1)).expect("eos"),
+        AdvanceResult::Accepted
+    );
 
     let ignored = source(
         "%start S\n%token ITEM SPACE\n%%\nS: ITEM;\n",
@@ -541,15 +733,22 @@ fn enforces_aggregate_regex_source_output_and_work_limits() {
         max_regex_output_bytes: 0,
         ..CompileLimits::default()
     };
-    let output_required = match normalize(one.clone(), item_close_tokens(), output_probe) {
-        Err(CompileError::RegexOutputLimit {
-            required,
-            maximum: 0,
-        }) => required,
-        result => panic!("expected regex output limit, got {result:?}"),
-    };
-    output_probe.max_regex_output_bytes = output_required;
-    assert!(normalize(one.clone(), item_close_tokens(), output_probe).is_ok());
+    let mut output_required = None;
+    for _ in 0..32 {
+        match normalize(one.clone(), item_close_tokens(), output_probe) {
+            Ok(_) => {
+                output_required = Some(output_probe.max_regex_output_bytes);
+                break;
+            }
+            Err(CompileError::RegexOutputLimit { required, maximum }) => {
+                assert_eq!(maximum, output_probe.max_regex_output_bytes);
+                assert!(required > maximum);
+                output_probe.max_regex_output_bytes = required;
+            }
+            result => panic!("expected regex output limit or success, got {result:?}"),
+        }
+    }
+    let output_required = output_required.expect("regex output boundary converges");
     assert!(matches!(
         normalize(two.clone(), item_close_tokens(), output_probe),
         Err(CompileError::RegexOutputLimit {
@@ -562,15 +761,22 @@ fn enforces_aggregate_regex_source_output_and_work_limits() {
         max_regex_fuel: 0,
         ..CompileLimits::default()
     };
-    let work_required = match normalize(one.clone(), item_close_tokens(), work_probe) {
-        Err(CompileError::CompilerWorkLimit {
-            required,
-            maximum: 0,
-        }) => required,
-        result => panic!("expected regex work limit, got {result:?}"),
-    };
-    work_probe.max_regex_fuel = work_required;
-    assert!(normalize(one, item_close_tokens(), work_probe).is_ok());
+    let mut work_required = None;
+    for _ in 0..32 {
+        match normalize(one.clone(), item_close_tokens(), work_probe) {
+            Ok(_) => {
+                work_required = Some(work_probe.max_regex_fuel);
+                break;
+            }
+            Err(CompileError::CompilerWorkLimit { required, maximum }) => {
+                assert_eq!(maximum, work_probe.max_regex_fuel);
+                assert!(required > maximum);
+                work_probe.max_regex_fuel = required;
+            }
+            result => panic!("expected regex work limit or success, got {result:?}"),
+        }
+    }
+    let work_required = work_required.expect("regex work boundary converges");
     assert!(matches!(
         normalize(two, item_close_tokens(), work_probe),
         Err(CompileError::CompilerWorkLimit {

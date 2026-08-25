@@ -19,7 +19,8 @@ Rust versions are locked in `Cargo.lock`.
 | Package | Version | Upstream license | Used by |
 |---|---:|---|---|
 | [cfgrammar](https://crates.io/crates/cfgrammar) | 0.15.0 | Apache-2.0/MIT | `greatgramma-compile` |
-| [derivre](https://crates.io/crates/derivre) | 0.3.12 | MIT | `greatgramma-compile` |
+| [llguidance](https://crates.io/crates/llguidance) | 1.8.0 | MIT | `greatgramma-compile` |
+| [lrtable](https://crates.io/crates/lrtable) | 0.15.0 | Apache-2.0/MIT | `greatgramma-compile` |
 | [serde_json](https://crates.io/crates/serde_json) | 1.0.151 | MIT OR Apache-2.0 | `greatgramma-compile` |
 | [pyo3](https://crates.io/crates/pyo3) | 0.29.0 | MIT OR Apache-2.0 | `greatgramma-python` |
 | [libfuzzer-sys](https://crates.io/crates/libfuzzer-sys) | 0.4.13 | MIT OR Apache-2.0 | bounded development fuzz target only |
@@ -40,16 +41,21 @@ linked into every build.
 | bytemuck | 1.25.2 | Zlib OR Apache-2.0 OR MIT |
 | bytemuck_derive | 1.12.0 | Zlib OR Apache-2.0 OR MIT |
 | cfg-if | 1.0.4 | MIT OR Apache-2.0 |
+| derivre | 0.3.12 | MIT |
 | equivalent | 1.0.2 | Apache-2.0 OR MIT |
+| fnv | 1.0.7 | Apache-2.0 OR MIT |
 | getrandom | 0.3.4 | MIT OR Apache-2.0 |
 | hashbrown | 0.17.1 | MIT OR Apache-2.0 |
 | heck | 0.5.0 | MIT OR Apache-2.0 |
 | indexmap | 2.14.0 | Apache-2.0 OR MIT |
 | itoa | 1.0.18 | MIT OR Apache-2.0 |
 | libc | 0.2.189 | MIT OR Apache-2.0 |
+| llguidance | 1.8.0 | MIT |
+| lrtable | 0.15.0 | Apache-2.0 OR MIT |
 | memchr | 2.8.3 | Unlicense OR MIT |
 | num-traits | 0.2.19 | MIT OR Apache-2.0 |
 | once_cell | 1.21.4 | MIT OR Apache-2.0 |
+| packedvec | 2.0.0 | Apache-2.0 OR MIT |
 | portable-atomic | 1.15.0 | Apache-2.0 OR MIT |
 | proc-macro2 | 1.0.107 | MIT OR Apache-2.0 |
 | pyo3-build-config | 0.29.0 | MIT OR Apache-2.0 |
@@ -64,11 +70,13 @@ linked into every build.
 | serde | 1.0.229 | MIT OR Apache-2.0 |
 | serde_core | 1.0.229 | MIT OR Apache-2.0 |
 | serde_derive | 1.0.229 | MIT OR Apache-2.0 |
+| sparsevec | 0.3.0 | Apache-2.0 OR MIT |
 | strum | 0.28.0 | MIT |
 | strum_macros | 0.28.0 | MIT |
 | syn | 2.0.119 | MIT OR Apache-2.0 |
 | syn | 3.0.4 | MIT OR Apache-2.0 |
 | target-lexicon | 0.13.5 | Apache-2.0 WITH LLVM-exception |
+| toktrie | 1.8.0 | MIT |
 | unicode-ident | 1.0.24 | (MIT OR Apache-2.0) AND Unicode-3.0 |
 | version_check | 0.9.5 | MIT/Apache-2.0 |
 | vob | 4.0.0 | Apache-2.0/MIT |
@@ -109,14 +117,15 @@ They are not source dependencies unless also listed above.
 | Project | Frozen source | Upstream license and attribution | Role |
 |---|---|---|---|
 | GreatGramma | [commit `4c21981386fc6d457efa381d1eb1863623d50fa1`](https://github.com/large-loris-models/greatgramma/commit/4c21981386fc6d457efa381d1eb1863623d50fa1) | MIT; Copyright (c) 2024 Kanghee Park ([license](https://github.com/large-loris-models/greatgramma/blob/4c21981386fc6d457efa381d1eb1863623d50fa1/LICENSE)) | Behavioral reference |
-| llguidance | [commit `c75b0d90e12c941b881566e0a77bb5fa24cd2731`](https://github.com/guidance-ai/llguidance/commit/c75b0d90e12c941b881566e0a77bb5fa24cd2731) | MIT; Copyright (c) Microsoft Corporation ([license](https://github.com/guidance-ai/llguidance/blob/c75b0d90e12c941b881566e0a77bb5fa24cd2731/LICENSE)) | Implementation reference |
+| llguidance | [commit `c75b0d90e12c941b881566e0a77bb5fa24cd2731`](https://github.com/guidance-ai/llguidance/commit/c75b0d90e12c941b881566e0a77bb5fa24cd2731) | MIT; Copyright (c) Microsoft Corporation ([license](https://github.com/guidance-ai/llguidance/blob/c75b0d90e12c941b881566e0a77bb5fa24cd2731/LICENSE)) | Compiler dependency and implementation reference |
 | constrained-decoding-formalization | [commit `112af02fa29b3e50c1048c36b4b8d18975dee102`](https://github.com/ucsd-formal/constrained-decoding-formalization/commit/112af02fa29b3e50c1048c36b4b8d18975dee102) | Apache-2.0; Copyright 2026 Arnav Dandu ([license](https://github.com/ucsd-formal/constrained-decoding-formalization/blob/112af02fa29b3e50c1048c36b4b8d18975dee102/LICENSE)) | Formal-specification reference |
 | Aeneas | [commit `5d08da45a405913bbee6fd544e01debf8154ac9d`](https://github.com/AeneasVerif/aeneas/commit/5d08da45a405913bbee6fd544e01debf8154ac9d) | Apache-2.0 ([license](https://github.com/AeneasVerif/aeneas/blob/5d08da45a405913bbee6fd544e01debf8154ac9d/LICENSE.md)) | Future Rust-to-Lean translation tool |
 | Charon | [commit `f5208b1c4ce287898a1fc015d41a20da3baf0974`](https://github.com/AeneasVerif/charon/commit/f5208b1c4ce287898a1fc015d41a20da3baf0974) | Apache-2.0 ([license](https://github.com/AeneasVerif/charon/blob/f5208b1c4ce287898a1fc015d41a20da3baf0974/LICENSE.md)) | Future Rust extraction tool |
 
 ## derivre version and reference revision
 
-The build uses the crates.io `derivre` 0.3.12 release. Its `v0.3.12` tag is
+The build uses the crates.io `derivre` 0.3.12 release transitively through
+llguidance. Its `v0.3.12` tag is
 [commit `f5a4d66a0e2f177304f570a6f2e87f447b4d7808`](https://github.com/guidance-ai/derivre/commit/f5a4d66a0e2f177304f570a6f2e87f447b4d7808).
 During design, the project also inspected
 [commit `60ddc2be07a84c323f979556e2fd698cf38ad56d`](https://github.com/guidance-ai/derivre/commit/60ddc2be07a84c323f979556e2fd698cf38ad56d),

@@ -8,8 +8,9 @@ publish = false
 
 [dependencies]
 cfgrammar = "=0.15.0"
-derivre = "=0.3.12"
 greatgramma-core = { path = "../greatgramma-core" }
+llguidance = { version = "=1.8.0", default-features = false, features = ["ahash"] }
+lrtable = "=0.15.0"
 regex-syntax = "=0.8.11"
 serde_json = "=1.0.151"
 
