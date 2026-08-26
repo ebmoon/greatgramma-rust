@@ -578,6 +578,13 @@
       "can_diverge": false,
       "status": "unproved"
     },
+    "GreatgrammaCore.engine.reserved_vec_after_clear": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
     "GreatgrammaCore.engine.running_lexer": {
       "kind": "function",
       "is_opaque": false,
@@ -651,7 +658,8 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.engine.stage_batch",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.stageBatchLoopTotal"
     },
     "GreatgrammaCore.engine.stage_batch_row": {
       "kind": "function",
@@ -854,14 +862,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.dfaStateIdGet_spec"
     },
     "GreatgrammaCore.ids.DfaStateId.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.dfaStateIdNew_spec"
     },
     "GreatgrammaCore.ids.NonterminalId.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -910,14 +920,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.nonterminalIdGet_spec"
     },
     "GreatgrammaCore.ids.NonterminalId.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.nonterminalIdNew_spec"
     },
     "GreatgrammaCore.ids.ParserStateId.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -966,14 +978,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.parserStateIdGet_spec"
     },
     "GreatgrammaCore.ids.ParserStateId.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.parserStateIdNew_spec"
     },
     "GreatgrammaCore.ids.ProductionId.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -1022,14 +1036,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionIdGet_spec"
     },
     "GreatgrammaCore.ids.ProductionId.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionIdNew_spec"
     },
     "GreatgrammaCore.ids.SequenceId.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -1078,14 +1094,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.sequenceIdGet_spec"
     },
     "GreatgrammaCore.ids.SequenceId.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.sequenceIdNew_spec"
     },
     "GreatgrammaCore.ids.TerminalId.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -1134,14 +1152,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.terminalIdGet_spec"
     },
     "GreatgrammaCore.ids.TerminalId.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.terminalIdNew_spec"
     },
     "GreatgrammaCore.ids.TokenId.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -1190,14 +1210,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.tokenIdGet_spec"
     },
     "GreatgrammaCore.ids.TokenId.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.tokenIdNew_spec"
     },
     "GreatgrammaCore.lalr.ParserError.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -1443,7 +1465,8 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.lalr.run_terminal",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.runTerminalLoopRankedTotal"
     },
     "GreatgrammaCore.lalr.run_validated_in_place": {
       "kind": "function",
@@ -1824,28 +1847,32 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsNonterminalCount_spec"
     },
     "GreatgrammaCore.normalized.LalrDimensions.impl.state_count": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsStateCount_spec"
     },
     "GreatgrammaCore.normalized.LalrDimensions.impl.terminal_count": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsTerminalCount_spec"
     },
     "GreatgrammaCore.normalized.LalrDimensions.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsNew_spec"
     },
     "GreatgrammaCore.normalized.LalrTable.Insts.CoreCmpEq.assert_fields_are_eq": {
       "kind": "function",
@@ -1873,14 +1900,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrTableNew_spec"
     },
     "GreatgrammaCore.normalized.LalrTable.with_ignored_terminals": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrTableWithIgnoredTerminals_spec"
     },
     "GreatgrammaCore.normalized.LexerDfa.Insts.CoreCmpEq.assert_fields_are_eq": {
       "kind": "function",
@@ -1908,7 +1937,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lexerDfaNew_spec"
     },
     "GreatgrammaCore.normalized.Production.Insts.CoreCloneClone.clone": {
       "kind": "function",
@@ -1943,21 +1973,24 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionLhs_spec"
     },
     "GreatgrammaCore.normalized.Production.impl.pop_len": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionPopLength_spec"
     },
     "GreatgrammaCore.normalized.Production.new": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionNew_spec"
     },
     "GreatgrammaCore.normalized.TokenEntry.Insts.CoreCmpEq.assert_fields_are_eq": {
       "kind": "function",
@@ -2006,14 +2039,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.unvalidatedGrammarNew_spec"
     },
     "GreatgrammaCore.normalized.UnvalidatedGrammar.validate": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": true,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validationBoundary"
     },
     "GreatgrammaCore.normalized.ValidatedGrammar.Insts.CoreCmpEq.assert_fields_are_eq": {
       "kind": "function",
@@ -2048,35 +2083,40 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarLalr_spec"
     },
     "GreatgrammaCore.normalized.ValidatedGrammar.impl.lexer": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarLexer_spec"
     },
     "GreatgrammaCore.normalized.ValidatedGrammar.impl.token_count": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarTokenCount_spec"
     },
     "GreatgrammaCore.normalized.ValidatedGrammar.impl.tokens": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarTokens_spec"
     },
     "GreatgrammaCore.normalized.ValidatedGrammar.token": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarToken_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.Insts.CoreCmpEq.assert_fields_are_eq": {
       "kind": "function",
@@ -2104,7 +2144,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrAction_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.from_unvalidated": {
       "kind": "function",
@@ -2118,42 +2159,48 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrGoto_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.impl.eof_terminal": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrEofTerminal_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.impl.production_count": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrProductionCount_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.impl.start_state": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrStartState_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.is_ignored": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrIsIgnored_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.nonterminal_count": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrNonterminalCount_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.nonterminal_index": {
       "kind": "function",
@@ -2167,14 +2214,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrProduction_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.state_count": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrStateCount_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.state_index": {
       "kind": "function",
@@ -2188,7 +2237,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrTerminalCount_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLalr.terminal_index": {
       "kind": "function",
@@ -2223,7 +2273,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerByteClass_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLexer.from_unvalidated": {
       "kind": "function",
@@ -2237,21 +2288,24 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerClassCount_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLexer.impl.start_state": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerStartState_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLexer.impl.state_count": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerStateCount_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLexer.state_index": {
       "kind": "function",
@@ -2265,14 +2319,16 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerTerminal_spec"
     },
     "GreatgrammaCore.normalized.ValidatedLexer.transition": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerTransition_spec"
     },
     "GreatgrammaCore.normalized.checked_index": {
       "kind": "function",
@@ -2647,7 +2703,8 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.sequence.propagate_fact",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.propagateFactLoopTotal"
     },
     "GreatgrammaCore.sequence.propagate_facts": {
       "kind": "function",
@@ -3382,7 +3439,8 @@
       "loops": [
         "GreatgrammaCore.validate.build_ignored_terminal_table_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.buildIgnoredTerminalTable_spec"
     },
     "GreatgrammaCore.validate.build_ignored_terminal_table.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorValidationError.call_once": {
       "kind": "function",
@@ -3397,56 +3455,64 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.build_ignored_terminal_table",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.buildIgnoredTerminalTableLoop_spec"
     },
     "GreatgrammaCore.validate.check_length": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.checkLength_spec"
     },
     "GreatgrammaCore.validate.check_limit": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.checkLimit_ok_iff"
     },
     "GreatgrammaCore.validate.checked_add": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.checkedAdd_spec"
     },
     "GreatgrammaCore.validate.checked_len": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.checkedLen_spec"
     },
     "GreatgrammaCore.validate.checked_mul": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.checkedMul_spec"
     },
     "GreatgrammaCore.validate.checked_product": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.checkedProduct_spec"
     },
     "GreatgrammaCore.validate.count_as_usize": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.countAsUsize_ok"
     },
     "GreatgrammaCore.validate.count_as_usize.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
       "kind": "function",
@@ -3460,7 +3526,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.indexAsU32_spec"
     },
     "GreatgrammaCore.validate.index_as_u32.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
       "kind": "function",
@@ -3474,28 +3541,32 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.logicalBytes_spec"
     },
     "GreatgrammaCore.validate.mark_ignored_terminal": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.markIgnoredTerminal_spec"
     },
     "GreatgrammaCore.validate.validate": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": true,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validate_spec"
     },
     "GreatgrammaCore.validate.validate_action": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateAction_ok"
     },
     "GreatgrammaCore.validate.validate_actions": {
       "kind": "function",
@@ -3505,7 +3576,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_actions_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateActions_spec"
     },
     "GreatgrammaCore.validate.validate_actions_loop": {
       "kind": "loop",
@@ -3513,14 +3585,16 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_actions",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateActionsLoop_spec"
     },
     "GreatgrammaCore.validate.validate_byte_class": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateByteClass_ok_iff"
     },
     "GreatgrammaCore.validate.validate_byte_class.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
       "kind": "function",
@@ -3537,7 +3611,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_byte_classes_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateByteClasses_spec"
     },
     "GreatgrammaCore.validate.validate_byte_classes_loop": {
       "kind": "loop",
@@ -3545,21 +3620,24 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_byte_classes",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateByteClassesLoop_spec"
     },
     "GreatgrammaCore.validate.validate_declared_sizes": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": true,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateDeclaredSizes_spec"
     },
     "GreatgrammaCore.validate.validate_goto": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateGoto_ok_iff"
     },
     "GreatgrammaCore.validate.validate_gotos": {
       "kind": "function",
@@ -3569,7 +3647,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_gotos_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateGotos_spec"
     },
     "GreatgrammaCore.validate.validate_gotos_loop": {
       "kind": "loop",
@@ -3577,21 +3656,24 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_gotos",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateGotosLoop_spec"
     },
     "GreatgrammaCore.validate.validate_id": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateId_ok_iff"
     },
     "GreatgrammaCore.validate.validate_ignored_terminal": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateIgnoredTerminal_ok_iff"
     },
     "GreatgrammaCore.validate.validate_ignored_terminals": {
       "kind": "function",
@@ -3601,7 +3683,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_ignored_terminals_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateIgnoredTerminals_spec"
     },
     "GreatgrammaCore.validate.validate_ignored_terminals_loop": {
       "kind": "loop",
@@ -3609,14 +3692,16 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_ignored_terminals",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateIgnoredTerminalsLoop_spec"
     },
     "GreatgrammaCore.validate.validate_lexer_terminal": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateLexerTerminal_ok"
     },
     "GreatgrammaCore.validate.validate_lexer_terminals": {
       "kind": "function",
@@ -3626,7 +3711,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_lexer_terminals_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateLexerTerminals_spec"
     },
     "GreatgrammaCore.validate.validate_lexer_terminals_loop": {
       "kind": "loop",
@@ -3634,7 +3720,8 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_lexer_terminals",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateLexerTerminalsLoop_spec"
     },
     "GreatgrammaCore.validate.validate_productions": {
       "kind": "function",
@@ -3644,7 +3731,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_productions_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateProductions_spec"
     },
     "GreatgrammaCore.validate.validate_productions_loop": {
       "kind": "loop",
@@ -3652,14 +3740,16 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_productions",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateProductionsLoop_spec"
     },
     "GreatgrammaCore.validate.validate_token_entry": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateTokenEntry_ok"
     },
     "GreatgrammaCore.validate.validate_token_entry.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
       "kind": "function",
@@ -3676,7 +3766,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_tokens_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateTokens_ok"
     },
     "GreatgrammaCore.validate.validate_tokens_loop": {
       "kind": "loop",
@@ -3684,14 +3775,16 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_tokens",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateTokensLoop_spec"
     },
     "GreatgrammaCore.validate.validate_transition": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateTransition_ok_iff"
     },
     "GreatgrammaCore.validate.validate_transitions": {
       "kind": "function",
@@ -3701,7 +3794,8 @@
       "loops": [
         "GreatgrammaCore.validate.validate_transitions_loop"
       ],
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateTransitions_spec"
     },
     "GreatgrammaCore.validate.validate_transitions_loop": {
       "kind": "loop",
@@ -3709,21 +3803,24 @@
       "can_fail": true,
       "can_diverge": true,
       "parent": "GreatgrammaCore.validate.validate_transitions",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validateTransitionsLoop_spec"
     },
     "GreatgrammaCore.validate.validation_base_work": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validationBaseWork_spec"
     },
     "GreatgrammaCore.validate.validation_result": {
       "kind": "function",
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validationResult_exact_spec"
     }
   }
 }

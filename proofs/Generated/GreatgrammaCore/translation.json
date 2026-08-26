@@ -4,7 +4,7 @@
   "crate": "greatgramma_core",
   "functions": [
     {
-      "def_id": 164,
+      "def_id": 165,
       "lean_name": "GreatgrammaCore.Usize.Insts.CoreConvertTryFromU32TryFromIntError.try_from",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::convert::num::ptr_try_from_impls::{impl core::convert::TryFrom<u32, core::num::error::TryFromIntError> for usize}::try_from",
@@ -21,7 +21,7 @@
       "reducible": false
     },
     {
-      "def_id": 487,
+      "def_id": 488,
       "lean_name": "GreatgrammaCore.U64.Insts.CoreConvertTryFromUsizeTryFromIntError.try_from",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::convert::num::ptr_try_from_impls::{impl core::convert::TryFrom<usize, core::num::error::TryFromIntError> for u64}::try_from",
@@ -38,7 +38,7 @@
       "reducible": false
     },
     {
-      "def_id": 445,
+      "def_id": 446,
       "lean_name": "GreatgrammaCore.U8.Insts.CoreConvertTryFromU16TryFromIntError.try_from",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::convert::num::{impl core::convert::TryFrom<u16, core::num::error::TryFromIntError> for u8}::try_from",
@@ -55,7 +55,7 @@
       "reducible": false
     },
     {
-      "def_id": 488,
+      "def_id": 489,
       "lean_name": "GreatgrammaCore.U8.Insts.CoreConvertTryFromUsizeTryFromIntError.try_from",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::convert::num::ptr_try_from_impls::{impl core::convert::TryFrom<usize, core::num::error::TryFromIntError> for u8}::try_from",
@@ -72,7 +72,7 @@
       "reducible": false
     },
     {
-      "def_id": 528,
+      "def_id": 529,
       "lean_name": "GreatgrammaCore.core.option.Option.Insts.CoreCloneClone.clone",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{impl core::clone::Clone for core::option::Option<T>}::clone",
@@ -89,7 +89,7 @@
       "reducible": false
     },
     {
-      "def_id": 653,
+      "def_id": 654,
       "lean_name": "GreatgrammaCore.core.option.Option.Insts.CoreFmtDebug.fmt",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{impl core::fmt::Debug for core::option::Option<T>}::fmt",
@@ -106,7 +106,7 @@
       "reducible": false
     },
     {
-      "def_id": 168,
+      "def_id": 169,
       "lean_name": "GreatgrammaCore.core.option.Option.ok_or",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{core::option::Option<T>}::ok_or",
@@ -123,7 +123,7 @@
       "reducible": false
     },
     {
-      "def_id": 167,
+      "def_id": 168,
       "lean_name": "GreatgrammaCore.core.option.Option.and_then",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{core::option::Option<T>}::and_then",
@@ -140,7 +140,7 @@
       "reducible": false
     },
     {
-      "def_id": 474,
+      "def_id": 475,
       "lean_name": "GreatgrammaCore.core.option.Option.filter",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{core::option::Option<T>}::filter",
@@ -157,7 +157,7 @@
       "reducible": false
     },
     {
-      "def_id": 190,
+      "def_id": 191,
       "lean_name": "GreatgrammaCore.core.option.OptionShared0T.copied",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{core::option::Option<&'_0 T>}::copied",
@@ -174,7 +174,7 @@
       "reducible": false
     },
     {
-      "def_id": 191,
+      "def_id": 192,
       "lean_name": "GreatgrammaCore.core.option.Option.Insts.CoreCmpPartialEqOption.eq",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{impl core::cmp::PartialEq<core::option::Option<T>> for core::option::Option<T>}::eq",
@@ -191,7 +191,7 @@
       "reducible": false
     },
     {
-      "def_id": 472,
+      "def_id": 473,
       "lean_name": "GreatgrammaCore.core.option.Option.Insts.CoreOpsTry_traitTry.branch",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{impl core::ops::try_trait::Try for core::option::Option<T>}::branch",
@@ -208,7 +208,7 @@
       "reducible": false
     },
     {
-      "def_id": 473,
+      "def_id": 474,
       "lean_name": "GreatgrammaCore.core.option.Option.Insts.CoreOpsTry_traitFromResidualOptionInfallible.from_residual",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::option::{impl core::ops::try_trait::FromResidual<core::option::Option<core::convert::Infallible>> for core::option::Option<T>}::from_residual",
@@ -225,7 +225,7 @@
       "reducible": false
     },
     {
-      "def_id": 516,
+      "def_id": 517,
       "lean_name": "GreatgrammaCore.core.result.Result.is_err",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::result::{core::result::Result<T, E>}::is_err",
@@ -242,7 +242,7 @@
       "reducible": false
     },
     {
-      "def_id": 425,
+      "def_id": 426,
       "lean_name": "GreatgrammaCore.core.result.Result.ok",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::result::{core::result::Result<T, E>}::ok",
@@ -259,7 +259,7 @@
       "reducible": false
     },
     {
-      "def_id": 208,
+      "def_id": 209,
       "lean_name": "GreatgrammaCore.core.result.Result.err",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::result::{core::result::Result<T, E>}::err",
@@ -276,7 +276,7 @@
       "reducible": false
     },
     {
-      "def_id": 165,
+      "def_id": 166,
       "lean_name": "GreatgrammaCore.core.result.Result.map_err",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::result::{core::result::Result<T, E>}::map_err",
@@ -293,7 +293,7 @@
       "reducible": false
     },
     {
-      "def_id": 335,
+      "def_id": 336,
       "lean_name": "GreatgrammaCore.core.slice.Slice.last",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "core::slice::{[T]}::last",
@@ -310,7 +310,7 @@
       "reducible": false
     },
     {
-      "def_id": 332,
+      "def_id": 333,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.capacity",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::{alloc::vec::Vec<T>}::capacity",
@@ -327,7 +327,7 @@
       "reducible": false
     },
     {
-      "def_id": 475,
+      "def_id": 476,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.try_reserve",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::{alloc::vec::Vec<T>}::try_reserve",
@@ -344,7 +344,7 @@
       "reducible": false
     },
     {
-      "def_id": 333,
+      "def_id": 334,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.try_reserve_exact",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::{alloc::vec::Vec<T>}::try_reserve_exact",
@@ -361,7 +361,7 @@
       "reducible": false
     },
     {
-      "def_id": 330,
+      "def_id": 331,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.truncate",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::{alloc::vec::Vec<T>}::truncate",
@@ -378,7 +378,7 @@
       "reducible": false
     },
     {
-      "def_id": 331,
+      "def_id": 332,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.clear",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::{alloc::vec::Vec<T>}::clear",
@@ -395,7 +395,7 @@
       "reducible": false
     },
     {
-      "def_id": 486,
+      "def_id": 487,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.is_empty",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::{alloc::vec::Vec<T>}::is_empty",
@@ -412,7 +412,7 @@
       "reducible": false
     },
     {
-      "def_id": 572,
+      "def_id": 573,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.Insts.CoreCmpPartialEqSlice.ne",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::partial_eq::{impl core::cmp::PartialEq<[U]> for alloc::vec::Vec<T>}::ne",
@@ -429,7 +429,7 @@
       "reducible": false
     },
     {
-      "def_id": 571,
+      "def_id": 572,
       "lean_name": "GreatgrammaCore.alloc.vec.Vec.Insts.CoreCmpPartialEqSlice.eq",
       "lean_file": "FunsExternal_Template.lean",
       "rust_name": "alloc::vec::partial_eq::{impl core::cmp::PartialEq<[U]> for alloc::vec::Vec<T>}::eq",
@@ -446,7 +446,7 @@
       "reducible": false
     },
     {
-      "def_id": 139,
+      "def_id": 140,
       "lean_name": "GreatgrammaCore.engine.MatcherPhase.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::clone::Clone for greatgramma_core::engine::MatcherPhase}::clone",
@@ -463,7 +463,7 @@
       "reducible": false
     },
     {
-      "def_id": 253,
+      "def_id": 254,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::fmt::Debug for greatgramma_core::ids::DfaStateId}::fmt",
@@ -480,7 +480,7 @@
       "reducible": false
     },
     {
-      "def_id": 337,
+      "def_id": 338,
       "lean_name": "GreatgrammaCore.lexer.LexerState.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::fmt::Debug for greatgramma_core::lexer::LexerState}::fmt",
@@ -497,7 +497,7 @@
       "reducible": false
     },
     {
-      "def_id": 141,
+      "def_id": 142,
       "lean_name": "GreatgrammaCore.engine.MatcherPhase.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::fmt::Debug for greatgramma_core::engine::MatcherPhase}::fmt",
@@ -514,7 +514,7 @@
       "reducible": false
     },
     {
-      "def_id": 256,
+      "def_id": 257,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpPartialEqDfaStateId.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialEq<greatgramma_core::ids::DfaStateId> for greatgramma_core::ids::DfaStateId}::eq",
@@ -531,7 +531,7 @@
       "reducible": false
     },
     {
-      "def_id": 339,
+      "def_id": 340,
       "lean_name": "GreatgrammaCore.lexer.LexerState.Insts.CoreCmpPartialEqLexerState.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::PartialEq<greatgramma_core::lexer::LexerState> for greatgramma_core::lexer::LexerState}::eq",
@@ -548,7 +548,7 @@
       "reducible": false
     },
     {
-      "def_id": 145,
+      "def_id": 146,
       "lean_name": "GreatgrammaCore.engine.MatcherPhase.Insts.CoreCmpPartialEqMatcherPhase.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::PartialEq<greatgramma_core::engine::MatcherPhase> for greatgramma_core::engine::MatcherPhase}::eq",
@@ -565,7 +565,7 @@
       "reducible": false
     },
     {
-      "def_id": 144,
+      "def_id": 145,
       "lean_name": "GreatgrammaCore.engine.MatcherPhase.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::Eq for greatgramma_core::engine::MatcherPhase}::assert_fields_are_eq",
@@ -582,7 +582,7 @@
       "reducible": false
     },
     {
-      "def_id": 269,
+      "def_id": 270,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::fmt::Debug for greatgramma_core::ids::ParserStateId}::fmt",
@@ -599,7 +599,7 @@
       "reducible": false
     },
     {
-      "def_id": 147,
+      "def_id": 148,
       "lean_name": "GreatgrammaCore.engine.MatcherStatus.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::fmt::Debug for greatgramma_core::engine::MatcherStatus}::fmt",
@@ -616,7 +616,7 @@
       "reducible": false
     },
     {
-      "def_id": 272,
+      "def_id": 273,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpPartialEqParserStateId.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialEq<greatgramma_core::ids::ParserStateId> for greatgramma_core::ids::ParserStateId}::eq",
@@ -633,7 +633,7 @@
       "reducible": false
     },
     {
-      "def_id": 149,
+      "def_id": 150,
       "lean_name": "GreatgrammaCore.engine.MatcherStatus.Insts.CoreCmpPartialEqMatcherStatus.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::PartialEq<greatgramma_core::engine::MatcherStatus> for greatgramma_core::engine::MatcherStatus}::eq",
@@ -650,7 +650,7 @@
       "reducible": false
     },
     {
-      "def_id": 148,
+      "def_id": 149,
       "lean_name": "GreatgrammaCore.engine.MatcherStatus.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::Eq for greatgramma_core::engine::MatcherStatus}::assert_fields_are_eq",
@@ -667,7 +667,7 @@
       "reducible": false
     },
     {
-      "def_id": 150,
+      "def_id": 151,
       "lean_name": "GreatgrammaCore.engine.MatcherStatus.empty",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::MatcherStatus}::empty",
@@ -684,7 +684,7 @@
       "reducible": false
     },
     {
-      "def_id": 151,
+      "def_id": 152,
       "lean_name": "GreatgrammaCore.engine.MatcherStatus.set_accepted",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::MatcherStatus}::set_accepted",
@@ -701,7 +701,7 @@
       "reducible": false
     },
     {
-      "def_id": 152,
+      "def_id": 153,
       "lean_name": "GreatgrammaCore.engine.AdvanceResult.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::clone::Clone for greatgramma_core::engine::AdvanceResult}::clone",
@@ -718,7 +718,7 @@
       "reducible": false
     },
     {
-      "def_id": 153,
+      "def_id": 154,
       "lean_name": "GreatgrammaCore.engine.AdvanceResult.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::fmt::Debug for greatgramma_core::engine::AdvanceResult}::fmt",
@@ -735,7 +735,7 @@
       "reducible": false
     },
     {
-      "def_id": 155,
+      "def_id": 156,
       "lean_name": "GreatgrammaCore.engine.AdvanceResult.Insts.CoreCmpPartialEqAdvanceResult.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::PartialEq<greatgramma_core::engine::AdvanceResult> for greatgramma_core::engine::AdvanceResult}::eq",
@@ -752,7 +752,7 @@
       "reducible": false
     },
     {
-      "def_id": 154,
+      "def_id": 155,
       "lean_name": "GreatgrammaCore.engine.AdvanceResult.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::Eq for greatgramma_core::engine::AdvanceResult}::assert_fields_are_eq",
@@ -769,7 +769,7 @@
       "reducible": false
     },
     {
-      "def_id": 156,
+      "def_id": 157,
       "lean_name": "GreatgrammaCore.engine.EngineError.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::clone::Clone for greatgramma_core::engine::EngineError}::clone",
@@ -786,7 +786,7 @@
       "reducible": false
     },
     {
-      "def_id": 234,
+      "def_id": 235,
       "lean_name": "GreatgrammaCore.ids.TokenId.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::fmt::Debug for greatgramma_core::ids::TokenId}::fmt",
@@ -803,7 +803,7 @@
       "reducible": false
     },
     {
-      "def_id": 157,
+      "def_id": 158,
       "lean_name": "GreatgrammaCore.engine.EngineError.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::fmt::Debug for greatgramma_core::engine::EngineError}::fmt",
@@ -820,7 +820,7 @@
       "reducible": false
     },
     {
-      "def_id": 240,
+      "def_id": 241,
       "lean_name": "GreatgrammaCore.ids.TokenId.Insts.CoreCmpPartialEqTokenId.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialEq<greatgramma_core::ids::TokenId> for greatgramma_core::ids::TokenId}::eq",
@@ -837,7 +837,7 @@
       "reducible": false
     },
     {
-      "def_id": 159,
+      "def_id": 160,
       "lean_name": "GreatgrammaCore.engine.EngineError.Insts.CoreCmpPartialEqEngineError.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::PartialEq<greatgramma_core::engine::EngineError> for greatgramma_core::engine::EngineError}::eq",
@@ -854,7 +854,7 @@
       "reducible": false
     },
     {
-      "def_id": 158,
+      "def_id": 159,
       "lean_name": "GreatgrammaCore.engine.EngineError.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{impl core::cmp::Eq for greatgramma_core::engine::EngineError}::assert_fields_are_eq",
@@ -871,7 +871,7 @@
       "reducible": false
     },
     {
-      "def_id": 160,
+      "def_id": 161,
       "lean_name": "GreatgrammaCore.token_step.WorkBudget.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{greatgramma_core::token_step::WorkBudget}::new",
@@ -888,7 +888,7 @@
       "reducible": false
     },
     {
-      "def_id": 107,
+      "def_id": 108,
       "lean_name": "GreatgrammaCore.token_step.check_limit",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::check_limit",
@@ -905,7 +905,7 @@
       "reducible": false
     },
     {
-      "def_id": 99,
+      "def_id": 100,
       "lean_name": "GreatgrammaCore.token_step.check_items",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::check_items",
@@ -922,7 +922,7 @@
       "reducible": false
     },
     {
-      "def_id": 593,
+      "def_id": 594,
       "lean_name": "GreatgrammaCore.token_step.source_count.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::source_count::{impl core::ops::function::FnOnce<(usize,), core::option::Option<usize>> for greatgramma_core::token_step::source_count::closure}::call_once",
@@ -939,7 +939,7 @@
       "reducible": false
     },
     {
-      "def_id": 411,
+      "def_id": 412,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.impl.state_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::state_count",
@@ -956,7 +956,7 @@
       "reducible": false
     },
     {
-      "def_id": 352,
+      "def_id": 353,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.impl.lexer",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedGrammar}::lexer",
@@ -973,7 +973,7 @@
       "reducible": false
     },
     {
-      "def_id": 95,
+      "def_id": 96,
       "lean_name": "GreatgrammaCore.token_step.source_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::source_count",
@@ -990,7 +990,7 @@
       "reducible": false
     },
     {
-      "def_id": 608,
+      "def_id": 609,
       "lean_name": "GreatgrammaCore.token_step.reserved_vec.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorUsize.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::reserved_vec::{impl core::ops::function::FnOnce<(alloc::collections::TryReserveError,), usize> for greatgramma_core::token_step::reserved_vec::closure<'_0, T>}::call_once",
@@ -1007,7 +1007,7 @@
       "reducible": false
     },
     {
-      "def_id": 104,
+      "def_id": 105,
       "lean_name": "GreatgrammaCore.token_step.reserved_vec",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::reserved_vec",
@@ -1024,7 +1024,7 @@
       "reducible": false
     },
     {
-      "def_id": 600,
+      "def_id": 601,
       "lean_name": "GreatgrammaCore.token_step.prepared_vec.closure.Insts.CoreOpsFunctionFnOnceTupleUsizePreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::prepared_vec::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::token_step::PreparationError> for greatgramma_core::token_step::prepared_vec::closure<T>}::call_once",
@@ -1041,7 +1041,7 @@
       "reducible": false
     },
     {
-      "def_id": 100,
+      "def_id": 101,
       "lean_name": "GreatgrammaCore.token_step.prepared_vec",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::prepared_vec",
@@ -1058,7 +1058,7 @@
       "reducible": false
     },
     {
-      "def_id": 258,
+      "def_id": 259,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::DfaStateId}::new",
@@ -1075,7 +1075,7 @@
       "reducible": false
     },
     {
-      "def_id": 96,
+      "def_id": 97,
       "lean_name": "GreatgrammaCore.token_step.source_at",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::source_at",
@@ -1092,7 +1092,7 @@
       "reducible": false
     },
     {
-      "def_id": 106,
+      "def_id": 107,
       "lean_name": "GreatgrammaCore.token_step.preparation_token_error",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::preparation_token_error",
@@ -1109,7 +1109,7 @@
       "reducible": false
     },
     {
-      "def_id": 591,
+      "def_id": 592,
       "lean_name": "GreatgrammaCore.token_step.append_token_cell.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::append_token_cell::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::token_step::append_token_cell::closure}::call_once",
@@ -1126,7 +1126,7 @@
       "reducible": false
     },
     {
-      "def_id": 604,
+      "def_id": 605,
       "lean_name": "GreatgrammaCore.token_step.token_output.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeTokenStepError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::token_output::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::token_step::TokenStepError> for greatgramma_core::token_step::token_output::closure}::call_once",
@@ -1143,7 +1143,7 @@
       "reducible": false
     },
     {
-      "def_id": 102,
+      "def_id": 103,
       "lean_name": "GreatgrammaCore.token_step.token_output",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::token_output",
@@ -1160,7 +1160,7 @@
       "reducible": false
     },
     {
-      "def_id": 89,
+      "def_id": 90,
       "lean_name": "GreatgrammaCore.token_step.map_lexer_rejection",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::map_lexer_rejection",
@@ -1177,7 +1177,7 @@
       "reducible": false
     },
     {
-      "def_id": 356,
+      "def_id": 357,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.impl.eof_terminal",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::eof_terminal",
@@ -1194,7 +1194,7 @@
       "reducible": false
     },
     {
-      "def_id": 259,
+      "def_id": 260,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.get",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::DfaStateId}::get",
@@ -1211,7 +1211,7 @@
       "reducible": false
     },
     {
-      "def_id": 414,
+      "def_id": 415,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.state_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::state_index",
@@ -1228,7 +1228,7 @@
       "reducible": false
     },
     {
-      "def_id": 260,
+      "def_id": 261,
       "lean_name": "GreatgrammaCore.ids.TerminalId.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::clone::Clone for greatgramma_core::ids::TerminalId}::clone",
@@ -1245,7 +1245,7 @@
       "reducible": false
     },
     {
-      "def_id": 354,
+      "def_id": 355,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.terminal",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::terminal",
@@ -1262,7 +1262,7 @@
       "reducible": false
     },
     {
-      "def_id": 314,
+      "def_id": 315,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.impl.lalr",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedGrammar}::lalr",
@@ -1279,7 +1279,7 @@
       "reducible": false
     },
     {
-      "def_id": 43,
+      "def_id": 44,
       "lean_name": "GreatgrammaCore.lexer.eos_step",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::eos_step",
@@ -1296,7 +1296,7 @@
       "reducible": false
     },
     {
-      "def_id": 413,
+      "def_id": 414,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.byte_class",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::byte_class",
@@ -1313,7 +1313,7 @@
       "reducible": false
     },
     {
-      "def_id": 252,
+      "def_id": 253,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::clone::Clone for greatgramma_core::ids::DfaStateId}::clone",
@@ -1330,7 +1330,7 @@
       "reducible": false
     },
     {
-      "def_id": 353,
+      "def_id": 354,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.transition",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::transition",
@@ -1347,7 +1347,7 @@
       "reducible": false
     },
     {
-      "def_id": 355,
+      "def_id": 356,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.impl.start_state",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::start_state",
@@ -1364,7 +1364,7 @@
       "reducible": false
     },
     {
-      "def_id": 42,
+      "def_id": 43,
       "lean_name": "GreatgrammaCore.lexer.begin_lexeme",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::begin_lexeme",
@@ -1381,7 +1381,7 @@
       "reducible": false
     },
     {
-      "def_id": 41,
+      "def_id": 42,
       "lean_name": "GreatgrammaCore.lexer.finish_or_reject_residual",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::finish_or_reject_residual",
@@ -1398,7 +1398,7 @@
       "reducible": false
     },
     {
-      "def_id": 40,
+      "def_id": 41,
       "lean_name": "GreatgrammaCore.lexer.byte_step",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::byte_step",
@@ -1415,7 +1415,7 @@
       "reducible": false
     },
     {
-      "def_id": 39,
+      "def_id": 40,
       "lean_name": "GreatgrammaCore.lexer.lexer_step",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::lexer_step",
@@ -1432,7 +1432,7 @@
       "reducible": false
     },
     {
-      "def_id": 88,
+      "def_id": 89,
       "lean_name": "GreatgrammaCore.token_step.execute_eos",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::execute_eos",
@@ -1449,7 +1449,7 @@
       "reducible": false
     },
     {
-      "def_id": 610,
+      "def_id": 611,
       "lean_name": "GreatgrammaCore.token_step.reserve_one.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorUsize.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::reserve_one::{impl core::ops::function::FnOnce<(alloc::collections::TryReserveError,), usize> for greatgramma_core::token_step::reserve_one::closure<'_0, T>}::call_once",
@@ -1466,7 +1466,7 @@
       "reducible": false
     },
     {
-      "def_id": 105,
+      "def_id": 106,
       "lean_name": "GreatgrammaCore.token_step.reserve_one",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::reserve_one",
@@ -1483,7 +1483,7 @@
       "reducible": false
     },
     {
-      "def_id": 606,
+      "def_id": 607,
       "lean_name": "GreatgrammaCore.token_step.token_push.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeTokenStepError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::token_push::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::token_step::TokenStepError> for greatgramma_core::token_step::token_push::closure}::call_once",
@@ -1500,7 +1500,7 @@
       "reducible": false
     },
     {
-      "def_id": 103,
+      "def_id": 104,
       "lean_name": "GreatgrammaCore.token_step.token_push",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::token_push",
@@ -1517,7 +1517,7 @@
       "reducible": false
     },
     {
-      "def_id": 87,
+      "def_id": 88,
       "lean_name": "GreatgrammaCore.token_step.execute_byte",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::execute_byte",
@@ -1534,7 +1534,7 @@
       "reducible": false
     },
     {
-      "def_id": 86,
+      "def_id": 87,
       "lean_name": "GreatgrammaCore.token_step.execute_bytes_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::execute_bytes",
@@ -1553,7 +1553,7 @@
       "parent_lean_name": "GreatgrammaCore.token_step.execute_bytes"
     },
     {
-      "def_id": 86,
+      "def_id": 87,
       "lean_name": "GreatgrammaCore.token_step.execute_bytes",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::execute_bytes",
@@ -1570,7 +1570,7 @@
       "reducible": false
     },
     {
-      "def_id": 84,
+      "def_id": 85,
       "lean_name": "GreatgrammaCore.token_step.execute_entry",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::execute_entry",
@@ -1587,7 +1587,7 @@
       "reducible": false
     },
     {
-      "def_id": 432,
+      "def_id": 433,
       "lean_name": "GreatgrammaCore.token_step.WorkBudget.charge",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{greatgramma_core::token_step::WorkBudget}::charge",
@@ -1604,7 +1604,7 @@
       "reducible": false
     },
     {
-      "def_id": 251,
+      "def_id": 252,
       "lean_name": "GreatgrammaCore.ids.TokenId.get",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::TokenId}::get",
@@ -1621,7 +1621,7 @@
       "reducible": false
     },
     {
-      "def_id": 406,
+      "def_id": 407,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.token",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedGrammar}::token",
@@ -1638,7 +1638,7 @@
       "reducible": false
     },
     {
-      "def_id": 250,
+      "def_id": 251,
       "lean_name": "GreatgrammaCore.ids.TokenId.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::TokenId}::new",
@@ -1655,7 +1655,7 @@
       "reducible": false
     },
     {
-      "def_id": 94,
+      "def_id": 95,
       "lean_name": "GreatgrammaCore.token_step.append_token_cell",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::append_token_cell",
@@ -1672,7 +1672,7 @@
       "reducible": false
     },
     {
-      "def_id": 93,
+      "def_id": 94,
       "lean_name": "GreatgrammaCore.token_step.build_token_row_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::build_token_row",
@@ -1691,7 +1691,7 @@
       "parent_lean_name": "GreatgrammaCore.token_step.build_token_row"
     },
     {
-      "def_id": 93,
+      "def_id": 94,
       "lean_name": "GreatgrammaCore.token_step.build_token_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::build_token_row",
@@ -1708,7 +1708,7 @@
       "reducible": false
     },
     {
-      "def_id": 92,
+      "def_id": 93,
       "lean_name": "GreatgrammaCore.token_step.build_token_table_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::build_token_table_row",
@@ -1725,7 +1725,7 @@
       "reducible": false
     },
     {
-      "def_id": 91,
+      "def_id": 92,
       "lean_name": "GreatgrammaCore.token_step.build_token_rows_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::build_token_rows",
@@ -1744,7 +1744,7 @@
       "parent_lean_name": "GreatgrammaCore.token_step.build_token_rows"
     },
     {
-      "def_id": 91,
+      "def_id": 92,
       "lean_name": "GreatgrammaCore.token_step.build_token_rows",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::build_token_rows",
@@ -1761,7 +1761,7 @@
       "reducible": false
     },
     {
-      "def_id": 589,
+      "def_id": 590,
       "lean_name": "GreatgrammaCore.token_step.prepare_token_table.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::prepare_token_table::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::token_step::prepare_token_table::closure}::call_once",
@@ -1778,7 +1778,7 @@
       "reducible": false
     },
     {
-      "def_id": 163,
+      "def_id": 164,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.impl.token_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedGrammar}::token_count",
@@ -1795,7 +1795,7 @@
       "reducible": false
     },
     {
-      "def_id": 90,
+      "def_id": 91,
       "lean_name": "GreatgrammaCore.token_step.prepare_token_table",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::prepare_token_table",
@@ -1812,7 +1812,7 @@
       "reducible": false
     },
     {
-      "def_id": 456,
+      "def_id": 457,
       "lean_name": "GreatgrammaCore.token_step.PreparedTokenTable.source_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{greatgramma_core::token_step::PreparedTokenTable}::source_count",
@@ -1829,7 +1829,7 @@
       "reducible": false
     },
     {
-      "def_id": 598,
+      "def_id": 599,
       "lean_name": "GreatgrammaCore.token_step.source_index_for_count.closure.Insts.CoreOpsFunctionFnOnceTupleSharedUsizeBool.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::source_index_for_count::{impl core::ops::function::FnOnce<(&'_ usize,), bool> for greatgramma_core::token_step::source_index_for_count::closure<'_0>}::call_once",
@@ -1846,7 +1846,7 @@
       "reducible": false
     },
     {
-      "def_id": 98,
+      "def_id": 99,
       "lean_name": "GreatgrammaCore.token_step.source_index_for_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::source_index_for_count",
@@ -1863,7 +1863,7 @@
       "reducible": false
     },
     {
-      "def_id": 596,
+      "def_id": 597,
       "lean_name": "GreatgrammaCore.token_step.source_index.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::source_index::{impl core::ops::function::FnOnce<(usize,), core::option::Option<usize>> for greatgramma_core::token_step::source_index::closure<'_0>}::call_once",
@@ -1880,7 +1880,7 @@
       "reducible": false
     },
     {
-      "def_id": 97,
+      "def_id": 98,
       "lean_name": "GreatgrammaCore.token_step.source_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::source_index",
@@ -1897,7 +1897,7 @@
       "reducible": false
     },
     {
-      "def_id": 457,
+      "def_id": 458,
       "lean_name": "GreatgrammaCore.token_step.PreparedTokenTable.cell",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{greatgramma_core::token_step::PreparedTokenTable}::cell",
@@ -1914,7 +1914,7 @@
       "reducible": false
     },
     {
-      "def_id": 602,
+      "def_id": 603,
       "lean_name": "GreatgrammaCore.token_step.prepared_push.closure.Insts.CoreOpsFunctionFnOnceTupleUsizePreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::prepared_push::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::token_step::PreparationError> for greatgramma_core::token_step::prepared_push::closure<T>}::call_once",
@@ -1931,7 +1931,7 @@
       "reducible": false
     },
     {
-      "def_id": 101,
+      "def_id": 102,
       "lean_name": "GreatgrammaCore.token_step.prepared_push",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::prepared_push",
@@ -1948,7 +1948,7 @@
       "reducible": false
     },
     {
-      "def_id": 296,
+      "def_id": 297,
       "lean_name": "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpPartialEqSequenceId.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialEq<greatgramma_core::ids::SequenceId> for greatgramma_core::ids::SequenceId}::eq",
@@ -1965,7 +1965,7 @@
       "reducible": false
     },
     {
-      "def_id": 81,
+      "def_id": 82,
       "lean_name": "GreatgrammaCore.spanner.bucket_index_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::bucket_index",
@@ -1984,7 +1984,7 @@
       "parent_lean_name": "GreatgrammaCore.spanner.bucket_index"
     },
     {
-      "def_id": 81,
+      "def_id": 82,
       "lean_name": "GreatgrammaCore.spanner.bucket_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::bucket_index",
@@ -2001,7 +2001,7 @@
       "reducible": true
     },
     {
-      "def_id": 80,
+      "def_id": 81,
       "lean_name": "GreatgrammaCore.spanner.append_existing_member",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::append_existing_member",
@@ -2018,7 +2018,7 @@
       "reducible": false
     },
     {
-      "def_id": 79,
+      "def_id": 80,
       "lean_name": "GreatgrammaCore.spanner.append_member",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::append_member",
@@ -2035,7 +2035,7 @@
       "reducible": false
     },
     {
-      "def_id": 581,
+      "def_id": 582,
       "lean_name": "GreatgrammaCore.sequence.sequence_id.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::sequence_id::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::sequence::sequence_id::closure}::call_once",
@@ -2052,7 +2052,7 @@
       "reducible": false
     },
     {
-      "def_id": 298,
+      "def_id": 299,
       "lean_name": "GreatgrammaCore.ids.SequenceId.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::SequenceId}::new",
@@ -2069,7 +2069,7 @@
       "reducible": false
     },
     {
-      "def_id": 71,
+      "def_id": 72,
       "lean_name": "GreatgrammaCore.sequence.sequence_id",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::sequence_id",
@@ -2086,7 +2086,7 @@
       "reducible": false
     },
     {
-      "def_id": 264,
+      "def_id": 265,
       "lean_name": "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpPartialEqTerminalId.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialEq<greatgramma_core::ids::TerminalId> for greatgramma_core::ids::TerminalId}::eq",
@@ -2103,7 +2103,7 @@
       "reducible": false
     },
     {
-      "def_id": 60,
+      "def_id": 61,
       "lean_name": "GreatgrammaCore.sequence.matches_sequence",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::matches_sequence",
@@ -2120,7 +2120,7 @@
       "reducible": false
     },
     {
-      "def_id": 59,
+      "def_id": 60,
       "lean_name": "GreatgrammaCore.sequence.find_sequence_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::find_sequence",
@@ -2139,7 +2139,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.find_sequence"
     },
     {
-      "def_id": 59,
+      "def_id": 60,
       "lean_name": "GreatgrammaCore.sequence.find_sequence",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::find_sequence",
@@ -2156,7 +2156,7 @@
       "reducible": false
     },
     {
-      "def_id": 58,
+      "def_id": 59,
       "lean_name": "GreatgrammaCore.sequence.copy_direct_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::copy_direct",
@@ -2175,7 +2175,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.copy_direct"
     },
     {
-      "def_id": 58,
+      "def_id": 59,
       "lean_name": "GreatgrammaCore.sequence.copy_direct",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::copy_direct",
@@ -2192,7 +2192,7 @@
       "reducible": false
     },
     {
-      "def_id": 443,
+      "def_id": 444,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.intern_head",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::intern_head",
@@ -2209,7 +2209,7 @@
       "reducible": false
     },
     {
-      "def_id": 439,
+      "def_id": 440,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.singleton_terminal",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::singleton_terminal",
@@ -2226,7 +2226,7 @@
       "reducible": false
     },
     {
-      "def_id": 78,
+      "def_id": 79,
       "lean_name": "GreatgrammaCore.spanner.append_continuation",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::append_continuation",
@@ -2243,7 +2243,7 @@
       "reducible": false
     },
     {
-      "def_id": 440,
+      "def_id": 441,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.singleton_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::singleton_count",
@@ -2260,7 +2260,7 @@
       "reducible": false
     },
     {
-      "def_id": 77,
+      "def_id": 78,
       "lean_name": "GreatgrammaCore.spanner.append_continuations_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::append_continuations",
@@ -2279,7 +2279,7 @@
       "parent_lean_name": "GreatgrammaCore.spanner.append_continuations"
     },
     {
-      "def_id": 77,
+      "def_id": 78,
       "lean_name": "GreatgrammaCore.spanner.append_continuations",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::append_continuations",
@@ -2296,7 +2296,7 @@
       "reducible": false
     },
     {
-      "def_id": 76,
+      "def_id": 77,
       "lean_name": "GreatgrammaCore.spanner.append_token_continuations",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::append_token_continuations",
@@ -2313,7 +2313,7 @@
       "reducible": false
     },
     {
-      "def_id": 75,
+      "def_id": 76,
       "lean_name": "GreatgrammaCore.spanner.build_inverse_row_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::build_inverse_row",
@@ -2332,7 +2332,7 @@
       "parent_lean_name": "GreatgrammaCore.spanner.build_inverse_row"
     },
     {
-      "def_id": 75,
+      "def_id": 76,
       "lean_name": "GreatgrammaCore.spanner.build_inverse_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::build_inverse_row",
@@ -2349,7 +2349,7 @@
       "reducible": false
     },
     {
-      "def_id": 74,
+      "def_id": 75,
       "lean_name": "GreatgrammaCore.spanner.build_inverse_rows_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::build_inverse_rows",
@@ -2368,7 +2368,7 @@
       "parent_lean_name": "GreatgrammaCore.spanner.build_inverse_rows"
     },
     {
-      "def_id": 74,
+      "def_id": 75,
       "lean_name": "GreatgrammaCore.spanner.build_inverse_rows",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::build_inverse_rows",
@@ -2385,7 +2385,7 @@
       "reducible": false
     },
     {
-      "def_id": 579,
+      "def_id": 580,
       "lean_name": "GreatgrammaCore.sequence.fact_index.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::fact_index::{impl core::ops::function::FnOnce<(usize,), core::option::Option<usize>> for greatgramma_core::sequence::fact_index::closure<'_0>}::call_once",
@@ -2402,7 +2402,7 @@
       "reducible": false
     },
     {
-      "def_id": 70,
+      "def_id": 71,
       "lean_name": "GreatgrammaCore.sequence.fact_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::fact_index",
@@ -2419,7 +2419,7 @@
       "reducible": false
     },
     {
-      "def_id": 575,
+      "def_id": 576,
       "lean_name": "GreatgrammaCore.sequence.collect_singleton.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::collect_singleton::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::sequence::collect_singleton::closure}::call_once",
@@ -2436,7 +2436,7 @@
       "reducible": false
     },
     {
-      "def_id": 266,
+      "def_id": 267,
       "lean_name": "GreatgrammaCore.ids.TerminalId.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::TerminalId}::new",
@@ -2453,7 +2453,7 @@
       "reducible": false
     },
     {
-      "def_id": 67,
+      "def_id": 68,
       "lean_name": "GreatgrammaCore.sequence.collect_singleton",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::collect_singleton",
@@ -2470,7 +2470,7 @@
       "reducible": false
     },
     {
-      "def_id": 66,
+      "def_id": 67,
       "lean_name": "GreatgrammaCore.sequence.collect_singletons_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::collect_singletons",
@@ -2489,7 +2489,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.collect_singletons"
     },
     {
-      "def_id": 66,
+      "def_id": 67,
       "lean_name": "GreatgrammaCore.sequence.collect_singletons",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::collect_singletons",
@@ -2506,7 +2506,7 @@
       "reducible": false
     },
     {
-      "def_id": 57,
+      "def_id": 58,
       "lean_name": "GreatgrammaCore.sequence.collect_singleton_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::collect_singleton_row",
@@ -2523,7 +2523,7 @@
       "reducible": false
     },
     {
-      "def_id": 56,
+      "def_id": 57,
       "lean_name": "GreatgrammaCore.sequence.collect_all_singletons_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::collect_all_singletons",
@@ -2542,7 +2542,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.collect_all_singletons"
     },
     {
-      "def_id": 56,
+      "def_id": 57,
       "lean_name": "GreatgrammaCore.sequence.collect_all_singletons",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::collect_all_singletons",
@@ -2559,7 +2559,7 @@
       "reducible": false
     },
     {
-      "def_id": 69,
+      "def_id": 70,
       "lean_name": "GreatgrammaCore.sequence.mark_fact_seen",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::mark_fact_seen",
@@ -2576,7 +2576,7 @@
       "reducible": false
     },
     {
-      "def_id": 577,
+      "def_id": 578,
       "lean_name": "GreatgrammaCore.sequence.add_fact.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::add_fact::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::sequence::add_fact::closure}::call_once",
@@ -2593,7 +2593,7 @@
       "reducible": false
     },
     {
-      "def_id": 267,
+      "def_id": 268,
       "lean_name": "GreatgrammaCore.ids.TerminalId.get",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::TerminalId}::get",
@@ -2610,7 +2610,7 @@
       "reducible": false
     },
     {
-      "def_id": 68,
+      "def_id": 69,
       "lean_name": "GreatgrammaCore.sequence.add_fact",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::add_fact",
@@ -2627,7 +2627,7 @@
       "reducible": false
     },
     {
-      "def_id": 65,
+      "def_id": 66,
       "lean_name": "GreatgrammaCore.sequence.propagate_predecessor",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::propagate_predecessor",
@@ -2644,7 +2644,7 @@
       "reducible": false
     },
     {
-      "def_id": 64,
+      "def_id": 65,
       "lean_name": "GreatgrammaCore.sequence.propagate_fact_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::propagate_fact",
@@ -2663,7 +2663,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.propagate_fact"
     },
     {
-      "def_id": 64,
+      "def_id": 65,
       "lean_name": "GreatgrammaCore.sequence.propagate_fact",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::propagate_fact",
@@ -2680,7 +2680,7 @@
       "reducible": false
     },
     {
-      "def_id": 436,
+      "def_id": 437,
       "lean_name": "GreatgrammaCore.sequence.Fact.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{impl core::clone::Clone for greatgramma_core::sequence::Fact}::clone",
@@ -2697,7 +2697,7 @@
       "reducible": false
     },
     {
-      "def_id": 55,
+      "def_id": 56,
       "lean_name": "GreatgrammaCore.sequence.propagate_facts_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::propagate_facts",
@@ -2716,7 +2716,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.propagate_facts"
     },
     {
-      "def_id": 55,
+      "def_id": 56,
       "lean_name": "GreatgrammaCore.sequence.propagate_facts",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::propagate_facts",
@@ -2733,7 +2733,7 @@
       "reducible": false
     },
     {
-      "def_id": 63,
+      "def_id": 64,
       "lean_name": "GreatgrammaCore.sequence.append_predecessor",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::append_predecessor",
@@ -2750,7 +2750,7 @@
       "reducible": false
     },
     {
-      "def_id": 573,
+      "def_id": 574,
       "lean_name": "GreatgrammaCore.sequence.scan_byte.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_byte::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::sequence::scan_byte::closure}::call_once",
@@ -2767,7 +2767,7 @@
       "reducible": false
     },
     {
-      "def_id": 62,
+      "def_id": 63,
       "lean_name": "GreatgrammaCore.sequence.scan_byte",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_byte",
@@ -2784,7 +2784,7 @@
       "reducible": false
     },
     {
-      "def_id": 61,
+      "def_id": 62,
       "lean_name": "GreatgrammaCore.sequence.scan_source_loop0",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_source",
@@ -2803,7 +2803,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.scan_source"
     },
     {
-      "def_id": 61,
+      "def_id": 62,
       "lean_name": "GreatgrammaCore.sequence.scan_source_loop1",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_source",
@@ -2822,7 +2822,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.scan_source"
     },
     {
-      "def_id": 61,
+      "def_id": 62,
       "lean_name": "GreatgrammaCore.sequence.scan_source_loop2",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_source",
@@ -2841,7 +2841,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.scan_source"
     },
     {
-      "def_id": 61,
+      "def_id": 62,
       "lean_name": "GreatgrammaCore.sequence.scan_source_loop3",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_source",
@@ -2860,7 +2860,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.scan_source"
     },
     {
-      "def_id": 61,
+      "def_id": 62,
       "lean_name": "GreatgrammaCore.sequence.scan_source",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_source",
@@ -2877,7 +2877,7 @@
       "reducible": false
     },
     {
-      "def_id": 54,
+      "def_id": 55,
       "lean_name": "GreatgrammaCore.sequence.scan_sources_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_sources",
@@ -2896,7 +2896,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.scan_sources"
     },
     {
-      "def_id": 54,
+      "def_id": 55,
       "lean_name": "GreatgrammaCore.sequence.scan_sources",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::scan_sources",
@@ -2913,7 +2913,7 @@
       "reducible": false
     },
     {
-      "def_id": 691,
+      "def_id": 692,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.build_singletons.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::build_singletons::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::build_singletons::closure}::call_once",
@@ -2930,7 +2930,7 @@
       "reducible": false
     },
     {
-      "def_id": 318,
+      "def_id": 319,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.terminal_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::terminal_count",
@@ -2947,7 +2947,7 @@
       "reducible": false
     },
     {
-      "def_id": 437,
+      "def_id": 438,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.build_singletons_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::build_singletons",
@@ -2966,7 +2966,7 @@
       "parent_lean_name": "GreatgrammaCore.sequence.SequenceTable.build_singletons"
     },
     {
-      "def_id": 437,
+      "def_id": 438,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.build_singletons",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::build_singletons",
@@ -2983,7 +2983,7 @@
       "reducible": false
     },
     {
-      "def_id": 73,
+      "def_id": 74,
       "lean_name": "GreatgrammaCore.spanner.prepare_spanner_with_budget",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::prepare_spanner_with_budget",
@@ -3000,7 +3000,7 @@
       "reducible": false
     },
     {
-      "def_id": 441,
+      "def_id": 442,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.sequence_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::sequence_count",
@@ -3017,7 +3017,7 @@
       "reducible": false
     },
     {
-      "def_id": 431,
+      "def_id": 432,
       "lean_name": "GreatgrammaCore.spanner.PreparedSpanner.sequence_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{greatgramma_core::spanner::PreparedSpanner}::sequence_count",
@@ -3034,7 +3034,7 @@
       "reducible": false
     },
     {
-      "def_id": 299,
+      "def_id": 300,
       "lean_name": "GreatgrammaCore.ids.SequenceId.get",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::SequenceId}::get",
@@ -3051,7 +3051,7 @@
       "reducible": false
     },
     {
-      "def_id": 442,
+      "def_id": 443,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.sequence",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::sequence",
@@ -3068,7 +3068,7 @@
       "reducible": false
     },
     {
-      "def_id": 434,
+      "def_id": 435,
       "lean_name": "GreatgrammaCore.spanner.PreparedSpanner.sequence",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{greatgramma_core::spanner::PreparedSpanner}::sequence",
@@ -3085,7 +3085,7 @@
       "reducible": false
     },
     {
-      "def_id": 435,
+      "def_id": 436,
       "lean_name": "GreatgrammaCore.token_step.WorkBudget.remaining",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{greatgramma_core::token_step::WorkBudget}::remaining",
@@ -3102,7 +3102,7 @@
       "reducible": false
     },
     {
-      "def_id": 53,
+      "def_id": 54,
       "lean_name": "GreatgrammaCore.preprocess.map_parser_preparation_error",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::map_parser_preparation_error",
@@ -3119,7 +3119,7 @@
       "reducible": false
     },
     {
-      "def_id": 52,
+      "def_id": 53,
       "lean_name": "GreatgrammaCore.preprocess.classify_decision",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::classify_decision",
@@ -3136,7 +3136,7 @@
       "reducible": false
     },
     {
-      "def_id": 543,
+      "def_id": 544,
       "lean_name": "GreatgrammaCore.lalr.copy_stack_into.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorParserError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::copy_stack_into::{impl core::ops::function::FnOnce<(alloc::collections::TryReserveError,), greatgramma_core::lalr::ParserError> for greatgramma_core::lalr::copy_stack_into::closure<'_0>}::call_once",
@@ -3153,7 +3153,7 @@
       "reducible": false
     },
     {
-      "def_id": 268,
+      "def_id": 269,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::clone::Clone for greatgramma_core::ids::ParserStateId}::clone",
@@ -3170,7 +3170,7 @@
       "reducible": false
     },
     {
-      "def_id": 33,
+      "def_id": 34,
       "lean_name": "GreatgrammaCore.lalr.copy_stack_into",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::copy_stack_into",
@@ -3187,7 +3187,7 @@
       "reducible": false
     },
     {
-      "def_id": 321,
+      "def_id": 322,
       "lean_name": "GreatgrammaCore.lalr.RunWork.exceeded",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{greatgramma_core::lalr::RunWork}::exceeded",
@@ -3204,7 +3204,7 @@
       "reducible": false
     },
     {
-      "def_id": 320,
+      "def_id": 321,
       "lean_name": "GreatgrammaCore.lalr.RunWork.charge",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{greatgramma_core::lalr::RunWork}::charge",
@@ -3221,7 +3221,7 @@
       "reducible": false
     },
     {
-      "def_id": 319,
+      "def_id": 320,
       "lean_name": "GreatgrammaCore.lalr.RunWork.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{greatgramma_core::lalr::RunWork}::new",
@@ -3238,7 +3238,7 @@
       "reducible": false
     },
     {
-      "def_id": 46,
+      "def_id": 47,
       "lean_name": "GreatgrammaCore.normalized.checked_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::checked_index",
@@ -3255,7 +3255,7 @@
       "reducible": false
     },
     {
-      "def_id": 423,
+      "def_id": 424,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.terminal_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::terminal_index",
@@ -3272,7 +3272,7 @@
       "reducible": false
     },
     {
-      "def_id": 323,
+      "def_id": 324,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.is_ignored",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::is_ignored",
@@ -3289,7 +3289,7 @@
       "reducible": false
     },
     {
-      "def_id": 322,
+      "def_id": 323,
       "lean_name": "GreatgrammaCore.lalr.RunWork.complete",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{greatgramma_core::lalr::RunWork}::complete",
@@ -3306,7 +3306,7 @@
       "reducible": false
     },
     {
-      "def_id": 317,
+      "def_id": 318,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.state_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::state_count",
@@ -3323,7 +3323,7 @@
       "reducible": false
     },
     {
-      "def_id": 275,
+      "def_id": 276,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.get",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::ParserStateId}::get",
@@ -3340,7 +3340,7 @@
       "reducible": false
     },
     {
-      "def_id": 422,
+      "def_id": 423,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.state_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::state_index",
@@ -3357,7 +3357,7 @@
       "reducible": false
     },
     {
-      "def_id": 382,
+      "def_id": 383,
       "lean_name": "GreatgrammaCore.normalized.Action.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::clone::Clone for greatgramma_core::normalized::Action}::clone",
@@ -3374,7 +3374,7 @@
       "reducible": false
     },
     {
-      "def_id": 324,
+      "def_id": 325,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.action",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::action",
@@ -3391,7 +3391,7 @@
       "reducible": false
     },
     {
-      "def_id": 35,
+      "def_id": 36,
       "lean_name": "GreatgrammaCore.lalr.stack_top",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::stack_top",
@@ -3408,7 +3408,7 @@
       "reducible": false
     },
     {
-      "def_id": 545,
+      "def_id": 546,
       "lean_name": "GreatgrammaCore.lalr.parser_push.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeParserError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::parser_push::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::lalr::ParserError> for greatgramma_core::lalr::parser_push::closure}::call_once",
@@ -3425,7 +3425,7 @@
       "reducible": false
     },
     {
-      "def_id": 34,
+      "def_id": 35,
       "lean_name": "GreatgrammaCore.lalr.parser_push",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::parser_push",
@@ -3442,7 +3442,7 @@
       "reducible": false
     },
     {
-      "def_id": 32,
+      "def_id": 33,
       "lean_name": "GreatgrammaCore.lalr.check_reduction_progress",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::check_reduction_progress",
@@ -3459,7 +3459,7 @@
       "reducible": false
     },
     {
-      "def_id": 386,
+      "def_id": 387,
       "lean_name": "GreatgrammaCore.normalized.Production.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::clone::Clone for greatgramma_core::normalized::Production}::clone",
@@ -3476,7 +3476,7 @@
       "reducible": false
     },
     {
-      "def_id": 291,
+      "def_id": 292,
       "lean_name": "GreatgrammaCore.ids.ProductionId.get",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::ProductionId}::get",
@@ -3493,7 +3493,7 @@
       "reducible": false
     },
     {
-      "def_id": 325,
+      "def_id": 326,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.production",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::production",
@@ -3510,7 +3510,7 @@
       "reducible": false
     },
     {
-      "def_id": 419,
+      "def_id": 420,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.nonterminal_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::nonterminal_count",
@@ -3527,7 +3527,7 @@
       "reducible": false
     },
     {
-      "def_id": 283,
+      "def_id": 284,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.get",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::NonterminalId}::get",
@@ -3544,7 +3544,7 @@
       "reducible": false
     },
     {
-      "def_id": 424,
+      "def_id": 425,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.nonterminal_index",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::nonterminal_index",
@@ -3561,7 +3561,7 @@
       "reducible": false
     },
     {
-      "def_id": 329,
+      "def_id": 330,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.goto",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::goto",
@@ -3578,7 +3578,7 @@
       "reducible": false
     },
     {
-      "def_id": 326,
+      "def_id": 327,
       "lean_name": "GreatgrammaCore.normalized.Production.impl.pop_len",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::Production}::pop_len",
@@ -3595,7 +3595,7 @@
       "reducible": false
     },
     {
-      "def_id": 328,
+      "def_id": 329,
       "lean_name": "GreatgrammaCore.normalized.Production.impl.lhs",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::Production}::lhs",
@@ -3612,7 +3612,7 @@
       "reducible": false
     },
     {
-      "def_id": 541,
+      "def_id": 542,
       "lean_name": "GreatgrammaCore.lalr.apply_reduction.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorParserError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::apply_reduction::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::lalr::ParserError> for greatgramma_core::lalr::apply_reduction::closure}::call_once",
@@ -3629,7 +3629,7 @@
       "reducible": false
     },
     {
-      "def_id": 31,
+      "def_id": 32,
       "lean_name": "GreatgrammaCore.lalr.apply_reduction",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::apply_reduction",
@@ -3646,7 +3646,7 @@
       "reducible": false
     },
     {
-      "def_id": 29,
+      "def_id": 30,
       "lean_name": "GreatgrammaCore.lalr.run_terminal_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::run_terminal",
@@ -3665,7 +3665,7 @@
       "parent_lean_name": "GreatgrammaCore.lalr.run_terminal"
     },
     {
-      "def_id": 29,
+      "def_id": 30,
       "lean_name": "GreatgrammaCore.lalr.run_terminal",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::run_terminal",
@@ -3682,7 +3682,7 @@
       "reducible": true
     },
     {
-      "def_id": 28,
+      "def_id": 29,
       "lean_name": "GreatgrammaCore.lalr.run_initialized_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::run_initialized",
@@ -3701,7 +3701,7 @@
       "parent_lean_name": "GreatgrammaCore.lalr.run_initialized"
     },
     {
-      "def_id": 28,
+      "def_id": 29,
       "lean_name": "GreatgrammaCore.lalr.run_initialized",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::run_initialized",
@@ -3718,7 +3718,7 @@
       "reducible": true
     },
     {
-      "def_id": 26,
+      "def_id": 27,
       "lean_name": "GreatgrammaCore.lalr.run_validated_into",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::run_validated_into",
@@ -3735,7 +3735,7 @@
       "reducible": false
     },
     {
-      "def_id": 22,
+      "def_id": 23,
       "lean_name": "GreatgrammaCore.lalr.execute_terminals_symbolic_checked_with_limit",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::execute_terminals_symbolic_checked_with_limit",
@@ -3752,7 +3752,7 @@
       "reducible": false
     },
     {
-      "def_id": 51,
+      "def_id": 52,
       "lean_name": "GreatgrammaCore.preprocess.classify_sequence_head_with_budget",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::classify_sequence_head_with_budget",
@@ -3769,7 +3769,7 @@
       "reducible": false
     },
     {
-      "def_id": 50,
+      "def_id": 51,
       "lean_name": "GreatgrammaCore.preprocess.prepare_parser_row_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::prepare_parser_row",
@@ -3788,7 +3788,7 @@
       "parent_lean_name": "GreatgrammaCore.preprocess.prepare_parser_row"
     },
     {
-      "def_id": 50,
+      "def_id": 51,
       "lean_name": "GreatgrammaCore.preprocess.prepare_parser_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::prepare_parser_row",
@@ -3805,7 +3805,7 @@
       "reducible": false
     },
     {
-      "def_id": 566,
+      "def_id": 567,
       "lean_name": "GreatgrammaCore.preprocess.prepare_parser_with_budget.closure_1.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::prepare_parser_with_budget::{impl core::ops::function::FnOnce<(usize,), core::option::Option<usize>> for greatgramma_core::preprocess::prepare_parser_with_budget::closure#1<'_0>}::call_once",
@@ -3822,7 +3822,7 @@
       "reducible": false
     },
     {
-      "def_id": 565,
+      "def_id": 566,
       "lean_name": "GreatgrammaCore.preprocess.prepare_parser_with_budget.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::prepare_parser_with_budget::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::preprocess::prepare_parser_with_budget::closure}::call_once",
@@ -3839,7 +3839,7 @@
       "reducible": false
     },
     {
-      "def_id": 274,
+      "def_id": 275,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::ParserStateId}::new",
@@ -3856,7 +3856,7 @@
       "reducible": false
     },
     {
-      "def_id": 49,
+      "def_id": 50,
       "lean_name": "GreatgrammaCore.preprocess.prepare_parser_with_budget_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::prepare_parser_with_budget",
@@ -3875,7 +3875,7 @@
       "parent_lean_name": "GreatgrammaCore.preprocess.prepare_parser_with_budget"
     },
     {
-      "def_id": 49,
+      "def_id": 50,
       "lean_name": "GreatgrammaCore.preprocess.prepare_parser_with_budget",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::prepare_parser_with_budget",
@@ -3892,7 +3892,7 @@
       "reducible": false
     },
     {
-      "def_id": 498,
+      "def_id": 499,
       "lean_name": "GreatgrammaCore.engine.prepare.closure_1.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::prepare::{impl core::ops::function::FnOnce<(usize,), core::option::Option<usize>> for greatgramma_core::engine::prepare::closure#1}::call_once",
@@ -3909,7 +3909,7 @@
       "reducible": false
     },
     {
-      "def_id": 497,
+      "def_id": 498,
       "lean_name": "GreatgrammaCore.engine.prepare.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::prepare::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::token_step::PreparationError> for greatgramma_core::engine::prepare::closure}::call_once",
@@ -3943,7 +3943,7 @@
       "reducible": false
     },
     {
-      "def_id": 169,
+      "def_id": 170,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.token_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::token_count",
@@ -3960,7 +3960,7 @@
       "reducible": false
     },
     {
-      "def_id": 170,
+      "def_id": 171,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.impl.mask_bytes",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::mask_bytes",
@@ -3977,7 +3977,7 @@
       "reducible": false
     },
     {
-      "def_id": 421,
+      "def_id": 422,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.impl.start_state",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::start_state",
@@ -3994,7 +3994,7 @@
       "reducible": false
     },
     {
-      "def_id": 643,
+      "def_id": 644,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.initial_status.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::initial_status::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::engine::EngineError> for greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::initial_status::closure}::call_once",
@@ -4011,7 +4011,7 @@
       "reducible": false
     },
     {
-      "def_id": 172,
+      "def_id": 173,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.initial_status",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::initial_status",
@@ -4028,7 +4028,7 @@
       "reducible": false
     },
     {
-      "def_id": 638,
+      "def_id": 639,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.into_matcher.closure_1.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::into_matcher::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::engine::EngineError> for greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::into_matcher::closure#1}::call_once",
@@ -4045,7 +4045,7 @@
       "reducible": false
     },
     {
-      "def_id": 637,
+      "def_id": 638,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.into_matcher.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::into_matcher::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::engine::EngineError> for greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::into_matcher::closure}::call_once",
@@ -4062,7 +4062,7 @@
       "reducible": false
     },
     {
-      "def_id": 171,
+      "def_id": 172,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.into_matcher_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::into_matcher",
@@ -4081,7 +4081,7 @@
       "parent_lean_name": "GreatgrammaCore.engine.PreparedGrammar.into_matcher"
     },
     {
-      "def_id": 171,
+      "def_id": 172,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.into_matcher",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::into_matcher",
@@ -4098,15 +4098,15 @@
       "reducible": false
     },
     {
-      "def_id": 17,
+      "def_id": 18,
       "lean_name": "GreatgrammaCore.engine.running_lexer",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::running_lexer",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 1028,
-        "end_line": 1033
+        "begin_line": 1035,
+        "end_line": 1040
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4115,7 +4115,7 @@
       "reducible": false
     },
     {
-      "def_id": 186,
+      "def_id": 187,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.check_token",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::check_token",
@@ -4132,7 +4132,7 @@
       "reducible": false
     },
     {
-      "def_id": 82,
+      "def_id": 83,
       "lean_name": "GreatgrammaCore.spanner.invalid_state",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::invalid_state",
@@ -4149,7 +4149,7 @@
       "reducible": false
     },
     {
-      "def_id": 455,
+      "def_id": 456,
       "lean_name": "GreatgrammaCore.spanner.PreparedSpanner.query_source",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{greatgramma_core::spanner::PreparedSpanner}::query_source",
@@ -4166,7 +4166,7 @@
       "reducible": false
     },
     {
-      "def_id": 453,
+      "def_id": 454,
       "lean_name": "GreatgrammaCore.spanner.PreparedSpanner.token_execution",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{greatgramma_core::spanner::PreparedSpanner}::token_execution",
@@ -4183,7 +4183,7 @@
       "reducible": false
     },
     {
-      "def_id": 30,
+      "def_id": 31,
       "lean_name": "GreatgrammaCore.lalr.unbounded_decision",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::unbounded_decision",
@@ -4200,7 +4200,7 @@
       "reducible": false
     },
     {
-      "def_id": 23,
+      "def_id": 24,
       "lean_name": "GreatgrammaCore.lalr.execute_terminals_concrete_into",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::execute_terminals_concrete_into",
@@ -4217,15 +4217,15 @@
       "reducible": false
     },
     {
-      "def_id": 19,
+      "def_id": 20,
       "lean_name": "GreatgrammaCore.engine.map_spanner_error",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::map_spanner_error",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 1053,
-        "end_line": 1055
+        "begin_line": 1060,
+        "end_line": 1062
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4234,15 +4234,15 @@
       "reducible": false
     },
     {
-      "def_id": 18,
+      "def_id": 19,
       "lean_name": "GreatgrammaCore.engine.map_parser_error",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::map_parser_error",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 1035,
-        "end_line": 1051
+        "begin_line": 1042,
+        "end_line": 1058
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4251,7 +4251,7 @@
       "reducible": false
     },
     {
-      "def_id": 27,
+      "def_id": 28,
       "lean_name": "GreatgrammaCore.lalr.run_validated_in_place",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::run_validated_in_place",
@@ -4268,7 +4268,7 @@
       "reducible": false
     },
     {
-      "def_id": 24,
+      "def_id": 25,
       "lean_name": "GreatgrammaCore.lalr.execute_terminals_concrete_in_place",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::execute_terminals_concrete_in_place",
@@ -4285,7 +4285,7 @@
       "reducible": false
     },
     {
-      "def_id": 185,
+      "def_id": 186,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.evaluate_eos_into",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::evaluate_eos_into",
@@ -4302,7 +4302,7 @@
       "reducible": false
     },
     {
-      "def_id": 454,
+      "def_id": 455,
       "lean_name": "GreatgrammaCore.spanner.PreparedSpanner.inverse_buckets",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{greatgramma_core::spanner::PreparedSpanner}::inverse_buckets",
@@ -4319,7 +4319,7 @@
       "reducible": false
     },
     {
-      "def_id": 233,
+      "def_id": 234,
       "lean_name": "GreatgrammaCore.ids.TokenId.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::clone::Clone for greatgramma_core::ids::TokenId}::clone",
@@ -4389,7 +4389,7 @@
       "reducible": false
     },
     {
-      "def_id": 688,
+      "def_id": 689,
       "lean_name": "GreatgrammaCore.preprocess.PreparedParser.classification.closure_1.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorParserError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::{greatgramma_core::preprocess::PreparedParser}::classification::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::lalr::ParserError> for greatgramma_core::preprocess::{greatgramma_core::preprocess::PreparedParser}::classification::closure#1<'_0>}::call_once",
@@ -4406,7 +4406,7 @@
       "reducible": false
     },
     {
-      "def_id": 687,
+      "def_id": 688,
       "lean_name": "GreatgrammaCore.preprocess.PreparedParser.classification.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorParserError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::{greatgramma_core::preprocess::PreparedParser}::classification::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::lalr::ParserError> for greatgramma_core::preprocess::{greatgramma_core::preprocess::PreparedParser}::classification::closure<'_0>}::call_once",
@@ -4423,7 +4423,7 @@
       "reducible": false
     },
     {
-      "def_id": 426,
+      "def_id": 427,
       "lean_name": "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::{impl core::clone::Clone for greatgramma_core::preprocess::SequenceClassification}::clone",
@@ -4440,7 +4440,7 @@
       "reducible": false
     },
     {
-      "def_id": 430,
+      "def_id": 431,
       "lean_name": "GreatgrammaCore.preprocess.PreparedParser.classification",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::{greatgramma_core::preprocess::PreparedParser}::classification",
@@ -4457,7 +4457,7 @@
       "reducible": false
     },
     {
-      "def_id": 38,
+      "def_id": 39,
       "lean_name": "GreatgrammaCore.lalr_reference.sequence_head_allowed_with_scratch",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr_reference::sequence_head_allowed_with_scratch",
@@ -4474,7 +4474,7 @@
       "reducible": false
     },
     {
-      "def_id": 184,
+      "def_id": 185,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.sequence_allowed_with_scratch",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::sequence_allowed_with_scratch",
@@ -4491,7 +4491,7 @@
       "reducible": false
     },
     {
-      "def_id": 183,
+      "def_id": 184,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.bucket_allows_token",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::bucket_allows_token",
@@ -4508,7 +4508,7 @@
       "reducible": false
     },
     {
-      "def_id": 182,
+      "def_id": 183,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.ordinary_token_allowed_with_scratch_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::ordinary_token_allowed_with_scratch",
@@ -4527,7 +4527,7 @@
       "parent_lean_name": "GreatgrammaCore.engine.PreparedGrammar.ordinary_token_allowed_with_scratch"
     },
     {
-      "def_id": 182,
+      "def_id": 183,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.ordinary_token_allowed_with_scratch",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::ordinary_token_allowed_with_scratch",
@@ -4544,7 +4544,7 @@
       "reducible": false
     },
     {
-      "def_id": 181,
+      "def_id": 182,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.evaluate_token_into",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::evaluate_token_into",
@@ -4561,7 +4561,7 @@
       "reducible": false
     },
     {
-      "def_id": 173,
+      "def_id": 174,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.allows_status",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::allows_status",
@@ -4578,7 +4578,7 @@
       "reducible": false
     },
     {
-      "def_id": 174,
+      "def_id": 175,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.next_status_into",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::next_status_into",
@@ -4595,7 +4595,7 @@
       "reducible": false
     },
     {
-      "def_id": 45,
+      "def_id": 46,
       "lean_name": "GreatgrammaCore.mask.set",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::mask::set",
@@ -4612,7 +4612,7 @@
       "reducible": false
     },
     {
-      "def_id": 180,
+      "def_id": 181,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_eos_token",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_eos_token",
@@ -4629,7 +4629,7 @@
       "reducible": false
     },
     {
-      "def_id": 179,
+      "def_id": 180,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_eos_mask_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_eos_mask",
@@ -4648,7 +4648,7 @@
       "parent_lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_eos_mask"
     },
     {
-      "def_id": 179,
+      "def_id": 180,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_eos_mask",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_eos_mask",
@@ -4665,7 +4665,7 @@
       "reducible": false
     },
     {
-      "def_id": 178,
+      "def_id": 179,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_mask_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_bucket_mask",
@@ -4684,7 +4684,7 @@
       "parent_lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_mask"
     },
     {
-      "def_id": 178,
+      "def_id": 179,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_mask",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_bucket_mask",
@@ -4701,7 +4701,7 @@
       "reducible": false
     },
     {
-      "def_id": 177,
+      "def_id": 178,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_at",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_bucket_at",
@@ -4718,7 +4718,7 @@
       "reducible": false
     },
     {
-      "def_id": 176,
+      "def_id": 177,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_ordinary_mask_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_ordinary_mask",
@@ -4737,7 +4737,7 @@
       "parent_lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_ordinary_mask"
     },
     {
-      "def_id": 176,
+      "def_id": 177,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_ordinary_mask",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_ordinary_mask",
@@ -4754,7 +4754,7 @@
       "reducible": false
     },
     {
-      "def_id": 175,
+      "def_id": 176,
       "lean_name": "GreatgrammaCore.engine.PreparedGrammar.fill_mask_with_scratch",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::PreparedGrammar}::fill_mask_with_scratch",
@@ -4771,7 +4771,7 @@
       "reducible": false
     },
     {
-      "def_id": 192,
+      "def_id": 193,
       "lean_name": "GreatgrammaCore.engine.Matcher.row_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::row_count",
@@ -4788,7 +4788,7 @@
       "reducible": false
     },
     {
-      "def_id": 193,
+      "def_id": 194,
       "lean_name": "GreatgrammaCore.engine.Matcher.token_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::token_count",
@@ -4805,7 +4805,7 @@
       "reducible": false
     },
     {
-      "def_id": 194,
+      "def_id": 195,
       "lean_name": "GreatgrammaCore.engine.Matcher.mask_bytes",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::mask_bytes",
@@ -4822,7 +4822,7 @@
       "reducible": false
     },
     {
-      "def_id": 205,
+      "def_id": 206,
       "lean_name": "GreatgrammaCore.engine.Matcher.state",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::state",
@@ -4839,7 +4839,7 @@
       "reducible": false
     },
     {
-      "def_id": 195,
+      "def_id": 196,
       "lean_name": "GreatgrammaCore.engine.Matcher.is_completed",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::is_completed",
@@ -4856,7 +4856,7 @@
       "reducible": false
     },
     {
-      "def_id": 44,
+      "def_id": 45,
       "lean_name": "GreatgrammaCore.mask.clear_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::mask::clear",
@@ -4875,7 +4875,7 @@
       "parent_lean_name": "GreatgrammaCore.mask.clear"
     },
     {
-      "def_id": 44,
+      "def_id": 45,
       "lean_name": "GreatgrammaCore.mask.clear",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::mask::clear",
@@ -4892,15 +4892,15 @@
       "reducible": true
     },
     {
-      "def_id": 4,
+      "def_id": 5,
       "lean_name": "GreatgrammaCore.engine.fill_selected_mask",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::fill_selected_mask",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 777,
-        "end_line": 790
+        "begin_line": 784,
+        "end_line": 797
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4909,7 +4909,7 @@
       "reducible": false
     },
     {
-      "def_id": 196,
+      "def_id": 197,
       "lean_name": "GreatgrammaCore.engine.Matcher.mask",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::mask",
@@ -4926,15 +4926,15 @@
       "reducible": false
     },
     {
-      "def_id": 16,
+      "def_id": 17,
       "lean_name": "GreatgrammaCore.engine.engine_result",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::engine_result",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 1021,
-        "end_line": 1026
+        "begin_line": 1028,
+        "end_line": 1033
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4943,15 +4943,15 @@
       "reducible": false
     },
     {
-      "def_id": 5,
+      "def_id": 6,
       "lean_name": "GreatgrammaCore.engine.fill_mask_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::fill_mask_row",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 792,
-        "end_line": 817
+        "begin_line": 799,
+        "end_line": 824
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4960,15 +4960,15 @@
       "reducible": false
     },
     {
-      "def_id": 3,
+      "def_id": 4,
       "lean_name": "GreatgrammaCore.engine.fill_all_masks_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::fill_all_masks",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 770,
-        "end_line": 773
+        "begin_line": 777,
+        "end_line": 780
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4979,15 +4979,15 @@
       "parent_lean_name": "GreatgrammaCore.engine.fill_all_masks"
     },
     {
-      "def_id": 3,
+      "def_id": 4,
       "lean_name": "GreatgrammaCore.engine.fill_all_masks",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::fill_all_masks",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 762,
-        "end_line": 775
+        "begin_line": 769,
+        "end_line": 782
       },
       "is_opaque": false,
       "can_fail": true,
@@ -4996,7 +4996,7 @@
       "reducible": false
     },
     {
-      "def_id": 197,
+      "def_id": 198,
       "lean_name": "GreatgrammaCore.engine.Matcher.masks",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::masks",
@@ -5013,7 +5013,7 @@
       "reducible": false
     },
     {
-      "def_id": 198,
+      "def_id": 199,
       "lean_name": "GreatgrammaCore.engine.Matcher.allows",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::allows",
@@ -5030,15 +5030,15 @@
       "reducible": false
     },
     {
-      "def_id": 13,
+      "def_id": 14,
       "lean_name": "GreatgrammaCore.engine.swap_status_at",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::swap_status_at",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 959,
-        "end_line": 974
+        "begin_line": 966,
+        "end_line": 981
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5047,15 +5047,15 @@
       "reducible": false
     },
     {
-      "def_id": 11,
+      "def_id": 12,
       "lean_name": "GreatgrammaCore.engine.next_status_at",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::next_status_at",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 932,
-        "end_line": 947
+        "begin_line": 939,
+        "end_line": 954
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5064,7 +5064,7 @@
       "reducible": false
     },
     {
-      "def_id": 199,
+      "def_id": 200,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance",
@@ -5081,15 +5081,15 @@
       "reducible": false
     },
     {
-      "def_id": 7,
+      "def_id": 8,
       "lean_name": "GreatgrammaCore.engine.stage_batch_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_batch_row",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 835,
-        "end_line": 858
+        "begin_line": 842,
+        "end_line": 865
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5098,15 +5098,15 @@
       "reducible": false
     },
     {
-      "def_id": 6,
+      "def_id": 7,
       "lean_name": "GreatgrammaCore.engine.stage_batch_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_batch",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 828,
-        "end_line": 831
+        "begin_line": 835,
+        "end_line": 838
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5117,15 +5117,15 @@
       "parent_lean_name": "GreatgrammaCore.engine.stage_batch"
     },
     {
-      "def_id": 6,
+      "def_id": 7,
       "lean_name": "GreatgrammaCore.engine.stage_batch",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_batch",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 819,
-        "end_line": 833
+        "begin_line": 826,
+        "end_line": 840
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5134,7 +5134,7 @@
       "reducible": false
     },
     {
-      "def_id": 645,
+      "def_id": 646,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_batch.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_batch::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::engine::EngineError> for greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_batch::closure}::call_once",
@@ -5151,7 +5151,7 @@
       "reducible": false
     },
     {
-      "def_id": 200,
+      "def_id": 201,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_batch",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_batch",
@@ -5168,15 +5168,15 @@
       "reducible": false
     },
     {
-      "def_id": 12,
+      "def_id": 13,
       "lean_name": "GreatgrammaCore.engine.set_staging_accepted",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::set_staging_accepted",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 949,
-        "end_line": 957
+        "begin_line": 956,
+        "end_line": 964
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5185,15 +5185,15 @@
       "reducible": false
     },
     {
-      "def_id": 10,
+      "def_id": 11,
       "lean_name": "GreatgrammaCore.engine.stage_active_row",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_active_row",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 896,
-        "end_line": 929
+        "begin_line": 903,
+        "end_line": 936
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5202,15 +5202,15 @@
       "reducible": false
     },
     {
-      "def_id": 8,
+      "def_id": 9,
       "lean_name": "GreatgrammaCore.engine.stage_active_with_results_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_active_with_results",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 870,
-        "end_line": 876
+        "begin_line": 877,
+        "end_line": 883
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5221,15 +5221,15 @@
       "parent_lean_name": "GreatgrammaCore.engine.stage_active_with_results"
     },
     {
-      "def_id": 8,
+      "def_id": 9,
       "lean_name": "GreatgrammaCore.engine.stage_active_with_results",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_active_with_results",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 860,
-        "end_line": 878
+        "begin_line": 867,
+        "end_line": 885
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5238,7 +5238,7 @@
       "reducible": false
     },
     {
-      "def_id": 647,
+      "def_id": 648,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_active.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::engine::EngineError> for greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active::closure}::call_once",
@@ -5255,7 +5255,7 @@
       "reducible": false
     },
     {
-      "def_id": 201,
+      "def_id": 202,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_active",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active",
@@ -5272,15 +5272,15 @@
       "reducible": false
     },
     {
-      "def_id": 15,
-      "lean_name": "GreatgrammaCore.engine.fill_staged_mask_row",
+      "def_id": 3,
+      "lean_name": "GreatgrammaCore.engine.reserved_vec_after_clear",
       "lean_file": "Funs.lean",
-      "rust_name": "greatgramma_core::engine::fill_staged_mask_row",
+      "rust_name": "greatgramma_core::engine::reserved_vec_after_clear",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 991,
-        "end_line": 1019
+        "begin_line": 764,
+        "end_line": 767
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5289,15 +5289,32 @@
       "reducible": false
     },
     {
-      "def_id": 14,
+      "def_id": 16,
+      "lean_name": "GreatgrammaCore.engine.fill_staged_mask_row",
+      "lean_file": "Funs.lean",
+      "rust_name": "greatgramma_core::engine::fill_staged_mask_row",
+      "is_local": true,
+      "source": {
+        "file": "crates/greatgramma-core/src/engine.rs",
+        "begin_line": 998,
+        "end_line": 1026
+      },
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "is_rec": false,
+      "reducible": false
+    },
+    {
+      "def_id": 15,
       "lean_name": "GreatgrammaCore.engine.fill_staged_masks_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::fill_staged_masks",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 984,
-        "end_line": 987
+        "begin_line": 991,
+        "end_line": 994
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5308,15 +5325,15 @@
       "parent_lean_name": "GreatgrammaCore.engine.fill_staged_masks"
     },
     {
-      "def_id": 14,
+      "def_id": 15,
       "lean_name": "GreatgrammaCore.engine.fill_staged_masks",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::fill_staged_masks",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 976,
-        "end_line": 989
+        "begin_line": 983,
+        "end_line": 996
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5325,15 +5342,15 @@
       "reducible": false
     },
     {
-      "def_id": 9,
+      "def_id": 10,
       "lean_name": "GreatgrammaCore.engine.stage_active_without_results_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_active_without_results",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 889,
-        "end_line": 892
+        "begin_line": 896,
+        "end_line": 899
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5344,15 +5361,15 @@
       "parent_lean_name": "GreatgrammaCore.engine.stage_active_without_results"
     },
     {
-      "def_id": 9,
+      "def_id": 10,
       "lean_name": "GreatgrammaCore.engine.stage_active_without_results",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::stage_active_without_results",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 880,
-        "end_line": 894
+        "begin_line": 887,
+        "end_line": 901
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5361,14 +5378,14 @@
       "reducible": false
     },
     {
-      "def_id": 204,
+      "def_id": 205,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_active_and_masks_impl",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks_impl",
       "is_local": true,
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
-        "begin_line": 695,
+        "begin_line": 696,
         "end_line": 752
       },
       "is_opaque": false,
@@ -5378,7 +5395,7 @@
       "reducible": false
     },
     {
-      "def_id": 649,
+      "def_id": 650,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_active_and_masks.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::engine::EngineError> for greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks::closure}::call_once",
@@ -5395,7 +5412,7 @@
       "reducible": false
     },
     {
-      "def_id": 202,
+      "def_id": 203,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_active_and_masks",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks",
@@ -5412,7 +5429,7 @@
       "reducible": false
     },
     {
-      "def_id": 203,
+      "def_id": 204,
       "lean_name": "GreatgrammaCore.engine.Matcher.advance_active_and_masks_no_result",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks_no_result",
@@ -5420,7 +5437,7 @@
       "source": {
         "file": "crates/greatgramma-core/src/engine.rs",
         "begin_line": 687,
-        "end_line": 693
+        "end_line": 694
       },
       "is_opaque": false,
       "can_fail": true,
@@ -5429,7 +5446,7 @@
       "reducible": false
     },
     {
-      "def_id": 213,
+      "def_id": 214,
       "lean_name": "GreatgrammaCore.error.ValidationTable.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::clone::Clone for greatgramma_core::error::ValidationTable}::clone",
@@ -5446,7 +5463,7 @@
       "reducible": false
     },
     {
-      "def_id": 214,
+      "def_id": 215,
       "lean_name": "GreatgrammaCore.error.ValidationTable.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::fmt::Debug for greatgramma_core::error::ValidationTable}::fmt",
@@ -5463,7 +5480,7 @@
       "reducible": false
     },
     {
-      "def_id": 216,
+      "def_id": 217,
       "lean_name": "GreatgrammaCore.error.ValidationTable.Insts.CoreCmpPartialEqValidationTable.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::PartialEq<greatgramma_core::error::ValidationTable> for greatgramma_core::error::ValidationTable}::eq",
@@ -5480,7 +5497,7 @@
       "reducible": false
     },
     {
-      "def_id": 215,
+      "def_id": 216,
       "lean_name": "GreatgrammaCore.error.ValidationTable.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::Eq for greatgramma_core::error::ValidationTable}::assert_fields_are_eq",
@@ -5497,7 +5514,7 @@
       "reducible": false
     },
     {
-      "def_id": 217,
+      "def_id": 218,
       "lean_name": "GreatgrammaCore.error.IdKind.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::clone::Clone for greatgramma_core::error::IdKind}::clone",
@@ -5514,7 +5531,7 @@
       "reducible": false
     },
     {
-      "def_id": 218,
+      "def_id": 219,
       "lean_name": "GreatgrammaCore.error.IdKind.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::fmt::Debug for greatgramma_core::error::IdKind}::fmt",
@@ -5531,7 +5548,7 @@
       "reducible": false
     },
     {
-      "def_id": 220,
+      "def_id": 221,
       "lean_name": "GreatgrammaCore.error.IdKind.Insts.CoreCmpPartialEqIdKind.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::PartialEq<greatgramma_core::error::IdKind> for greatgramma_core::error::IdKind}::eq",
@@ -5548,7 +5565,7 @@
       "reducible": false
     },
     {
-      "def_id": 219,
+      "def_id": 220,
       "lean_name": "GreatgrammaCore.error.IdKind.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::Eq for greatgramma_core::error::IdKind}::assert_fields_are_eq",
@@ -5565,7 +5582,7 @@
       "reducible": false
     },
     {
-      "def_id": 221,
+      "def_id": 222,
       "lean_name": "GreatgrammaCore.error.ArithmeticKind.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::clone::Clone for greatgramma_core::error::ArithmeticKind}::clone",
@@ -5582,7 +5599,7 @@
       "reducible": false
     },
     {
-      "def_id": 222,
+      "def_id": 223,
       "lean_name": "GreatgrammaCore.error.ArithmeticKind.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::fmt::Debug for greatgramma_core::error::ArithmeticKind}::fmt",
@@ -5599,7 +5616,7 @@
       "reducible": false
     },
     {
-      "def_id": 224,
+      "def_id": 225,
       "lean_name": "GreatgrammaCore.error.ArithmeticKind.Insts.CoreCmpPartialEqArithmeticKind.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::PartialEq<greatgramma_core::error::ArithmeticKind> for greatgramma_core::error::ArithmeticKind}::eq",
@@ -5616,7 +5633,7 @@
       "reducible": false
     },
     {
-      "def_id": 223,
+      "def_id": 224,
       "lean_name": "GreatgrammaCore.error.ArithmeticKind.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::Eq for greatgramma_core::error::ArithmeticKind}::assert_fields_are_eq",
@@ -5633,7 +5650,7 @@
       "reducible": false
     },
     {
-      "def_id": 225,
+      "def_id": 226,
       "lean_name": "GreatgrammaCore.error.LimitKind.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::clone::Clone for greatgramma_core::error::LimitKind}::clone",
@@ -5650,7 +5667,7 @@
       "reducible": false
     },
     {
-      "def_id": 226,
+      "def_id": 227,
       "lean_name": "GreatgrammaCore.error.LimitKind.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::fmt::Debug for greatgramma_core::error::LimitKind}::fmt",
@@ -5667,7 +5684,7 @@
       "reducible": false
     },
     {
-      "def_id": 228,
+      "def_id": 229,
       "lean_name": "GreatgrammaCore.error.LimitKind.Insts.CoreCmpPartialEqLimitKind.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::PartialEq<greatgramma_core::error::LimitKind> for greatgramma_core::error::LimitKind}::eq",
@@ -5684,7 +5701,7 @@
       "reducible": false
     },
     {
-      "def_id": 227,
+      "def_id": 228,
       "lean_name": "GreatgrammaCore.error.LimitKind.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::Eq for greatgramma_core::error::LimitKind}::assert_fields_are_eq",
@@ -5701,7 +5718,7 @@
       "reducible": false
     },
     {
-      "def_id": 229,
+      "def_id": 230,
       "lean_name": "GreatgrammaCore.error.ValidationError.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::clone::Clone for greatgramma_core::error::ValidationError}::clone",
@@ -5718,7 +5735,7 @@
       "reducible": false
     },
     {
-      "def_id": 261,
+      "def_id": 262,
       "lean_name": "GreatgrammaCore.ids.TerminalId.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::fmt::Debug for greatgramma_core::ids::TerminalId}::fmt",
@@ -5735,7 +5752,7 @@
       "reducible": false
     },
     {
-      "def_id": 230,
+      "def_id": 231,
       "lean_name": "GreatgrammaCore.error.ValidationError.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::fmt::Debug for greatgramma_core::error::ValidationError}::fmt",
@@ -5752,7 +5769,7 @@
       "reducible": false
     },
     {
-      "def_id": 232,
+      "def_id": 233,
       "lean_name": "GreatgrammaCore.error.ValidationError.Insts.CoreCmpPartialEqValidationError.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::PartialEq<greatgramma_core::error::ValidationError> for greatgramma_core::error::ValidationError}::eq",
@@ -5769,7 +5786,7 @@
       "reducible": false
     },
     {
-      "def_id": 231,
+      "def_id": 232,
       "lean_name": "GreatgrammaCore.error.ValidationError.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::error::{impl core::cmp::Eq for greatgramma_core::error::ValidationError}::assert_fields_are_eq",
@@ -5786,7 +5803,7 @@
       "reducible": false
     },
     {
-      "def_id": 276,
+      "def_id": 277,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::clone::Clone for greatgramma_core::ids::NonterminalId}::clone",
@@ -5803,7 +5820,7 @@
       "reducible": false
     },
     {
-      "def_id": 284,
+      "def_id": 285,
       "lean_name": "GreatgrammaCore.ids.ProductionId.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::clone::Clone for greatgramma_core::ids::ProductionId}::clone",
@@ -5820,7 +5837,7 @@
       "reducible": false
     },
     {
-      "def_id": 292,
+      "def_id": 293,
       "lean_name": "GreatgrammaCore.ids.SequenceId.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::clone::Clone for greatgramma_core::ids::SequenceId}::clone",
@@ -5837,7 +5854,7 @@
       "reducible": false
     },
     {
-      "def_id": 277,
+      "def_id": 278,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::fmt::Debug for greatgramma_core::ids::NonterminalId}::fmt",
@@ -5854,7 +5871,7 @@
       "reducible": false
     },
     {
-      "def_id": 285,
+      "def_id": 286,
       "lean_name": "GreatgrammaCore.ids.ProductionId.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::fmt::Debug for greatgramma_core::ids::ProductionId}::fmt",
@@ -5871,7 +5888,7 @@
       "reducible": false
     },
     {
-      "def_id": 293,
+      "def_id": 294,
       "lean_name": "GreatgrammaCore.ids.SequenceId.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::fmt::Debug for greatgramma_core::ids::SequenceId}::fmt",
@@ -5888,7 +5905,7 @@
       "reducible": false
     },
     {
-      "def_id": 235,
+      "def_id": 236,
       "lean_name": "GreatgrammaCore.ids.TokenId.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Eq for greatgramma_core::ids::TokenId}::assert_fields_are_eq",
@@ -5905,7 +5922,7 @@
       "reducible": false
     },
     {
-      "def_id": 254,
+      "def_id": 255,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Eq for greatgramma_core::ids::DfaStateId}::assert_fields_are_eq",
@@ -5922,7 +5939,7 @@
       "reducible": false
     },
     {
-      "def_id": 262,
+      "def_id": 263,
       "lean_name": "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Eq for greatgramma_core::ids::TerminalId}::assert_fields_are_eq",
@@ -5939,7 +5956,7 @@
       "reducible": false
     },
     {
-      "def_id": 270,
+      "def_id": 271,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Eq for greatgramma_core::ids::ParserStateId}::assert_fields_are_eq",
@@ -5956,7 +5973,7 @@
       "reducible": false
     },
     {
-      "def_id": 280,
+      "def_id": 281,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpPartialEqNonterminalId.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialEq<greatgramma_core::ids::NonterminalId> for greatgramma_core::ids::NonterminalId}::eq",
@@ -5973,7 +5990,7 @@
       "reducible": false
     },
     {
-      "def_id": 278,
+      "def_id": 279,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Eq for greatgramma_core::ids::NonterminalId}::assert_fields_are_eq",
@@ -5990,7 +6007,7 @@
       "reducible": false
     },
     {
-      "def_id": 288,
+      "def_id": 289,
       "lean_name": "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpPartialEqProductionId.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialEq<greatgramma_core::ids::ProductionId> for greatgramma_core::ids::ProductionId}::eq",
@@ -6007,7 +6024,7 @@
       "reducible": false
     },
     {
-      "def_id": 286,
+      "def_id": 287,
       "lean_name": "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Eq for greatgramma_core::ids::ProductionId}::assert_fields_are_eq",
@@ -6024,7 +6041,7 @@
       "reducible": false
     },
     {
-      "def_id": 294,
+      "def_id": 295,
       "lean_name": "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Eq for greatgramma_core::ids::SequenceId}::assert_fields_are_eq",
@@ -6041,7 +6058,7 @@
       "reducible": false
     },
     {
-      "def_id": 236,
+      "def_id": 237,
       "lean_name": "GreatgrammaCore.ids.TokenId.Insts.CoreCmpOrd.cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Ord for greatgramma_core::ids::TokenId}::cmp",
@@ -6058,7 +6075,7 @@
       "reducible": false
     },
     {
-      "def_id": 241,
+      "def_id": 242,
       "lean_name": "GreatgrammaCore.ids.TokenId.Insts.CoreCmpPartialOrdTokenId.partial_cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialOrd<greatgramma_core::ids::TokenId> for greatgramma_core::ids::TokenId}::partial_cmp",
@@ -6075,7 +6092,7 @@
       "reducible": false
     },
     {
-      "def_id": 255,
+      "def_id": 256,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpOrd.cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Ord for greatgramma_core::ids::DfaStateId}::cmp",
@@ -6092,7 +6109,7 @@
       "reducible": false
     },
     {
-      "def_id": 257,
+      "def_id": 258,
       "lean_name": "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpPartialOrdDfaStateId.partial_cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialOrd<greatgramma_core::ids::DfaStateId> for greatgramma_core::ids::DfaStateId}::partial_cmp",
@@ -6109,7 +6126,7 @@
       "reducible": false
     },
     {
-      "def_id": 263,
+      "def_id": 264,
       "lean_name": "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpOrd.cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Ord for greatgramma_core::ids::TerminalId}::cmp",
@@ -6126,7 +6143,7 @@
       "reducible": false
     },
     {
-      "def_id": 265,
+      "def_id": 266,
       "lean_name": "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpPartialOrdTerminalId.partial_cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialOrd<greatgramma_core::ids::TerminalId> for greatgramma_core::ids::TerminalId}::partial_cmp",
@@ -6143,7 +6160,7 @@
       "reducible": false
     },
     {
-      "def_id": 271,
+      "def_id": 272,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpOrd.cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Ord for greatgramma_core::ids::ParserStateId}::cmp",
@@ -6160,7 +6177,7 @@
       "reducible": false
     },
     {
-      "def_id": 273,
+      "def_id": 274,
       "lean_name": "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpPartialOrdParserStateId.partial_cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialOrd<greatgramma_core::ids::ParserStateId> for greatgramma_core::ids::ParserStateId}::partial_cmp",
@@ -6177,7 +6194,7 @@
       "reducible": false
     },
     {
-      "def_id": 279,
+      "def_id": 280,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpOrd.cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Ord for greatgramma_core::ids::NonterminalId}::cmp",
@@ -6194,7 +6211,7 @@
       "reducible": false
     },
     {
-      "def_id": 281,
+      "def_id": 282,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpPartialOrdNonterminalId.partial_cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialOrd<greatgramma_core::ids::NonterminalId> for greatgramma_core::ids::NonterminalId}::partial_cmp",
@@ -6211,7 +6228,7 @@
       "reducible": false
     },
     {
-      "def_id": 287,
+      "def_id": 288,
       "lean_name": "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpOrd.cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Ord for greatgramma_core::ids::ProductionId}::cmp",
@@ -6228,7 +6245,7 @@
       "reducible": false
     },
     {
-      "def_id": 289,
+      "def_id": 290,
       "lean_name": "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpPartialOrdProductionId.partial_cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialOrd<greatgramma_core::ids::ProductionId> for greatgramma_core::ids::ProductionId}::partial_cmp",
@@ -6245,7 +6262,7 @@
       "reducible": false
     },
     {
-      "def_id": 295,
+      "def_id": 296,
       "lean_name": "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpOrd.cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::Ord for greatgramma_core::ids::SequenceId}::cmp",
@@ -6262,7 +6279,7 @@
       "reducible": false
     },
     {
-      "def_id": 297,
+      "def_id": 298,
       "lean_name": "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpPartialOrdSequenceId.partial_cmp",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{impl core::cmp::PartialOrd<greatgramma_core::ids::SequenceId> for greatgramma_core::ids::SequenceId}::partial_cmp",
@@ -6279,7 +6296,7 @@
       "reducible": false
     },
     {
-      "def_id": 282,
+      "def_id": 283,
       "lean_name": "GreatgrammaCore.ids.NonterminalId.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::NonterminalId}::new",
@@ -6296,7 +6313,7 @@
       "reducible": false
     },
     {
-      "def_id": 290,
+      "def_id": 291,
       "lean_name": "GreatgrammaCore.ids.ProductionId.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::ids::{greatgramma_core::ids::ProductionId}::new",
@@ -6313,7 +6330,7 @@
       "reducible": false
     },
     {
-      "def_id": 300,
+      "def_id": 301,
       "lean_name": "GreatgrammaCore.lalr.ParserExecution.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::clone::Clone for greatgramma_core::lalr::ParserExecution}::clone",
@@ -6330,7 +6347,7 @@
       "reducible": false
     },
     {
-      "def_id": 301,
+      "def_id": 302,
       "lean_name": "GreatgrammaCore.lalr.ParserExecution.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::fmt::Debug for greatgramma_core::lalr::ParserExecution}::fmt",
@@ -6347,7 +6364,7 @@
       "reducible": false
     },
     {
-      "def_id": 303,
+      "def_id": 304,
       "lean_name": "GreatgrammaCore.lalr.ParserExecution.Insts.CoreCmpPartialEqParserExecution.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::cmp::PartialEq<greatgramma_core::lalr::ParserExecution> for greatgramma_core::lalr::ParserExecution}::eq",
@@ -6364,7 +6381,7 @@
       "reducible": false
     },
     {
-      "def_id": 302,
+      "def_id": 303,
       "lean_name": "GreatgrammaCore.lalr.ParserExecution.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::cmp::Eq for greatgramma_core::lalr::ParserExecution}::assert_fields_are_eq",
@@ -6381,7 +6398,7 @@
       "reducible": false
     },
     {
-      "def_id": 304,
+      "def_id": 305,
       "lean_name": "GreatgrammaCore.lalr.ParserError.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::clone::Clone for greatgramma_core::lalr::ParserError}::clone",
@@ -6398,7 +6415,7 @@
       "reducible": false
     },
     {
-      "def_id": 305,
+      "def_id": 306,
       "lean_name": "GreatgrammaCore.lalr.ParserError.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::fmt::Debug for greatgramma_core::lalr::ParserError}::fmt",
@@ -6415,7 +6432,7 @@
       "reducible": false
     },
     {
-      "def_id": 307,
+      "def_id": 308,
       "lean_name": "GreatgrammaCore.lalr.ParserError.Insts.CoreCmpPartialEqParserError.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::cmp::PartialEq<greatgramma_core::lalr::ParserError> for greatgramma_core::lalr::ParserError}::eq",
@@ -6432,7 +6449,7 @@
       "reducible": false
     },
     {
-      "def_id": 306,
+      "def_id": 307,
       "lean_name": "GreatgrammaCore.lalr.ParserError.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::cmp::Eq for greatgramma_core::lalr::ParserError}::assert_fields_are_eq",
@@ -6449,7 +6466,7 @@
       "reducible": false
     },
     {
-      "def_id": 308,
+      "def_id": 309,
       "lean_name": "GreatgrammaCore.lalr.RunDecision.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::clone::Clone for greatgramma_core::lalr::RunDecision}::clone",
@@ -6466,7 +6483,7 @@
       "reducible": false
     },
     {
-      "def_id": 309,
+      "def_id": 310,
       "lean_name": "GreatgrammaCore.lalr.RunDecision.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::fmt::Debug for greatgramma_core::lalr::RunDecision}::fmt",
@@ -6483,7 +6500,7 @@
       "reducible": false
     },
     {
-      "def_id": 311,
+      "def_id": 312,
       "lean_name": "GreatgrammaCore.lalr.RunDecision.Insts.CoreCmpPartialEqRunDecision.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::cmp::PartialEq<greatgramma_core::lalr::RunDecision> for greatgramma_core::lalr::RunDecision}::eq",
@@ -6500,7 +6517,7 @@
       "reducible": false
     },
     {
-      "def_id": 310,
+      "def_id": 311,
       "lean_name": "GreatgrammaCore.lalr.RunDecision.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::cmp::Eq for greatgramma_core::lalr::RunDecision}::assert_fields_are_eq",
@@ -6517,7 +6534,7 @@
       "reducible": false
     },
     {
-      "def_id": 312,
+      "def_id": 313,
       "lean_name": "GreatgrammaCore.lalr.UnderflowMode.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::clone::Clone for greatgramma_core::lalr::UnderflowMode}::clone",
@@ -6534,7 +6551,7 @@
       "reducible": false
     },
     {
-      "def_id": 313,
+      "def_id": 314,
       "lean_name": "GreatgrammaCore.lalr.PreviousReduction.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::{impl core::clone::Clone for greatgramma_core::lalr::PreviousReduction}::clone",
@@ -6551,7 +6568,7 @@
       "reducible": false
     },
     {
-      "def_id": 25,
+      "def_id": 26,
       "lean_name": "GreatgrammaCore.lalr.validate_inputs_loop0",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::validate_inputs",
@@ -6570,7 +6587,7 @@
       "parent_lean_name": "GreatgrammaCore.lalr.validate_inputs"
     },
     {
-      "def_id": 25,
+      "def_id": 26,
       "lean_name": "GreatgrammaCore.lalr.validate_inputs_loop1",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::validate_inputs",
@@ -6589,7 +6606,7 @@
       "parent_lean_name": "GreatgrammaCore.lalr.validate_inputs"
     },
     {
-      "def_id": 25,
+      "def_id": 26,
       "lean_name": "GreatgrammaCore.lalr.validate_inputs",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::validate_inputs",
@@ -6606,7 +6623,7 @@
       "reducible": false
     },
     {
-      "def_id": 20,
+      "def_id": 21,
       "lean_name": "GreatgrammaCore.lalr.execute_terminals",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::execute_terminals",
@@ -6623,7 +6640,7 @@
       "reducible": false
     },
     {
-      "def_id": 21,
+      "def_id": 22,
       "lean_name": "GreatgrammaCore.lalr.execute_terminals_symbolic",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr::execute_terminals_symbolic",
@@ -6640,7 +6657,7 @@
       "reducible": false
     },
     {
-      "def_id": 37,
+      "def_id": 38,
       "lean_name": "GreatgrammaCore.lalr_reference.execute_sequence_head_checked",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr_reference::execute_sequence_head_checked",
@@ -6657,7 +6674,7 @@
       "reducible": false
     },
     {
-      "def_id": 36,
+      "def_id": 37,
       "lean_name": "GreatgrammaCore.lalr_reference.execute_sequence_head",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lalr_reference::execute_sequence_head",
@@ -6674,7 +6691,7 @@
       "reducible": false
     },
     {
-      "def_id": 336,
+      "def_id": 337,
       "lean_name": "GreatgrammaCore.lexer.LexerState.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::clone::Clone for greatgramma_core::lexer::LexerState}::clone",
@@ -6691,7 +6708,7 @@
       "reducible": false
     },
     {
-      "def_id": 338,
+      "def_id": 339,
       "lean_name": "GreatgrammaCore.lexer.LexerState.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::Eq for greatgramma_core::lexer::LexerState}::assert_fields_are_eq",
@@ -6708,7 +6725,7 @@
       "reducible": false
     },
     {
-      "def_id": 340,
+      "def_id": 341,
       "lean_name": "GreatgrammaCore.lexer.LexerInput.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::clone::Clone for greatgramma_core::lexer::LexerInput}::clone",
@@ -6725,7 +6742,7 @@
       "reducible": false
     },
     {
-      "def_id": 341,
+      "def_id": 342,
       "lean_name": "GreatgrammaCore.lexer.LexerInput.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::fmt::Debug for greatgramma_core::lexer::LexerInput}::fmt",
@@ -6742,7 +6759,7 @@
       "reducible": false
     },
     {
-      "def_id": 343,
+      "def_id": 344,
       "lean_name": "GreatgrammaCore.lexer.LexerInput.Insts.CoreCmpPartialEqLexerInput.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::PartialEq<greatgramma_core::lexer::LexerInput> for greatgramma_core::lexer::LexerInput}::eq",
@@ -6759,7 +6776,7 @@
       "reducible": false
     },
     {
-      "def_id": 342,
+      "def_id": 343,
       "lean_name": "GreatgrammaCore.lexer.LexerInput.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::Eq for greatgramma_core::lexer::LexerInput}::assert_fields_are_eq",
@@ -6776,7 +6793,7 @@
       "reducible": false
     },
     {
-      "def_id": 344,
+      "def_id": 345,
       "lean_name": "GreatgrammaCore.lexer.LexerStep.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::clone::Clone for greatgramma_core::lexer::LexerStep}::clone",
@@ -6793,7 +6810,7 @@
       "reducible": false
     },
     {
-      "def_id": 345,
+      "def_id": 346,
       "lean_name": "GreatgrammaCore.lexer.LexerStep.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::fmt::Debug for greatgramma_core::lexer::LexerStep}::fmt",
@@ -6810,7 +6827,7 @@
       "reducible": false
     },
     {
-      "def_id": 347,
+      "def_id": 348,
       "lean_name": "GreatgrammaCore.lexer.LexerStep.Insts.CoreCmpPartialEqLexerStep.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::PartialEq<greatgramma_core::lexer::LexerStep> for greatgramma_core::lexer::LexerStep}::eq",
@@ -6827,7 +6844,7 @@
       "reducible": false
     },
     {
-      "def_id": 346,
+      "def_id": 347,
       "lean_name": "GreatgrammaCore.lexer.LexerStep.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::Eq for greatgramma_core::lexer::LexerStep}::assert_fields_are_eq",
@@ -6844,7 +6861,7 @@
       "reducible": false
     },
     {
-      "def_id": 348,
+      "def_id": 349,
       "lean_name": "GreatgrammaCore.lexer.LexerError.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::clone::Clone for greatgramma_core::lexer::LexerError}::clone",
@@ -6861,7 +6878,7 @@
       "reducible": false
     },
     {
-      "def_id": 349,
+      "def_id": 350,
       "lean_name": "GreatgrammaCore.lexer.LexerError.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::fmt::Debug for greatgramma_core::lexer::LexerError}::fmt",
@@ -6878,7 +6895,7 @@
       "reducible": false
     },
     {
-      "def_id": 351,
+      "def_id": 352,
       "lean_name": "GreatgrammaCore.lexer.LexerError.Insts.CoreCmpPartialEqLexerError.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::PartialEq<greatgramma_core::lexer::LexerError> for greatgramma_core::lexer::LexerError}::eq",
@@ -6895,7 +6912,7 @@
       "reducible": false
     },
     {
-      "def_id": 350,
+      "def_id": 351,
       "lean_name": "GreatgrammaCore.lexer.LexerError.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::lexer::{impl core::cmp::Eq for greatgramma_core::lexer::LexerError}::assert_fields_are_eq",
@@ -6912,7 +6929,7 @@
       "reducible": false
     },
     {
-      "def_id": 357,
+      "def_id": 358,
       "lean_name": "GreatgrammaCore.limits.ValidationLimits.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::clone::Clone for greatgramma_core::limits::ValidationLimits}::clone",
@@ -6929,7 +6946,7 @@
       "reducible": false
     },
     {
-      "def_id": 358,
+      "def_id": 359,
       "lean_name": "GreatgrammaCore.limits.ValidationLimits.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::fmt::Debug for greatgramma_core::limits::ValidationLimits}::fmt",
@@ -6946,7 +6963,7 @@
       "reducible": false
     },
     {
-      "def_id": 360,
+      "def_id": 361,
       "lean_name": "GreatgrammaCore.limits.ValidationLimits.Insts.CoreCmpPartialEqValidationLimits.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::cmp::PartialEq<greatgramma_core::limits::ValidationLimits> for greatgramma_core::limits::ValidationLimits}::eq",
@@ -6963,7 +6980,7 @@
       "reducible": false
     },
     {
-      "def_id": 359,
+      "def_id": 360,
       "lean_name": "GreatgrammaCore.limits.ValidationLimits.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::cmp::Eq for greatgramma_core::limits::ValidationLimits}::assert_fields_are_eq",
@@ -6980,7 +6997,7 @@
       "reducible": false
     },
     {
-      "def_id": 361,
+      "def_id": 362,
       "lean_name": "GreatgrammaCore.limits.ValidationLimits.Insts.CoreDefaultDefault.default",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::default::Default for greatgramma_core::limits::ValidationLimits}::default",
@@ -6997,7 +7014,7 @@
       "reducible": false
     },
     {
-      "def_id": 362,
+      "def_id": 363,
       "lean_name": "GreatgrammaCore.limits.PreparationLimits.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::clone::Clone for greatgramma_core::limits::PreparationLimits}::clone",
@@ -7014,7 +7031,7 @@
       "reducible": false
     },
     {
-      "def_id": 363,
+      "def_id": 364,
       "lean_name": "GreatgrammaCore.limits.PreparationLimits.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::fmt::Debug for greatgramma_core::limits::PreparationLimits}::fmt",
@@ -7031,7 +7048,7 @@
       "reducible": false
     },
     {
-      "def_id": 365,
+      "def_id": 366,
       "lean_name": "GreatgrammaCore.limits.PreparationLimits.Insts.CoreCmpPartialEqPreparationLimits.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::cmp::PartialEq<greatgramma_core::limits::PreparationLimits> for greatgramma_core::limits::PreparationLimits}::eq",
@@ -7048,7 +7065,7 @@
       "reducible": false
     },
     {
-      "def_id": 364,
+      "def_id": 365,
       "lean_name": "GreatgrammaCore.limits.PreparationLimits.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::cmp::Eq for greatgramma_core::limits::PreparationLimits}::assert_fields_are_eq",
@@ -7065,7 +7082,7 @@
       "reducible": false
     },
     {
-      "def_id": 366,
+      "def_id": 367,
       "lean_name": "GreatgrammaCore.limits.PreparationLimits.Insts.CoreDefaultDefault.default",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::limits::{impl core::default::Default for greatgramma_core::limits::PreparationLimits}::default",
@@ -7082,7 +7099,7 @@
       "reducible": false
     },
     {
-      "def_id": 367,
+      "def_id": 368,
       "lean_name": "GreatgrammaCore.normalized.TokenEntry.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::TokenEntry}::fmt",
@@ -7099,7 +7116,7 @@
       "reducible": false
     },
     {
-      "def_id": 369,
+      "def_id": 370,
       "lean_name": "GreatgrammaCore.normalized.TokenEntry.Insts.CoreCmpPartialEqTokenEntry.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::TokenEntry> for greatgramma_core::normalized::TokenEntry}::eq",
@@ -7116,7 +7133,7 @@
       "reducible": false
     },
     {
-      "def_id": 368,
+      "def_id": 369,
       "lean_name": "GreatgrammaCore.normalized.TokenEntry.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::TokenEntry}::assert_fields_are_eq",
@@ -7133,7 +7150,7 @@
       "reducible": false
     },
     {
-      "def_id": 370,
+      "def_id": 371,
       "lean_name": "GreatgrammaCore.normalized.LexerDfa.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::LexerDfa}::fmt",
@@ -7150,7 +7167,7 @@
       "reducible": false
     },
     {
-      "def_id": 372,
+      "def_id": 373,
       "lean_name": "GreatgrammaCore.normalized.LexerDfa.Insts.CoreCmpPartialEqLexerDfa.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::LexerDfa> for greatgramma_core::normalized::LexerDfa}::eq",
@@ -7167,7 +7184,7 @@
       "reducible": false
     },
     {
-      "def_id": 371,
+      "def_id": 372,
       "lean_name": "GreatgrammaCore.normalized.LexerDfa.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::LexerDfa}::assert_fields_are_eq",
@@ -7184,7 +7201,7 @@
       "reducible": false
     },
     {
-      "def_id": 373,
+      "def_id": 374,
       "lean_name": "GreatgrammaCore.normalized.LexerDfa.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::LexerDfa}::new",
@@ -7201,7 +7218,7 @@
       "reducible": false
     },
     {
-      "def_id": 374,
+      "def_id": 375,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::clone::Clone for greatgramma_core::normalized::LalrDimensions}::clone",
@@ -7218,7 +7235,7 @@
       "reducible": false
     },
     {
-      "def_id": 375,
+      "def_id": 376,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::LalrDimensions}::fmt",
@@ -7235,7 +7252,7 @@
       "reducible": false
     },
     {
-      "def_id": 377,
+      "def_id": 378,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreCmpPartialEqLalrDimensions.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::LalrDimensions> for greatgramma_core::normalized::LalrDimensions}::eq",
@@ -7252,7 +7269,7 @@
       "reducible": false
     },
     {
-      "def_id": 376,
+      "def_id": 377,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::LalrDimensions}::assert_fields_are_eq",
@@ -7269,7 +7286,7 @@
       "reducible": false
     },
     {
-      "def_id": 378,
+      "def_id": 379,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::LalrDimensions}::new",
@@ -7286,7 +7303,7 @@
       "reducible": false
     },
     {
-      "def_id": 379,
+      "def_id": 380,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.impl.state_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::LalrDimensions}::state_count",
@@ -7303,7 +7320,7 @@
       "reducible": false
     },
     {
-      "def_id": 380,
+      "def_id": 381,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.impl.terminal_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::LalrDimensions}::terminal_count",
@@ -7320,7 +7337,7 @@
       "reducible": false
     },
     {
-      "def_id": 381,
+      "def_id": 382,
       "lean_name": "GreatgrammaCore.normalized.LalrDimensions.impl.nonterminal_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::LalrDimensions}::nonterminal_count",
@@ -7337,7 +7354,7 @@
       "reducible": false
     },
     {
-      "def_id": 383,
+      "def_id": 384,
       "lean_name": "GreatgrammaCore.normalized.Action.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::Action}::fmt",
@@ -7354,7 +7371,7 @@
       "reducible": false
     },
     {
-      "def_id": 385,
+      "def_id": 386,
       "lean_name": "GreatgrammaCore.normalized.Action.Insts.CoreCmpPartialEqAction.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::Action> for greatgramma_core::normalized::Action}::eq",
@@ -7371,7 +7388,7 @@
       "reducible": false
     },
     {
-      "def_id": 384,
+      "def_id": 385,
       "lean_name": "GreatgrammaCore.normalized.Action.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::Action}::assert_fields_are_eq",
@@ -7388,7 +7405,7 @@
       "reducible": false
     },
     {
-      "def_id": 387,
+      "def_id": 388,
       "lean_name": "GreatgrammaCore.normalized.Production.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::Production}::fmt",
@@ -7405,7 +7422,7 @@
       "reducible": false
     },
     {
-      "def_id": 389,
+      "def_id": 390,
       "lean_name": "GreatgrammaCore.normalized.Production.Insts.CoreCmpPartialEqProduction.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::Production> for greatgramma_core::normalized::Production}::eq",
@@ -7422,7 +7439,7 @@
       "reducible": false
     },
     {
-      "def_id": 388,
+      "def_id": 389,
       "lean_name": "GreatgrammaCore.normalized.Production.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::Production}::assert_fields_are_eq",
@@ -7439,7 +7456,7 @@
       "reducible": false
     },
     {
-      "def_id": 390,
+      "def_id": 391,
       "lean_name": "GreatgrammaCore.normalized.Production.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::Production}::new",
@@ -7456,7 +7473,7 @@
       "reducible": false
     },
     {
-      "def_id": 391,
+      "def_id": 392,
       "lean_name": "GreatgrammaCore.normalized.LalrTable.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::LalrTable}::fmt",
@@ -7473,7 +7490,7 @@
       "reducible": false
     },
     {
-      "def_id": 393,
+      "def_id": 394,
       "lean_name": "GreatgrammaCore.normalized.LalrTable.Insts.CoreCmpPartialEqLalrTable.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::LalrTable> for greatgramma_core::normalized::LalrTable}::eq",
@@ -7490,7 +7507,7 @@
       "reducible": false
     },
     {
-      "def_id": 392,
+      "def_id": 393,
       "lean_name": "GreatgrammaCore.normalized.LalrTable.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::LalrTable}::assert_fields_are_eq",
@@ -7507,7 +7524,7 @@
       "reducible": false
     },
     {
-      "def_id": 394,
+      "def_id": 395,
       "lean_name": "GreatgrammaCore.normalized.LalrTable.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::LalrTable}::new",
@@ -7524,7 +7541,7 @@
       "reducible": false
     },
     {
-      "def_id": 395,
+      "def_id": 396,
       "lean_name": "GreatgrammaCore.normalized.LalrTable.with_ignored_terminals",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::LalrTable}::with_ignored_terminals",
@@ -7541,7 +7558,7 @@
       "reducible": false
     },
     {
-      "def_id": 396,
+      "def_id": 397,
       "lean_name": "GreatgrammaCore.normalized.UnvalidatedGrammar.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::UnvalidatedGrammar}::fmt",
@@ -7558,7 +7575,7 @@
       "reducible": false
     },
     {
-      "def_id": 398,
+      "def_id": 399,
       "lean_name": "GreatgrammaCore.normalized.UnvalidatedGrammar.Insts.CoreCmpPartialEqUnvalidatedGrammar.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::UnvalidatedGrammar> for greatgramma_core::normalized::UnvalidatedGrammar}::eq",
@@ -7575,7 +7592,7 @@
       "reducible": false
     },
     {
-      "def_id": 397,
+      "def_id": 398,
       "lean_name": "GreatgrammaCore.normalized.UnvalidatedGrammar.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::UnvalidatedGrammar}::assert_fields_are_eq",
@@ -7592,7 +7609,7 @@
       "reducible": false
     },
     {
-      "def_id": 399,
+      "def_id": 400,
       "lean_name": "GreatgrammaCore.normalized.UnvalidatedGrammar.new",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::UnvalidatedGrammar}::new",
@@ -7609,7 +7626,7 @@
       "reducible": false
     },
     {
-      "def_id": 627,
+      "def_id": 628,
       "lean_name": "GreatgrammaCore.validate.count_as_usize.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::count_as_usize::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::error::ValidationError> for greatgramma_core::validate::count_as_usize::closure<'_0>}::call_once",
@@ -7626,7 +7643,7 @@
       "reducible": false
     },
     {
-      "def_id": 134,
+      "def_id": 135,
       "lean_name": "GreatgrammaCore.validate.count_as_usize",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::count_as_usize",
@@ -7643,7 +7660,7 @@
       "reducible": false
     },
     {
-      "def_id": 129,
+      "def_id": 130,
       "lean_name": "GreatgrammaCore.validate.check_length",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::check_length",
@@ -7660,7 +7677,7 @@
       "reducible": false
     },
     {
-      "def_id": 128,
+      "def_id": 129,
       "lean_name": "GreatgrammaCore.validate.validate_id",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_id",
@@ -7677,7 +7694,7 @@
       "reducible": false
     },
     {
-      "def_id": 127,
+      "def_id": 128,
       "lean_name": "GreatgrammaCore.validate.validation_result",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validation_result",
@@ -7694,7 +7711,7 @@
       "reducible": false
     },
     {
-      "def_id": 126,
+      "def_id": 127,
       "lean_name": "GreatgrammaCore.validate.validate_ignored_terminal",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_ignored_terminal",
@@ -7711,7 +7728,7 @@
       "reducible": false
     },
     {
-      "def_id": 125,
+      "def_id": 126,
       "lean_name": "GreatgrammaCore.validate.validate_ignored_terminals_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_ignored_terminals",
@@ -7730,7 +7747,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_ignored_terminals"
     },
     {
-      "def_id": 125,
+      "def_id": 126,
       "lean_name": "GreatgrammaCore.validate.validate_ignored_terminals",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_ignored_terminals",
@@ -7747,7 +7764,7 @@
       "reducible": false
     },
     {
-      "def_id": 625,
+      "def_id": 626,
       "lean_name": "GreatgrammaCore.validate.index_as_u32.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::index_as_u32::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::error::ValidationError> for greatgramma_core::validate::index_as_u32::closure<'_0>}::call_once",
@@ -7764,7 +7781,7 @@
       "reducible": false
     },
     {
-      "def_id": 133,
+      "def_id": 134,
       "lean_name": "GreatgrammaCore.validate.index_as_u32",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::index_as_u32",
@@ -7781,7 +7798,7 @@
       "reducible": false
     },
     {
-      "def_id": 124,
+      "def_id": 125,
       "lean_name": "GreatgrammaCore.validate.validate_action",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_action",
@@ -7798,7 +7815,7 @@
       "reducible": false
     },
     {
-      "def_id": 123,
+      "def_id": 124,
       "lean_name": "GreatgrammaCore.validate.validate_actions_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_actions",
@@ -7817,7 +7834,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_actions"
     },
     {
-      "def_id": 123,
+      "def_id": 124,
       "lean_name": "GreatgrammaCore.validate.validate_actions",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_actions",
@@ -7834,7 +7851,7 @@
       "reducible": false
     },
     {
-      "def_id": 623,
+      "def_id": 624,
       "lean_name": "GreatgrammaCore.validate.validate_byte_class.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_byte_class::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::error::ValidationError> for greatgramma_core::validate::validate_byte_class::closure}::call_once",
@@ -7851,7 +7868,7 @@
       "reducible": false
     },
     {
-      "def_id": 122,
+      "def_id": 123,
       "lean_name": "GreatgrammaCore.validate.validate_byte_class",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_byte_class",
@@ -7868,7 +7885,7 @@
       "reducible": false
     },
     {
-      "def_id": 121,
+      "def_id": 122,
       "lean_name": "GreatgrammaCore.validate.validate_byte_classes_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_byte_classes",
@@ -7887,7 +7904,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_byte_classes"
     },
     {
-      "def_id": 121,
+      "def_id": 122,
       "lean_name": "GreatgrammaCore.validate.validate_byte_classes",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_byte_classes",
@@ -7904,7 +7921,7 @@
       "reducible": false
     },
     {
-      "def_id": 118,
+      "def_id": 119,
       "lean_name": "GreatgrammaCore.validate.mark_ignored_terminal",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::mark_ignored_terminal",
@@ -7921,7 +7938,7 @@
       "reducible": false
     },
     {
-      "def_id": 619,
+      "def_id": 620,
       "lean_name": "GreatgrammaCore.validate.build_ignored_terminal_table.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorValidationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::build_ignored_terminal_table::{impl core::ops::function::FnOnce<(alloc::collections::TryReserveError,), greatgramma_core::error::ValidationError> for greatgramma_core::validate::build_ignored_terminal_table::closure<'_0>}::call_once",
@@ -7938,7 +7955,7 @@
       "reducible": false
     },
     {
-      "def_id": 117,
+      "def_id": 118,
       "lean_name": "GreatgrammaCore.validate.build_ignored_terminal_table_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::build_ignored_terminal_table",
@@ -7957,7 +7974,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.build_ignored_terminal_table"
     },
     {
-      "def_id": 117,
+      "def_id": 118,
       "lean_name": "GreatgrammaCore.validate.build_ignored_terminal_table",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::build_ignored_terminal_table",
@@ -7974,7 +7991,7 @@
       "reducible": false
     },
     {
-      "def_id": 116,
+      "def_id": 117,
       "lean_name": "GreatgrammaCore.validate.validate_productions_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_productions",
@@ -7993,7 +8010,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_productions"
     },
     {
-      "def_id": 116,
+      "def_id": 117,
       "lean_name": "GreatgrammaCore.validate.validate_productions",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_productions",
@@ -8010,7 +8027,7 @@
       "reducible": false
     },
     {
-      "def_id": 115,
+      "def_id": 116,
       "lean_name": "GreatgrammaCore.validate.validate_goto",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_goto",
@@ -8027,7 +8044,7 @@
       "reducible": false
     },
     {
-      "def_id": 114,
+      "def_id": 115,
       "lean_name": "GreatgrammaCore.validate.validate_gotos_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_gotos",
@@ -8046,7 +8063,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_gotos"
     },
     {
-      "def_id": 114,
+      "def_id": 115,
       "lean_name": "GreatgrammaCore.validate.validate_gotos",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_gotos",
@@ -8063,7 +8080,7 @@
       "reducible": false
     },
     {
-      "def_id": 113,
+      "def_id": 114,
       "lean_name": "GreatgrammaCore.validate.validate_lexer_terminal",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_lexer_terminal",
@@ -8080,7 +8097,7 @@
       "reducible": false
     },
     {
-      "def_id": 112,
+      "def_id": 113,
       "lean_name": "GreatgrammaCore.validate.validate_lexer_terminals_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_lexer_terminals",
@@ -8099,7 +8116,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_lexer_terminals"
     },
     {
-      "def_id": 112,
+      "def_id": 113,
       "lean_name": "GreatgrammaCore.validate.validate_lexer_terminals",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_lexer_terminals",
@@ -8116,7 +8133,7 @@
       "reducible": false
     },
     {
-      "def_id": 111,
+      "def_id": 112,
       "lean_name": "GreatgrammaCore.validate.validate_transition",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_transition",
@@ -8133,7 +8150,7 @@
       "reducible": false
     },
     {
-      "def_id": 110,
+      "def_id": 111,
       "lean_name": "GreatgrammaCore.validate.validate_transitions_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_transitions",
@@ -8152,7 +8169,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_transitions"
     },
     {
-      "def_id": 110,
+      "def_id": 111,
       "lean_name": "GreatgrammaCore.validate.validate_transitions",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_transitions",
@@ -8169,7 +8186,7 @@
       "reducible": false
     },
     {
-      "def_id": 136,
+      "def_id": 137,
       "lean_name": "GreatgrammaCore.validate.checked_mul",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::checked_mul",
@@ -8186,7 +8203,7 @@
       "reducible": false
     },
     {
-      "def_id": 135,
+      "def_id": 136,
       "lean_name": "GreatgrammaCore.validate.checked_add",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::checked_add",
@@ -8203,7 +8220,7 @@
       "reducible": false
     },
     {
-      "def_id": 138,
+      "def_id": 139,
       "lean_name": "GreatgrammaCore.validate.validation_base_work",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validation_base_work",
@@ -8220,7 +8237,7 @@
       "reducible": false
     },
     {
-      "def_id": 137,
+      "def_id": 138,
       "lean_name": "GreatgrammaCore.validate.logical_bytes",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::logical_bytes",
@@ -8237,7 +8254,7 @@
       "reducible": false
     },
     {
-      "def_id": 132,
+      "def_id": 133,
       "lean_name": "GreatgrammaCore.validate.checked_product",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::checked_product",
@@ -8254,7 +8271,7 @@
       "reducible": false
     },
     {
-      "def_id": 131,
+      "def_id": 132,
       "lean_name": "GreatgrammaCore.validate.checked_len",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::checked_len",
@@ -8271,7 +8288,7 @@
       "reducible": false
     },
     {
-      "def_id": 130,
+      "def_id": 131,
       "lean_name": "GreatgrammaCore.validate.check_limit",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::check_limit",
@@ -8288,7 +8305,7 @@
       "reducible": false
     },
     {
-      "def_id": 621,
+      "def_id": 622,
       "lean_name": "GreatgrammaCore.validate.validate_token_entry.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_token_entry::{impl core::ops::function::FnOnce<(core::num::error::TryFromIntError,), greatgramma_core::error::ValidationError> for greatgramma_core::validate::validate_token_entry::closure}::call_once",
@@ -8305,7 +8322,7 @@
       "reducible": false
     },
     {
-      "def_id": 120,
+      "def_id": 121,
       "lean_name": "GreatgrammaCore.validate.validate_token_entry",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_token_entry",
@@ -8322,7 +8339,7 @@
       "reducible": false
     },
     {
-      "def_id": 119,
+      "def_id": 120,
       "lean_name": "GreatgrammaCore.validate.validate_tokens_loop",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_tokens",
@@ -8341,7 +8358,7 @@
       "parent_lean_name": "GreatgrammaCore.validate.validate_tokens"
     },
     {
-      "def_id": 119,
+      "def_id": 120,
       "lean_name": "GreatgrammaCore.validate.validate_tokens",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_tokens",
@@ -8358,7 +8375,7 @@
       "reducible": false
     },
     {
-      "def_id": 109,
+      "def_id": 110,
       "lean_name": "GreatgrammaCore.validate.validate_declared_sizes",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate_declared_sizes",
@@ -8375,7 +8392,7 @@
       "reducible": false
     },
     {
-      "def_id": 418,
+      "def_id": 419,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.from_unvalidated",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::from_unvalidated",
@@ -8392,7 +8409,7 @@
       "reducible": false
     },
     {
-      "def_id": 410,
+      "def_id": 411,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.from_unvalidated",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::from_unvalidated",
@@ -8409,7 +8426,7 @@
       "reducible": false
     },
     {
-      "def_id": 404,
+      "def_id": 405,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.from_parts",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedGrammar}::from_parts",
@@ -8426,7 +8443,7 @@
       "reducible": false
     },
     {
-      "def_id": 108,
+      "def_id": 109,
       "lean_name": "GreatgrammaCore.validate.validate",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::validate",
@@ -8443,7 +8460,7 @@
       "reducible": false
     },
     {
-      "def_id": 400,
+      "def_id": 401,
       "lean_name": "GreatgrammaCore.normalized.UnvalidatedGrammar.validate",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::UnvalidatedGrammar}::validate",
@@ -8460,7 +8477,7 @@
       "reducible": false
     },
     {
-      "def_id": 415,
+      "def_id": 416,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::ValidatedLalr}::fmt",
@@ -8477,7 +8494,7 @@
       "reducible": false
     },
     {
-      "def_id": 407,
+      "def_id": 408,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::ValidatedLexer}::fmt",
@@ -8494,7 +8511,7 @@
       "reducible": false
     },
     {
-      "def_id": 401,
+      "def_id": 402,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::fmt::Debug for greatgramma_core::normalized::ValidatedGrammar}::fmt",
@@ -8511,7 +8528,7 @@
       "reducible": false
     },
     {
-      "def_id": 417,
+      "def_id": 418,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.Insts.CoreCmpPartialEqValidatedLalr.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::ValidatedLalr> for greatgramma_core::normalized::ValidatedLalr}::eq",
@@ -8528,7 +8545,7 @@
       "reducible": false
     },
     {
-      "def_id": 409,
+      "def_id": 410,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.Insts.CoreCmpPartialEqValidatedLexer.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::ValidatedLexer> for greatgramma_core::normalized::ValidatedLexer}::eq",
@@ -8545,7 +8562,7 @@
       "reducible": false
     },
     {
-      "def_id": 403,
+      "def_id": 404,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.Insts.CoreCmpPartialEqValidatedGrammar.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::PartialEq<greatgramma_core::normalized::ValidatedGrammar> for greatgramma_core::normalized::ValidatedGrammar}::eq",
@@ -8562,7 +8579,7 @@
       "reducible": false
     },
     {
-      "def_id": 402,
+      "def_id": 403,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::ValidatedGrammar}::assert_fields_are_eq",
@@ -8579,7 +8596,7 @@
       "reducible": false
     },
     {
-      "def_id": 405,
+      "def_id": 406,
       "lean_name": "GreatgrammaCore.normalized.ValidatedGrammar.impl.tokens",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedGrammar}::tokens",
@@ -8596,7 +8613,7 @@
       "reducible": false
     },
     {
-      "def_id": 408,
+      "def_id": 409,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::ValidatedLexer}::assert_fields_are_eq",
@@ -8613,7 +8630,7 @@
       "reducible": false
     },
     {
-      "def_id": 412,
+      "def_id": 413,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLexer.impl.class_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLexer}::class_count",
@@ -8630,7 +8647,7 @@
       "reducible": false
     },
     {
-      "def_id": 416,
+      "def_id": 417,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{impl core::cmp::Eq for greatgramma_core::normalized::ValidatedLalr}::assert_fields_are_eq",
@@ -8647,7 +8664,7 @@
       "reducible": false
     },
     {
-      "def_id": 420,
+      "def_id": 421,
       "lean_name": "GreatgrammaCore.normalized.ValidatedLalr.impl.production_count",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::normalized::{greatgramma_core::normalized::ValidatedLalr}::production_count",
@@ -8664,7 +8681,7 @@
       "reducible": false
     },
     {
-      "def_id": 427,
+      "def_id": 428,
       "lean_name": "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::{impl core::fmt::Debug for greatgramma_core::preprocess::SequenceClassification}::fmt",
@@ -8681,7 +8698,7 @@
       "reducible": false
     },
     {
-      "def_id": 429,
+      "def_id": 430,
       "lean_name": "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreCmpPartialEqSequenceClassification.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::{impl core::cmp::PartialEq<greatgramma_core::preprocess::SequenceClassification> for greatgramma_core::preprocess::SequenceClassification}::eq",
@@ -8698,7 +8715,7 @@
       "reducible": false
     },
     {
-      "def_id": 428,
+      "def_id": 429,
       "lean_name": "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::{impl core::cmp::Eq for greatgramma_core::preprocess::SequenceClassification}::assert_fields_are_eq",
@@ -8715,7 +8732,7 @@
       "reducible": false
     },
     {
-      "def_id": 47,
+      "def_id": 48,
       "lean_name": "GreatgrammaCore.preprocess.classify_sequence_head",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::classify_sequence_head",
@@ -8732,7 +8749,7 @@
       "reducible": false
     },
     {
-      "def_id": 48,
+      "def_id": 49,
       "lean_name": "GreatgrammaCore.preprocess.prepare_parser",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::preprocess::prepare_parser",
@@ -8749,7 +8766,7 @@
       "reducible": false
     },
     {
-      "def_id": 438,
+      "def_id": 439,
       "lean_name": "GreatgrammaCore.sequence.SequenceTable.singleton",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::sequence::{greatgramma_core::sequence::SequenceTable}::singleton",
@@ -8766,7 +8783,7 @@
       "reducible": false
     },
     {
-      "def_id": 447,
+      "def_id": 448,
       "lean_name": "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{impl core::clone::Clone for greatgramma_core::spanner::SpannerQueryError}::clone",
@@ -8783,7 +8800,7 @@
       "reducible": false
     },
     {
-      "def_id": 448,
+      "def_id": 449,
       "lean_name": "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{impl core::fmt::Debug for greatgramma_core::spanner::SpannerQueryError}::fmt",
@@ -8800,7 +8817,7 @@
       "reducible": false
     },
     {
-      "def_id": 450,
+      "def_id": 451,
       "lean_name": "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreCmpPartialEqSpannerQueryError.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{impl core::cmp::PartialEq<greatgramma_core::spanner::SpannerQueryError> for greatgramma_core::spanner::SpannerQueryError}::eq",
@@ -8817,7 +8834,7 @@
       "reducible": false
     },
     {
-      "def_id": 449,
+      "def_id": 450,
       "lean_name": "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{impl core::cmp::Eq for greatgramma_core::spanner::SpannerQueryError}::assert_fields_are_eq",
@@ -8834,7 +8851,7 @@
       "reducible": false
     },
     {
-      "def_id": 451,
+      "def_id": 452,
       "lean_name": "GreatgrammaCore.spanner.PreparedSpanner.singleton_terminals",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{greatgramma_core::spanner::PreparedSpanner}::singleton_terminals",
@@ -8851,7 +8868,7 @@
       "reducible": false
     },
     {
-      "def_id": 452,
+      "def_id": 453,
       "lean_name": "GreatgrammaCore.spanner.PreparedSpanner.inverse_tokens",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::{greatgramma_core::spanner::PreparedSpanner}::inverse_tokens",
@@ -8868,7 +8885,7 @@
       "reducible": false
     },
     {
-      "def_id": 72,
+      "def_id": 73,
       "lean_name": "GreatgrammaCore.spanner.prepare_spanner",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::spanner::prepare_spanner",
@@ -8885,7 +8902,7 @@
       "reducible": false
     },
     {
-      "def_id": 459,
+      "def_id": 460,
       "lean_name": "GreatgrammaCore.token_step.TokenExecution.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::clone::Clone for greatgramma_core::token_step::TokenExecution}::clone",
@@ -8902,7 +8919,7 @@
       "reducible": false
     },
     {
-      "def_id": 460,
+      "def_id": 461,
       "lean_name": "GreatgrammaCore.token_step.TokenExecution.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::fmt::Debug for greatgramma_core::token_step::TokenExecution}::fmt",
@@ -8919,7 +8936,7 @@
       "reducible": false
     },
     {
-      "def_id": 462,
+      "def_id": 463,
       "lean_name": "GreatgrammaCore.token_step.TokenExecution.Insts.CoreCmpPartialEqTokenExecution.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::cmp::PartialEq<greatgramma_core::token_step::TokenExecution> for greatgramma_core::token_step::TokenExecution}::eq",
@@ -8936,7 +8953,7 @@
       "reducible": false
     },
     {
-      "def_id": 461,
+      "def_id": 462,
       "lean_name": "GreatgrammaCore.token_step.TokenExecution.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::cmp::Eq for greatgramma_core::token_step::TokenExecution}::assert_fields_are_eq",
@@ -8953,7 +8970,7 @@
       "reducible": false
     },
     {
-      "def_id": 463,
+      "def_id": 464,
       "lean_name": "GreatgrammaCore.token_step.TokenStepError.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::clone::Clone for greatgramma_core::token_step::TokenStepError}::clone",
@@ -8970,7 +8987,7 @@
       "reducible": false
     },
     {
-      "def_id": 464,
+      "def_id": 465,
       "lean_name": "GreatgrammaCore.token_step.TokenStepError.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::fmt::Debug for greatgramma_core::token_step::TokenStepError}::fmt",
@@ -8987,7 +9004,7 @@
       "reducible": false
     },
     {
-      "def_id": 466,
+      "def_id": 467,
       "lean_name": "GreatgrammaCore.token_step.TokenStepError.Insts.CoreCmpPartialEqTokenStepError.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::cmp::PartialEq<greatgramma_core::token_step::TokenStepError> for greatgramma_core::token_step::TokenStepError}::eq",
@@ -9004,7 +9021,7 @@
       "reducible": false
     },
     {
-      "def_id": 465,
+      "def_id": 466,
       "lean_name": "GreatgrammaCore.token_step.TokenStepError.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::cmp::Eq for greatgramma_core::token_step::TokenStepError}::assert_fields_are_eq",
@@ -9021,7 +9038,7 @@
       "reducible": false
     },
     {
-      "def_id": 467,
+      "def_id": 468,
       "lean_name": "GreatgrammaCore.token_step.PreparationError.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::clone::Clone for greatgramma_core::token_step::PreparationError}::clone",
@@ -9038,7 +9055,7 @@
       "reducible": false
     },
     {
-      "def_id": 468,
+      "def_id": 469,
       "lean_name": "GreatgrammaCore.token_step.PreparationError.Insts.CoreFmtDebug.fmt",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::fmt::Debug for greatgramma_core::token_step::PreparationError}::fmt",
@@ -9055,7 +9072,7 @@
       "reducible": false
     },
     {
-      "def_id": 470,
+      "def_id": 471,
       "lean_name": "GreatgrammaCore.token_step.PreparationError.Insts.CoreCmpPartialEqPreparationError.eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::cmp::PartialEq<greatgramma_core::token_step::PreparationError> for greatgramma_core::token_step::PreparationError}::eq",
@@ -9072,7 +9089,7 @@
       "reducible": false
     },
     {
-      "def_id": 469,
+      "def_id": 470,
       "lean_name": "GreatgrammaCore.token_step.PreparationError.Insts.CoreCmpEq.assert_fields_are_eq",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::{impl core::cmp::Eq for greatgramma_core::token_step::PreparationError}::assert_fields_are_eq",
@@ -9089,7 +9106,7 @@
       "reducible": false
     },
     {
-      "def_id": 85,
+      "def_id": 86,
       "lean_name": "GreatgrammaCore.token_step.check_source",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::check_source",
@@ -9106,7 +9123,7 @@
       "reducible": false
     },
     {
-      "def_id": 83,
+      "def_id": 84,
       "lean_name": "GreatgrammaCore.token_step.execute_token",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::token_step::execute_token",
@@ -9123,7 +9140,7 @@
       "reducible": false
     },
     {
-      "def_id": 482,
+      "def_id": 483,
       "lean_name": "GreatgrammaCore.validate.DeclaredSizes.Insts.CoreCloneClone.clone",
       "lean_file": "Funs.lean",
       "rust_name": "greatgramma_core::validate::{impl core::clone::Clone for greatgramma_core::validate::DeclaredSizes}::clone",

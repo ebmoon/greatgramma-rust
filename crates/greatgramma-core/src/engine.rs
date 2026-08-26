@@ -664,14 +664,14 @@ impl Matcher {
     }
 
     /// Computes all successor masks and commits the fixed rows only when every
-    /// running successor has a valid mask. Accepted rows leave a zero row for
-    /// the caller to replace with its padding policy.
+    /// running successor has a valid mask. Every output byte is zero on error,
+    /// including result allocation failure; accepted rows also leave zero rows.
     pub fn advance_active_and_masks(
         &mut self,
         tokens: &[Option<TokenId>],
         output: &mut [u8],
     ) -> Result<Vec<Option<AdvanceResult>>, EngineError> {
-        let mut results = reserved_vec(self.states.len())
+        let mut results = reserved_vec_after_clear(self.states.len(), output)
             .map_err(|requested| EngineError::AllocationFailure { requested })?;
         self.advance_active_and_masks_impl(tokens, output, Some(&mut results), false)?;
         Ok(results)
@@ -689,6 +689,7 @@ impl Matcher {
         tokens: &[Option<TokenId>],
         output: &mut [u8],
     ) -> Result<(), EngineError> {
+        mask::clear(output);
         self.advance_active_and_masks_impl(tokens, output, None, true)
     }
 
@@ -699,7 +700,6 @@ impl Matcher {
         results: Option<&mut Vec<Option<AdvanceResult>>>,
         report_rejected_row: bool,
     ) -> Result<(), EngineError> {
-        mask::clear(output);
         if tokens.len() != self.states.len() {
             return Err(EngineError::BatchSizeMismatch {
                 expected: self.states.len(),
@@ -757,6 +757,13 @@ impl Matcher {
             rows: self.states.len(),
         })
     }
+}
+
+/// Establishes the fused API's zero-buffer failure invariant before the only
+/// allocation performed by its result-returning entry point.
+fn reserved_vec_after_clear<T>(capacity: usize, output: &mut [u8]) -> Result<Vec<T>, usize> {
+    mask::clear(output);
+    reserved_vec(capacity)
 }
 
 fn fill_all_masks(
@@ -1061,6 +1068,16 @@ mod tests {
         Action, DfaStateId, LalrDimensions, LalrTable, LexerDfa, TerminalId, TokenEntry,
         UnvalidatedGrammar, ValidationLimits,
     };
+
+    #[test]
+    fn result_allocation_failure_clears_fused_output() {
+        let mut output = [0xff; 4];
+        assert_eq!(
+            reserved_vec_after_clear::<Option<AdvanceResult>>(usize::MAX, &mut output),
+            Err(usize::MAX),
+        );
+        assert_eq!(output, [0; 4]);
+    }
 
     fn reusable_stack_grammar() -> ValidatedGrammar {
         let item = TerminalId::new(0);
