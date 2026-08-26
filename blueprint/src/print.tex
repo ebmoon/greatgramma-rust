@@ -1,0 +1,23 @@
+% Printable entry point. Invoke latexmk with XeLaTeX directly from this directory.
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{expl3}
+\usepackage{amssymb,amsthm,mathtools}
+\usepackage[unicode,colorlinks=true,linkcolor=blue,urlcolor=magenta]{hyperref}
+\usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+
+\input{macros/common}
+\input{macros/print}
+
+\title{GreatGramma Rust: Phase 2 Lean Verification Blueprint}
+\author{GreatGramma contributors}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{center}
+  \small Documentation roadmap --- not kernel-checked proof evidence.
+\end{center}
+\input{content}
+\end{document}

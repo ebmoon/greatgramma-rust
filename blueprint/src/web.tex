@@ -1,0 +1,27 @@
+% HTML entry point. Invoke plasTeX directly from this directory.
+\documentclass{article}
+
+\usepackage{amssymb,amsthm,amsmath}
+\usepackage{hyperref}
+\usepackage[
+  dep_graph,
+  thms=definition+lemma+proposition+theorem+corollary+assumption
+]{blueprint}
+
+\input{macros/common}
+\input{macros/web}
+
+\home{https://github.com/ebmoon/greatgramma-rust}
+\github{https://github.com/ebmoon/greatgramma-rust}
+% No public doc-gen deployment exists. This base is inert while U1 has no links.
+\dochome{https://github.com/ebmoon/greatgramma-rust}
+
+\graphcolor{not_ready}{#D97706}{Planned or conditional; not proof evidence}
+
+\title{GreatGramma Rust: Phase 2 Lean Verification Blueprint}
+\author{GreatGramma contributors}
+
+\begin{document}
+\maketitle
+\input{content}
+\end{document}

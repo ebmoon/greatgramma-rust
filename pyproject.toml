@@ -25,6 +25,9 @@ dev = [
     "pyright==1.1.411",
     "pytest==9.1.1",
 ]
+proof-docs = [
+    "leanblueprint==0.0.20",
+]
 
 [tool.maturin]
 manifest-path = "crates/greatgramma-python/Cargo.toml"

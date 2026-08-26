@@ -1,0 +1,3729 @@
+{
+  "schema_version": 1,
+  "translation": {
+    "crate": "greatgramma_core",
+    "aeneas_version": "5d08da45",
+    "charon_version": "0.1.235"
+  },
+  "flag_semantics": "is_opaque, can_fail, and can_diverge are Aeneas translation properties; can_fail does not mean that the Rust API returns Result.",
+  "declarations": {
+    "GreatgrammaCore.engine.AdvanceResult.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.AdvanceResult.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.AdvanceResult.Insts.CoreCmpPartialEqAdvanceResult.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.AdvanceResult.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.EngineError.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.EngineError.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.EngineError.Insts.CoreCmpPartialEqEngineError.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.EngineError.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_active": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_active.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_active_and_masks": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_active_and_masks.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_active_and_masks_impl": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_active_and_masks_no_result": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_batch": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.advance_batch.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.allows": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.is_completed": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.mask": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.mask_bytes": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.masks": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.row_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.state": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.Matcher.token_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherPhase.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherPhase.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherPhase.Insts.CoreCmpPartialEqMatcherPhase.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherPhase.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherStatus.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherStatus.Insts.CoreCmpPartialEqMatcherStatus.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherStatus.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherStatus.empty": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.MatcherStatus.set_accepted": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.allows_status": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.bucket_allows_token": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.check_token": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.evaluate_eos_into": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.evaluate_token_into": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_at": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_mask": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_mask_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_mask_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.PreparedGrammar.fill_bucket_mask",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_eos_mask": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.PreparedGrammar.fill_eos_mask_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_eos_mask_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.PreparedGrammar.fill_eos_mask",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_eos_token": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_mask_with_scratch": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_ordinary_mask": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.PreparedGrammar.fill_ordinary_mask_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.fill_ordinary_mask_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.PreparedGrammar.fill_ordinary_mask",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.impl.mask_bytes": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.initial_status": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.initial_status.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.into_matcher": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.PreparedGrammar.into_matcher_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.into_matcher.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.into_matcher.closure_1.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.into_matcher_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.PreparedGrammar.into_matcher",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.next_status_into": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.ordinary_token_allowed_with_scratch": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.PreparedGrammar.ordinary_token_allowed_with_scratch_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.ordinary_token_allowed_with_scratch_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.PreparedGrammar.ordinary_token_allowed_with_scratch",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.sequence_allowed_with_scratch": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.PreparedGrammar.token_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.bucket_contains_token": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.bucket_contains_token_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.bucket_contains_token_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.bucket_contains_token",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.bucket_sequence_for_token": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.engine_result": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.fill_all_masks": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.fill_all_masks_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.fill_all_masks_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.fill_all_masks",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.fill_mask_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.fill_selected_mask": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.fill_staged_mask_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.fill_staged_masks": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.fill_staged_masks_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.fill_staged_masks_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.fill_staged_masks",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.map_parser_error": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.map_spanner_error": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.next_status_at": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.prepare": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.prepare.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.prepare.closure_1.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.running_lexer": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.set_staging_accepted": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_active_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_active_with_results": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.stage_active_with_results_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_active_with_results_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.stage_active_with_results",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_active_without_results": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.stage_active_without_results_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_active_without_results_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.stage_active_without_results",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_batch": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.engine.stage_batch_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_batch_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.engine.stage_batch",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.stage_batch_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.engine.swap_status_at": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ArithmeticKind.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ArithmeticKind.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ArithmeticKind.Insts.CoreCmpPartialEqArithmeticKind.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ArithmeticKind.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.IdKind.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.IdKind.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.IdKind.Insts.CoreCmpPartialEqIdKind.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.IdKind.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.LimitKind.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.LimitKind.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.LimitKind.Insts.CoreCmpPartialEqLimitKind.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.LimitKind.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationError.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationError.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationError.Insts.CoreCmpPartialEqValidationError.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationError.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationTable.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationTable.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationTable.Insts.CoreCmpPartialEqValidationTable.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.error.ValidationTable.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpOrd.cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpPartialEqDfaStateId.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.Insts.CoreCmpPartialOrdDfaStateId.partial_cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.get": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.DfaStateId.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpOrd.cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpPartialEqNonterminalId.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.Insts.CoreCmpPartialOrdNonterminalId.partial_cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.get": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.NonterminalId.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpOrd.cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpPartialEqParserStateId.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.Insts.CoreCmpPartialOrdParserStateId.partial_cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.get": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ParserStateId.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpOrd.cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpPartialEqProductionId.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.Insts.CoreCmpPartialOrdProductionId.partial_cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.get": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.ProductionId.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpOrd.cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpPartialEqSequenceId.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.Insts.CoreCmpPartialOrdSequenceId.partial_cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.get": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.SequenceId.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpOrd.cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpPartialEqTerminalId.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.Insts.CoreCmpPartialOrdTerminalId.partial_cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.get": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TerminalId.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.Insts.CoreCmpOrd.cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.Insts.CoreCmpPartialEqTokenId.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.Insts.CoreCmpPartialOrdTokenId.partial_cmp": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.get": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.ids.TokenId.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserError.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserError.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserError.Insts.CoreCmpPartialEqParserError.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserError.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserExecution.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserExecution.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserExecution.Insts.CoreCmpPartialEqParserExecution.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.ParserExecution.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.PreviousReduction.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunDecision.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunDecision.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunDecision.Insts.CoreCmpPartialEqRunDecision.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunDecision.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunWork.charge": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunWork.complete": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunWork.exceeded": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.RunWork.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.UnderflowMode.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.apply_reduction": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.apply_reduction.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorParserError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.check_reduction_progress": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.copy_stack_into": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.copy_stack_into.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorParserError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.execute_terminals": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.execute_terminals_concrete_in_place": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.execute_terminals_concrete_into": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.execute_terminals_symbolic": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.execute_terminals_symbolic_checked_with_limit": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.parser_push": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.parser_push.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeParserError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.run_initialized": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.lalr.run_initialized_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.run_initialized_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.lalr.run_initialized",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.run_terminal": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.lalr.run_terminal_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.run_terminal_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.lalr.run_terminal",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.run_validated_in_place": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.run_validated_into": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.stack_top": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.unbounded_decision": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.validate_inputs": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.lalr.validate_inputs_loop0",
+        "GreatgrammaCore.lalr.validate_inputs_loop1"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.validate_inputs_loop0": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.lalr.validate_inputs",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr.validate_inputs_loop1": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.lalr.validate_inputs",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr_reference.execute_sequence_head": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr_reference.execute_sequence_head_checked": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lalr_reference.sequence_head_allowed_with_scratch": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerError.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerError.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerError.Insts.CoreCmpPartialEqLexerError.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerError.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerInput.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerInput.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerInput.Insts.CoreCmpPartialEqLexerInput.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerInput.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerState.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerState.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerState.Insts.CoreCmpPartialEqLexerState.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerState.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerStep.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerStep.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerStep.Insts.CoreCmpPartialEqLexerStep.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.LexerStep.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.begin_lexeme": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.byte_step": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.eos_step": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.finish_or_reject_residual": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.lexer.lexer_step": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.PreparationLimits.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.PreparationLimits.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.PreparationLimits.Insts.CoreCmpPartialEqPreparationLimits.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.PreparationLimits.Insts.CoreDefaultDefault.default": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.PreparationLimits.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.ValidationLimits.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.ValidationLimits.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.ValidationLimits.Insts.CoreCmpPartialEqValidationLimits.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.ValidationLimits.Insts.CoreDefaultDefault.default": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.limits.ValidationLimits.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.mask.clear": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.mask.clear_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.mask.clear_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.mask.clear",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.mask.set": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Action.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Action.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Action.Insts.CoreCmpPartialEqAction.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Action.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreCmpPartialEqLalrDimensions.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.impl.nonterminal_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.impl.state_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.impl.terminal_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrDimensions.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrTable.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrTable.Insts.CoreCmpPartialEqLalrTable.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrTable.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrTable.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LalrTable.with_ignored_terminals": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LexerDfa.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LexerDfa.Insts.CoreCmpPartialEqLexerDfa.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LexerDfa.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.LexerDfa.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Production.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Production.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Production.Insts.CoreCmpPartialEqProduction.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Production.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Production.impl.lhs": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Production.impl.pop_len": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.Production.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.TokenEntry.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.TokenEntry.Insts.CoreCmpPartialEqTokenEntry.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.TokenEntry.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.UnvalidatedGrammar.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.UnvalidatedGrammar.Insts.CoreCmpPartialEqUnvalidatedGrammar.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.UnvalidatedGrammar.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.UnvalidatedGrammar.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.UnvalidatedGrammar.validate": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.Insts.CoreCmpPartialEqValidatedGrammar.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.from_parts": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.impl.lalr": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.impl.lexer": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.impl.token_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.impl.tokens": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedGrammar.token": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.Insts.CoreCmpPartialEqValidatedLalr.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.action": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.from_unvalidated": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.goto": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.impl.eof_terminal": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.impl.production_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.impl.start_state": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.is_ignored": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.nonterminal_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.nonterminal_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.production": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.state_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.state_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.terminal_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLalr.terminal_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.Insts.CoreCmpPartialEqValidatedLexer.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.byte_class": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.from_unvalidated": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.impl.class_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.impl.start_state": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.impl.state_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.state_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.terminal": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.ValidatedLexer.transition": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.normalized.checked_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.PreparedParser.classification": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.PreparedParser.classification.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorParserError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.PreparedParser.classification.closure_1.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorParserError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreCmpPartialEqSequenceClassification.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.SequenceClassification.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.classify_decision": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.classify_sequence_head": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.classify_sequence_head_with_budget": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.map_parser_preparation_error": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.prepare_parser": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.prepare_parser_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.preprocess.prepare_parser_row_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.prepare_parser_row_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.preprocess.prepare_parser_row",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.prepare_parser_with_budget": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.preprocess.prepare_parser_with_budget_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.prepare_parser_with_budget.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.prepare_parser_with_budget.closure_1.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.preprocess.prepare_parser_with_budget_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.preprocess.prepare_parser_with_budget",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.Fact.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.build_singletons": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.SequenceTable.build_singletons_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.build_singletons.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.build_singletons_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.SequenceTable.build_singletons",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.intern_head": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.sequence": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.sequence_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.singleton": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.singleton_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.SequenceTable.singleton_terminal": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.add_fact": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.add_fact.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.append_predecessor": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.collect_all_singletons": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.collect_all_singletons_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.collect_all_singletons_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.collect_all_singletons",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.collect_singleton": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.collect_singleton.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.collect_singleton_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.collect_singletons": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.collect_singletons_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.collect_singletons_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.collect_singletons",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.copy_direct": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.copy_direct_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.copy_direct_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.copy_direct",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.fact_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.fact_index.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.find_sequence": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.find_sequence_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.find_sequence_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.find_sequence",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.mark_fact_seen": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.matches_sequence": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.propagate_fact": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.propagate_fact_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.propagate_fact_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.propagate_fact",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.propagate_facts": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.propagate_facts_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.propagate_facts_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.propagate_facts",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.propagate_predecessor": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_byte": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_byte.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_source": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.scan_source_loop0",
+        "GreatgrammaCore.sequence.scan_source_loop1",
+        "GreatgrammaCore.sequence.scan_source_loop2",
+        "GreatgrammaCore.sequence.scan_source_loop3"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_source_loop0": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.scan_source",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_source_loop1": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.scan_source",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_source_loop2": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.scan_source",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_source_loop3": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.scan_source",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_sources": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.sequence.scan_sources_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.scan_sources_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.sequence.scan_sources",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.sequence_id": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.sequence.sequence_id.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.PreparedSpanner.inverse_buckets": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.PreparedSpanner.inverse_tokens": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.PreparedSpanner.query_source": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.PreparedSpanner.sequence": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.PreparedSpanner.sequence_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.PreparedSpanner.singleton_terminals": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.PreparedSpanner.token_execution": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreCmpPartialEqSpannerQueryError.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.SpannerQueryError.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.append_continuation": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.append_continuations": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.spanner.append_continuations_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.append_continuations_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.spanner.append_continuations",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.append_existing_member": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.append_member": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.append_token_continuations": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.bucket_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.spanner.bucket_index_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.bucket_index_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.spanner.bucket_index",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.build_inverse_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.spanner.build_inverse_row_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.build_inverse_row_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.spanner.build_inverse_row",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.build_inverse_rows": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.spanner.build_inverse_rows_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.build_inverse_rows_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.spanner.build_inverse_rows",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.invalid_state": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.prepare_spanner": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.spanner.prepare_spanner_with_budget": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.PreparationError.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.PreparationError.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.PreparationError.Insts.CoreCmpPartialEqPreparationError.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.PreparationError.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.PreparedTokenTable.cell": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.PreparedTokenTable.source_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenExecution.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenExecution.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenExecution.Insts.CoreCmpPartialEqTokenExecution.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenExecution.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenStepError.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenStepError.Insts.CoreCmpEq.assert_fields_are_eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenStepError.Insts.CoreCmpPartialEqTokenStepError.eq": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.TokenStepError.Insts.CoreFmtDebug.fmt": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.WorkBudget.charge": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.WorkBudget.new": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.WorkBudget.remaining": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.append_token_cell": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.append_token_cell.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.build_token_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.token_step.build_token_row_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.build_token_row_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.token_step.build_token_row",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.build_token_rows": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.token_step.build_token_rows_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.build_token_rows_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.token_step.build_token_rows",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.build_token_table_row": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.check_items": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.check_limit": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.check_source": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.execute_byte": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.execute_bytes": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.token_step.execute_bytes_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.execute_bytes_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.token_step.execute_bytes",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.execute_entry": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.execute_eos": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.execute_token": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.map_lexer_rejection": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.preparation_token_error": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.prepare_token_table": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.prepare_token_table.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorPreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.prepared_push": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.prepared_push.closure.Insts.CoreOpsFunctionFnOnceTupleUsizePreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.prepared_vec": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.prepared_vec.closure.Insts.CoreOpsFunctionFnOnceTupleUsizePreparationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.reserve_one": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.reserve_one.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorUsize.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.reserved_vec": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.reserved_vec.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorUsize.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.source_at": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.source_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.source_count.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.source_index": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.source_index.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeOptionUsize.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.source_index_for_count": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.source_index_for_count.closure.Insts.CoreOpsFunctionFnOnceTupleSharedUsizeBool.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.token_output": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.token_output.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeTokenStepError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.token_push": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.token_step.token_push.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeTokenStepError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.DeclaredSizes.Insts.CoreCloneClone.clone": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.build_ignored_terminal_table": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.build_ignored_terminal_table_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.build_ignored_terminal_table.closure.Insts.CoreOpsFunctionFnOnceTupleTryReserveErrorValidationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.build_ignored_terminal_table_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.build_ignored_terminal_table",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.check_length": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.check_limit": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.checked_add": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.checked_len": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.checked_mul": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.checked_product": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.count_as_usize": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.count_as_usize.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.index_as_u32": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.index_as_u32.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.logical_bytes": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.mark_ignored_terminal": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_action": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_actions": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_actions_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_actions_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_actions",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_byte_class": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_byte_class.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_byte_classes": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_byte_classes_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_byte_classes_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_byte_classes",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_declared_sizes": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_goto": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_gotos": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_gotos_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_gotos_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_gotos",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_id": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_ignored_terminal": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_ignored_terminals": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_ignored_terminals_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_ignored_terminals_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_ignored_terminals",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_lexer_terminal": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_lexer_terminals": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_lexer_terminals_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_lexer_terminals_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_lexer_terminals",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_productions": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_productions_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_productions_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_productions",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_token_entry": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_token_entry.closure.Insts.CoreOpsFunctionFnOnceTupleTryFromIntErrorValidationError.call_once": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_tokens": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_tokens_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_tokens_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_tokens",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_transition": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_transitions": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "loops": [
+        "GreatgrammaCore.validate.validate_transitions_loop"
+      ],
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validate_transitions_loop": {
+      "kind": "loop",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": true,
+      "parent": "GreatgrammaCore.validate.validate_transitions",
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validation_base_work": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    },
+    "GreatgrammaCore.validate.validation_result": {
+      "kind": "function",
+      "is_opaque": false,
+      "can_fail": true,
+      "can_diverge": false,
+      "status": "unproved"
+    }
+  }
+}

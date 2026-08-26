@@ -55,3 +55,28 @@ aeneas-smoke:
     @scripts/aeneas-smoke.sh
 
 aeneas-core: aeneas-smoke
+
+proof-build:
+    cd proofs && lake build Greatgramma blueprintCheckDecls
+
+proof-coverage:
+    python3 scripts/check-proof-coverage.py --self-test
+
+public-api-coverage:
+    python3 scripts/check-public-api-coverage.py --self-test
+
+proof-fast: proof-build proof-coverage public-api-coverage
+
+proof-docs-sync:
+    uv sync --locked --group proof-docs --no-install-project
+
+blueprint-clean:
+    rm -rf blueprint/web blueprint/print blueprint/lean_decls blueprint/src/*.paux
+
+blueprint-check: proof-fast proof-docs-sync blueprint-clean
+    python3 scripts/check-blueprint-coverage.py --self-test
+    uv run --frozen --no-sync --project . --directory blueprint/src plastex -c plastex.cfg web.tex
+    cd proofs && lake exe blueprintCheckDecls ../blueprint/lean_decls
+
+blueprint-build: blueprint-check
+    cd blueprint/src && latexmk -xelatex -interaction=nonstopmode -halt-on-error -outdir=../print print.tex
