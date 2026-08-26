@@ -273,6 +273,39 @@ def hooks(path: Path, kind: str) -> Counter:
     pattern = re.compile(rf'@\[rust_{kind}\s+"([^"]+)"')
     return Counter(pattern.findall(path.read_text(encoding="utf-8")))
 
+command_modifiers = (
+    r"(?:(?:@\[[^\]]*\]|private|public|protected|meta|noncomputable|unsafe|partial|nonrec)\s+)*"
+)
+bridge_declaration = re.compile(
+    rf"(?m)^\s*{command_modifiers}"
+    r"(?:abbrev|def|inductive|instance|opaque|structure|theorem)\b"
+)
+forbidden_declaration = re.compile(
+    rf"(?m)^\s*{command_modifiers}(?:axiom|opaque|constant)\b|\b(?:sorry|admit)\b"
+)
+
+# Keep the modifier-aware part of the trust-boundary gate executable even when
+# the checked-in models do not currently use command modifiers.
+for modifier in (
+    "private",
+    "public",
+    "protected",
+    "meta",
+    "noncomputable",
+    "unsafe",
+    "partial",
+    "nonrec",
+):
+    fixture = f"{modifier} axiom witness : False"
+    if not forbidden_declaration.search(fixture):
+        raise SystemExit(f"forbidden-declaration check missed self-test: {fixture}")
+if not forbidden_declaration.search(
+    "@[extern \"witness\"] private opaque witness : Nat"
+):
+    raise SystemExit("forbidden-declaration check missed attribute self-test")
+if not bridge_declaration.search("private def hidden := 0"):
+    raise SystemExit("import-only bridge check missed modified declaration self-test")
+
 expected_types = hooks(types_template, "type")
 expected_funs = hooks(funs_template, "fun")
 modeled_types = sum((hooks(path, "type") for path in model_paths), Counter())
@@ -290,10 +323,7 @@ for bridge in bridges:
     bridge_text = bridge.read_text(encoding="utf-8")
     if re.search(r'@\[rust_(?:fun|type)\s+"', bridge_text):
         raise SystemExit(f"generated-adjacent bridge is not import-only: {bridge}")
-    declaration = re.search(
-        r"(?m)^\s*(?:abbrev|def|inductive|instance|opaque|structure|theorem)\s",
-        bridge_text,
-    )
+    declaration = bridge_declaration.search(bridge_text)
     if declaration:
         line = bridge_text.count(chr(10), 0, declaration.start()) + 1
         raise SystemExit(
@@ -302,9 +332,7 @@ for bridge in bridges:
 
 for model_path in [*model_paths, *bridges]:
     model = model_path.read_text(encoding="utf-8")
-    forbidden = re.search(
-        r"(?m)^\s*(?:axiom|opaque|constant)\s|\b(?:sorry|admit)\b", model
-    )
+    forbidden = forbidden_declaration.search(model)
     if forbidden:
         line = model.count(chr(10), 0, forbidden.start()) + 1
         raise SystemExit(f"unconstrained declaration in {model_path}:{line}")
