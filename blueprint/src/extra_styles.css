@@ -1,0 +1,12 @@
+div.theorem_thmcontent,
+div.proposition_thmcontent,
+div.definition_thmcontent,
+div.assumption_thmcontent {
+  border-left: 0.16rem solid #334155;
+  padding-left: 0.8rem;
+}
+
+div.assumption_thmcontent {
+  border-left-color: #b45309;
+  background: #fffbeb;
+}

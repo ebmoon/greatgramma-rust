@@ -1,2 +1,9 @@
-# Aeneas-owned files, relative to proofs/Generated/.
+# Aeneas-owned files, relative to proofs/Generated/, after deterministic
+# namespace packaging by scripts/aeneas-smoke.sh. External support modules
+# without the `_Template` suffix are intentionally excluded.
 GreatgrammaCore.lean
+GreatgrammaCore/Funs.lean
+GreatgrammaCore/FunsExternal_Template.lean
+GreatgrammaCore/Types.lean
+GreatgrammaCore/TypesExternal_Template.lean
+GreatgrammaCore/translation.json

@@ -7,6 +7,20 @@ fail() {
     exit 1
 }
 
+write_tree_inventory() {
+    local inventory_root=$1
+    local inventory_output=$2
+    local unexpected_link
+    if IFS= read -r unexpected_link < <(find "${inventory_root}" -type l -print); then
+        echo "unexpected symlink in generated tree: ${unexpected_link}" >&2
+        return 1
+    fi
+    (
+        cd "${inventory_root}"
+        find . -type f -print | sed 's#^\./##' | LC_ALL=C sort
+    ) > "${inventory_output}"
+}
+
 script_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
 repo_root=$(CDPATH= cd -- "${script_dir}/.." && pwd -P)
 proof_root="${repo_root}/proofs"
@@ -17,6 +31,7 @@ generated_baseline="${proof_root}/Generated"
 [ -f "${pin_manifest}" ] || fail "missing ${pin_manifest}"
 [ -f "${generated_manifest}" ] || fail "missing ${generated_manifest}"
 [ -f "${proof_root}/lakefile.lean" ] || fail "missing ${proof_root}/lakefile.lean"
+[ -f "${proof_root}/lake-manifest.json" ] || fail "missing ${proof_root}/lake-manifest.json"
 [ -f "${proof_root}/lean-toolchain" ] || fail "missing ${proof_root}/lean-toolchain"
 # This file is repository-owned configuration containing readonly string values.
 # shellcheck source=../proofs/aeneas-manifest.env
@@ -34,8 +49,36 @@ charon_root=$(CDPATH= cd -- "${charon_root_input}" && pwd -P)
 
 command -v git >/dev/null 2>&1 || fail "git is required to verify the pinned source checkouts"
 command -v cargo >/dev/null 2>&1 || fail "cargo is required to build pinned Charon sources"
-command -v lake >/dev/null 2>&1 || fail "lake is required to elaborate the generated Lean module (${LEAN_TOOLCHAIN})"
-command -v lean >/dev/null 2>&1 || fail "lean is required to verify the generated Lean module (${LEAN_TOOLCHAIN})"
+command -v lake >/dev/null 2>&1 || fail "lake is required to elaborate the generated Lean project (${LEAN_TOOLCHAIN})"
+command -v lean >/dev/null 2>&1 || fail "lean is required to verify the generated Lean project (${LEAN_TOOLCHAIN})"
+command -v python3 >/dev/null 2>&1 || fail "python3 is required to validate the pinned Lake manifest"
+
+grep -Fq "${AENEAS_GIT_URL}" "${proof_root}/lakefile.lean" || fail "lakefile.lean does not use the pinned Aeneas URL"
+grep -Fq "${AENEAS_COMMIT}" "${proof_root}/lakefile.lean" || fail "lakefile.lean does not use the pinned Aeneas commit"
+grep -Fq "${AENEAS_LEAN_SUBDIR}" "${proof_root}/lakefile.lean" || fail "lakefile.lean does not use the pinned Aeneas Lean subdirectory"
+python3 - "${proof_root}/lake-manifest.json" "${AENEAS_GIT_URL}" "${AENEAS_COMMIT}" "${AENEAS_LEAN_SUBDIR}" <<'PY' || fail "lake-manifest.json does not lock the pinned Aeneas Lean dependency"
+import json
+from pathlib import Path
+import sys
+
+manifest_path, expected_url, expected_revision, expected_subdir = sys.argv[1:]
+manifest = json.loads(Path(manifest_path).read_text(encoding="utf-8"))
+matches = [
+    package
+    for package in manifest.get("packages", [])
+    if package.get("name") == "aeneas"
+]
+if len(matches) != 1:
+    raise SystemExit(1)
+package = matches[0]
+if (
+    package.get("url") != expected_url
+    or package.get("rev") != expected_revision
+    or package.get("inputRev") != expected_revision
+    or package.get("subDir") != expected_subdir
+):
+    raise SystemExit(1)
+PY
 
 aeneas_head=$(git -C "${aeneas_root}" rev-parse --verify HEAD 2>/dev/null) || fail "AENEAS_ROOT is not a Git checkout"
 [ "${aeneas_head}" = "${AENEAS_COMMIT}" ] || fail "Aeneas checkout is ${aeneas_head}; expected ${AENEAS_COMMIT}"
@@ -63,6 +106,23 @@ cleanup() {
     fi
 }
 trap cleanup EXIT
+
+# Exercise the exact-tree guard independently of Aeneas output so a future
+# edit cannot silently weaken unexpected-file detection.
+inventory_fixture="${scratch}/inventory-fixture"
+mkdir -p "${inventory_fixture}"
+touch "${inventory_fixture}/Expected.lean"
+printf '%s\n' 'Expected.lean' > "${scratch}/inventory-fixture.expected"
+write_tree_inventory "${inventory_fixture}" "${scratch}/inventory-fixture.actual" ||
+    fail "generated-tree inventory rejected its valid self-test fixture"
+cmp -s "${scratch}/inventory-fixture.expected" "${scratch}/inventory-fixture.actual" ||
+    fail "generated-tree inventory rejected its valid self-test fixture"
+touch "${inventory_fixture}/Unexpected.lean"
+write_tree_inventory "${inventory_fixture}" "${scratch}/inventory-fixture.actual" ||
+    fail "generated-tree inventory could not read its negative self-test fixture"
+if cmp -s "${scratch}/inventory-fixture.expected" "${scratch}/inventory-fixture.actual"; then
+    fail "generated-tree inventory accepted an unexpected-file self-test fixture"
+fi
 
 # Charon reports only its semver, so an ignored bin/charon from another commit
 # could otherwise survive a checkout and satisfy every version check below.
@@ -99,8 +159,9 @@ aeneas_version=$("${aeneas_bin}" -version 2>/dev/null) || fail "could not query 
 [ "${aeneas_version}" = "aeneas ${expected_aeneas_version}" ] || fail "Aeneas binary reports '${aeneas_version}'; expected 'aeneas ${expected_aeneas_version}'"
 
 llbc_path="${scratch}/${LLBC_FILE}"
-lean_project="${scratch}/lean"
-mkdir -p "${lean_project}"
+aeneas_output="${scratch}/aeneas-output"
+packaged_output="${scratch}/Generated"
+mkdir -p "${aeneas_output}" "${packaged_output}/${LEAN_NAMESPACE}"
 
 echo "Extracting ${CORE_CRATE} with pinned Charon..."
 (
@@ -113,20 +174,32 @@ echo "Translating ${LLBC_FILE} with pinned Aeneas..."
 "${aeneas_bin}" \
     -backend lean \
     -namespace "${LEAN_NAMESPACE}" \
-    -dest "${lean_project}" \
+    -dest "${aeneas_output}" \
+    -split-files \
+    -gen-lib-entry \
+    -loops-to-rec \
+    -emit-json \
     -abort-on-error \
     -warnings-as-errors \
     "${llbc_path}"
 
-generated_entry="${lean_project}/${GENERATED_ENTRY}"
-[ -s "${generated_entry}" ] || fail "Aeneas did not produce ${GENERATED_ENTRY}"
+[ -s "${aeneas_output}/${GENERATED_ENTRY}" ] || fail "Aeneas did not produce ${GENERATED_ENTRY}"
+[ -s "${aeneas_output}/translation.json" ] || fail "Aeneas did not produce translation.json"
 
-cp "${proof_root}/lakefile.lean" "${lean_project}/lakefile.lean"
-cp "${proof_root}/lean-toolchain" "${lean_project}/lean-toolchain"
-ln -s "${aeneas_root}/backends/lean" "${lean_project}/aeneas"
+# Split extraction is emitted flat, while its generated imports use the
+# namespace as a module prefix. Package all non-entry Lean modules under that
+# namespace without modifying their bytes. Keep translation.json beside the
+# split modules because its `lean_file` fields are relative to that location.
+cp "${aeneas_output}/${GENERATED_ENTRY}" "${packaged_output}/${GENERATED_ENTRY}"
+cp "${aeneas_output}/translation.json" "${packaged_output}/${LEAN_NAMESPACE}/translation.json"
+while IFS= read -r source_path; do
+    file_name=$(basename -- "${source_path}")
+    [ "${file_name}" = "${GENERATED_ENTRY}" ] && continue
+    cp "${source_path}" "${packaged_output}/${LEAN_NAMESPACE}/${file_name}"
+done < <(find "${aeneas_output}" -maxdepth 1 -type f -name '*.lean' -print | LC_ALL=C sort)
 
 lean_version=$(
-    cd "${lean_project}"
+    cd "${proof_root}"
     lean --version
 ) || fail "could not start the pinned Lean toolchain"
 case "${lean_version}" in
@@ -134,30 +207,52 @@ case "${lean_version}" in
     *) fail "Lean reports '${lean_version}'; expected version ${LEAN_VERSION}" ;;
 esac
 
-echo "Elaborating ${GENERATED_ENTRY} with ${LEAN_TOOLCHAIN}..."
-(
-    cd "${lean_project}"
-    lake build "${LEAN_NAMESPACE}"
-)
-
 actual_manifest="${scratch}/Generated.manifest"
-(
-    cd "${lean_project}"
-    find . -maxdepth 1 -type f -name '*.lean' ! -name 'lakefile.lean' -print | sed 's#^\./##' | LC_ALL=C sort
-) > "${actual_manifest}"
+write_tree_inventory "${packaged_output}" "${actual_manifest}" ||
+    fail "generated output contains a symlink"
 expected_manifest="${scratch}/Expected.manifest"
 grep -Ev '^[[:space:]]*(#|$)' "${generated_manifest}" | LC_ALL=C sort > "${expected_manifest}"
 if ! diff -u "${expected_manifest}" "${actual_manifest}"; then
     fail "generated file inventory drifted from proofs/Generated.manifest"
 fi
 
+expected_checked_in_manifest="${scratch}/ExpectedCheckedIn.manifest"
+{
+    cat "${expected_manifest}"
+    printf '%s\n' \
+        "${LEAN_NAMESPACE}/FunsExternal.lean" \
+        "${LEAN_NAMESPACE}/TypesExternal.lean"
+} | LC_ALL=C sort > "${expected_checked_in_manifest}"
+checked_in_manifest="${scratch}/CheckedIn.manifest"
+write_tree_inventory "${generated_baseline}" "${checked_in_manifest}" ||
+    fail "proofs/Generated contains a symlink"
+if ! diff -u "${expected_checked_in_manifest}" "${checked_in_manifest}"; then
+    fail "proofs/Generated contains files outside the generator manifest and Unit 1 bridges"
+fi
+
 while IFS= read -r relative_path; do
     [ -n "${relative_path}" ] || continue
     baseline_path="${generated_baseline}/${relative_path}"
     [ -f "${baseline_path}" ] || fail "missing checked-in baseline ${baseline_path}; retain the scratch with AENEAS_KEEP_TMP=1, review the elaborated output, and add it explicitly"
-    if ! diff -u "${baseline_path}" "${lean_project}/${relative_path}"; then
-        fail "generated Lean drifted from ${baseline_path}"
+    if ! cmp -s "${baseline_path}" "${packaged_output}/${relative_path}"; then
+        fail "generated output drifted from ${baseline_path}; retain the scratch with AENEAS_KEEP_TMP=1 to inspect ${packaged_output}/${relative_path}"
     fi
 done < "${expected_manifest}"
 
-echo "Aeneas smoke passed: pinned extraction, Lean elaboration, and generated-file drift are clean."
+# Until Unit 2 replaces these external models with reviewed handwritten ones,
+# Unit 1 deliberately elaborates the exact Aeneas templates. They are support
+# files, not generator-owned baseline files, so they stay out of the manifest.
+for template_name in TypesExternal FunsExternal; do
+    template_path="${generated_baseline}/${LEAN_NAMESPACE}/${template_name}_Template.lean"
+    support_path="${generated_baseline}/${LEAN_NAMESPACE}/${template_name}.lean"
+    [ -f "${support_path}" ] || fail "missing extraction support module ${support_path}"
+    cmp -s "${template_path}" "${support_path}" || fail "${support_path} must exactly match its Aeneas template during Unit 1"
+done
+
+echo "Elaborating the pinned proof workspace with ${LEAN_TOOLCHAIN}..."
+(
+    cd "${proof_root}"
+    lake build Greatgramma blueprintCheckDecls
+)
+
+echo "Aeneas smoke passed: pinned split extraction, metadata, Lean elaboration, and generated-file drift are clean."

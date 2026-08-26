@@ -1,0 +1,262 @@
+% This is the sole roadmap and documentation-state source for the Phase 2 proof.
+% All nodes start as planned or assumption nodes in U1. Later units may change
+% only the markers and add stable handwritten Lean links after their gates pass.
+
+\section{Authority and roadmap}
+
+This document describes the intended proof dependency graph for the
+GreatGramma Rust semantic kernel.  It deliberately separates implementation
+refinement from conditional language correctness.  The graph and its colors
+are navigational aids only.  The authoritative evidence is Lean elaboration,
+the generated-declaration and public-API inventories, the proof manifest, and
+the root-theorem axiom audit.
+
+The roadmap has four documentation states.  \emph{Planned} nodes are orange
+and have no Lean link.  \emph{Linked} nodes point to one stable handwritten
+Lean declaration but make no completion claim.  \emph{Proved} nodes have
+passed the authoritative gates before receiving their completion marker.
+\emph{Assumption} nodes remain conditional forever, even if their proposition
+is represented in Lean.  No state in this document is proof evidence.
+
+\section{Named assumptions and trusted boundary}
+
+\begin{assumption}[AS1: normalized token bytes]
+  \label{asm:token-bytes-correct}
+  \bpstatus{assumption}
+  \notready
+  \textbf{TokenBytesCorrect.}
+  Every ordinary token ID denotes its authoritative normalized byte sequence,
+  concatenation agrees with whole-sequence decoding, and every normalized EOS
+  entry denotes termination without contributing bytes.
+\end{assumption}
+
+\begin{assumption}[AS2: lexer DFA semantics]
+  \label{asm:lexer-dfa-correct}
+  \bpstatus{assumption}
+  \notready
+  \textbf{LexerDfaCorrect.}
+  The supplied DFA implements priority-resolved one-lookahead maximal munch,
+  has no empty lexeme, labels terminals correctly, and removes unreachable
+  states.
+\end{assumption}
+
+\begin{assumption}[AS3: operational LALR safety]
+  \label{asm:lalr-operational-wf}
+  \bpstatus{assumption}
+  \notready
+  \textbf{LalrOperationalWF.}
+  Reachable action, goto, production, EOF, and ignored-terminal behavior is
+  safe and excludes missing-goto and stack-underflow corruption.
+\end{assumption}
+
+\begin{assumption}[AS4: reduction rank]
+  \label{asm:reduction-rank-correct}
+  \bpstatus{assumption}
+  \notready
+  \textbf{ReductionRankCorrect.}
+  Every reachable reduction sequence decreases the supplied well-founded rank
+  used to rule out parser divergence.
+\end{assumption}
+
+\begin{assumption}[AS5: LALR language meaning]
+  \label{asm:lalr-language-correct}
+  \bpstatus{assumption}
+  \notready
+  \textbf{LalrLanguageCorrect.}
+  Safe ranked LALR acceptance recognizes the intended grammar language.
+\end{assumption}
+
+\begin{assumption}[AS6: continuation realizability]
+  \label{asm:continuation-realizable}
+  \bpstatus{assumption}
+  \notready
+  \textbf{ContinuationRealizable.}
+  Every admitted finite byte head has the model-token continuation witness
+  required by the soundness argument.  This premise is explicit because the
+  original paper's argument omitted it.
+\end{assumption}
+
+\begin{assumption}[AS7: parser productivity]
+  \label{asm:parser-productive}
+  \bpstatus{assumption}
+  \notready
+  \textbf{ParserProductive.}
+  Every reachable nonrejected parser configuration has an accepting
+  continuation.
+\end{assumption}
+
+\begin{assumption}[AS8: logical allocator]
+  \label{asm:allocator-contract}
+  \bpstatus{assumption}
+  \notready
+  \textbf{AllocatorContract.}
+  The defined logical allocator oracle preserves vector contents and committed
+  state on both modeled success and typed allocation error.  It does not claim
+  fidelity to a concrete system allocator.
+\end{assumption}
+
+\begin{assumption}[AS9: trusted computing base]
+  \label{asm:trusted-computing-base}
+  \bpstatus{assumption}
+  \notready
+  Charon, Aeneas, the source-to-translation inventory, reviewed external-model
+  correspondence, the Aeneas Lean library, Lean's kernel, and the pinned Rust
+  semantics remain in the trusted computing base.
+\end{assumption}
+
+\section{Generated core to finite-head refinement}
+
+\begin{definition}[U1: reproducible generated boundary]
+  \label{def:generated-proof-boundary}
+  \bpstatus{planned}
+  \notready
+  Split Aeneas output, translation metadata, exact dependency pins, and the
+  generated inventory define the reproducible boundary between Rust and the
+  handwritten proof.  Nothing under \texttt{proofs/Generated/} is edited by
+  hand.  The two temporary external bridge modules are exact template copies
+  excluded from the Aeneas-owned manifest.  The pinned extraction still uses
+  \texttt{partial\_fixpoint} for all 46 translated loops, so totality remains
+  an explicit U2 feasibility obligation.  Blueprint output is outside both the
+  generated and Lean dependency graphs.
+\end{definition}
+
+\begin{proposition}[U2: feasibility gate]
+  \label{prop:feasibility-gate}
+  \bpstatus{planned}
+  \notready
+  \uses{def:generated-proof-boundary, asm:allocator-contract, asm:trusted-computing-base}
+  Representative validation, graph, ranked parser, and transactional batch
+  loops have total weakest-precondition specifications after all proof-reachable
+  external operations are modeled or explicitly classified.
+\end{proposition}
+
+\begin{definition}[U3: finite-head checker]
+  \label{def:finite-head-checker}
+  \bpstatus{planned}
+  \notready
+  \uses{prop:feasibility-gate}
+  The stable handwritten checker consumes normalized token bytes through the
+  corrected lexer and ranked LALR relation, and defines the exact next-token
+  predicate independently of generated declaration names.
+\end{definition}
+
+\begin{theorem}[U3: validation boundary]
+  \label{thm:validation-boundary}
+  \bpstatus{planned}
+  \notready
+  \uses{def:finite-head-checker, prop:feasibility-gate}
+  Successful generated validation establishes the structural representation
+  predicates needed by every later refinement theorem; failure exposes no
+  value carrying those predicates.
+\end{theorem}
+
+\begin{theorem}[U4: lexer and token refinement]
+  \label{thm:lexer-token-refinement}
+  \bpstatus{planned}
+  \notready
+  \uses{thm:validation-boundary, def:finite-head-checker}
+  Generated byte and token execution refines corrected maximal-munch semantics,
+  including boundary reconsumption, logical-start separation, residual EOS
+  flushing, and unfinished-residual rejection.
+\end{theorem}
+
+\begin{theorem}[U5: singleton and inverse spanner refinement]
+  \label{thm:spanner-refinement}
+  \bpstatus{planned}
+  \notready
+  \uses{thm:lexer-token-refinement}
+  Singleton production, sequence interning, and inverse spanner buckets are
+  sound and complete for the finite byte-head relation computed by the Rust
+  preparation algorithms.
+\end{theorem}
+
+\begin{theorem}[U6: ranked LALR and preprocessing refinement]
+  \label{thm:lalr-preprocess-refinement}
+  \bpstatus{planned}
+  \notready
+  \uses{thm:validation-boundary, asm:lalr-operational-wf, asm:reduction-rank-correct}
+  Concrete and symbolic LALR execution, speculative head probing, underflow
+  classification, and parser preprocessing refine one deterministic ranked
+  LALR relation.
+\end{theorem}
+
+\begin{theorem}[U7 / Root 1: core refinement]
+  \label{thm:core-refines-finite-head}
+  \bpstatus{planned}
+  \notready
+  \uses{def:finite-head-checker, thm:spanner-refinement, thm:lalr-preprocess-refinement, asm:lalr-operational-wf, asm:reduction-rank-correct, asm:allocator-contract}
+  \textbf{CoreRefinesFiniteHead.}
+  For every reachable generated matcher state, construction, exact packed
+  masks, EOS, allowance queries, and single-row transitions refine the stable
+  finite-head checker.  All inner success and domain-error results are modeled,
+  while outer failure and divergence are excluded under the stated contracts.
+\end{theorem}
+
+\begin{theorem}[U8: batch and fail-closed runtime]
+  \label{thm:batch-runtime-correct}
+  \bpstatus{planned}
+  \notready
+  \uses{thm:core-refines-finite-head, asm:allocator-contract}
+  Every batch and fused operation is the ordered pointwise lifting of the
+  single-row result, commits atomically, preserves reusable workspace
+  invariants, leaves accepted-row mask regions zero, and clears the full caller
+  buffer on failure.
+\end{theorem}
+
+\section{Conditional language correctness}
+
+\begin{proposition}[U9: realizability adapter]
+  \label{prop:realizability-adapter}
+  \bpstatus{planned}
+  \notready
+  \uses{asm:token-bytes-correct, asm:lexer-dfa-correct, asm:lalr-language-correct}
+  The frozen UCSD-style byte-coverage, pruning, and universal-separator
+  hypotheses give a sufficient adapter for the direct continuation-realizability
+  premise.  The root theorem accepts the direct premise and does not require
+  this stronger corollary.
+\end{proposition}
+
+\begin{theorem}[U9 / Root 2: pure language theorem]
+  \label{thm:finite-head-language-correct}
+  \bpstatus{planned}
+  \notready
+  \uses{def:finite-head-checker, asm:token-bytes-correct, asm:lexer-dfa-correct, asm:lalr-operational-wf, asm:reduction-rank-correct, asm:lalr-language-correct, asm:continuation-realizable, asm:parser-productive}
+  \textbf{FiniteHeadLanguageCorrect.}
+  The pure finite-head checker is sound, complete, productive, EOS-correct, and
+  independent of tokenization path under the named semantic assumptions.
+\end{theorem}
+
+\begin{theorem}[U9 / Root 3: composed core-language theorem]
+  \label{thm:core-language-correct}
+  \bpstatus{planned}
+  \notready
+  \uses{thm:core-refines-finite-head, thm:finite-head-language-correct}
+  \textbf{CoreLanguageCorrect.}
+  The generated Rust core implements grammar-constrained decoding for reachable
+  normalized histories by composing the implementation and pure-language
+  roots, while retaining both roots' assumptions visibly.
+\end{theorem}
+
+\begin{theorem}[U9: intended-grammar corollary]
+  \label{thm:intended-grammar-corollary}
+  \bpstatus{planned}
+  \notready
+  \uses{thm:core-language-correct, asm:token-bytes-correct, asm:lexer-dfa-correct, asm:lalr-language-correct}
+  Under the supplied tokenizer, lexer, and LALR semantic-correctness premises,
+  the core's accepted language equals the intended grammar language and its
+  intermediate language equals the viable-prefix language.
+\end{theorem}
+
+\section{Audit and claim gate}
+
+\begin{proposition}[U10: reviewable verification claim]
+  \label{prop:verification-claim-gate}
+  \bpstatus{planned}
+  \notready
+  \uses{def:generated-proof-boundary, thm:batch-runtime-correct, thm:core-language-correct, thm:intended-grammar-corollary, asm:allocator-contract, asm:trusted-computing-base}
+  The final ``verified core under assumptions'' claim is available only when
+  regeneration and both coverage inventories agree, every required theorem is
+  in the proof manifest, all three roots elaborate, the axiom allowlist passes,
+  and the trusted boundary and exclusions are disclosed.  Passing this
+  Blueprint's checks never discharges any of those obligations.
+\end{proposition}

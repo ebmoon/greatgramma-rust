@@ -1,0 +1,4 @@
+# Keep the direct PDF build reproducible and fail on the first TeX error.
+$pdf_mode = 1;
+$pdflatex = 'xelatex -interaction=nonstopmode -halt-on-error -file-line-error %O %S';
+@default_files = ('print.tex');

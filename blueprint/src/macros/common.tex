@@ -1,0 +1,16 @@
+% Shared mathematical and roadmap presentation definitions.
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{assumption}[theorem]{Assumption}
+
+% The checker treats this as the single explicit documentation-state source.
+\newcommand{\bpstatus}[1]{%
+  \par\noindent\textsf{\footnotesize Status: #1}\par\smallskip%
+}
