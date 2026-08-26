@@ -5818,7 +5818,7 @@ def engine.PreparedGrammar.into_matcher
         engine.Matcher (core.convert.FromSame engine.EngineError) residual
 
 /-- [greatgramma_core::engine::running_lexer]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 1028:0-1033:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 1035:0-1040:1 -/
 def engine.running_lexer
   (state : engine.MatcherStatus) :
   Result (core.result.Result lexer.LexerState engine.EngineError)
@@ -5922,13 +5922,13 @@ def lalr.execute_terminals_concrete_into
     ok (r1, destination1)
 
 /-- [greatgramma_core::engine::map_spanner_error]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 1053:0-1055:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 1060:0-1062:1 -/
 def engine.map_spanner_error
   (_error : spanner.SpannerQueryError) : Result engine.EngineError := do
   ok engine.EngineError.CorruptPreparedData
 
 /-- [greatgramma_core::engine::map_parser_error]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 1035:0-1051:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 1042:0-1058:1 -/
 def engine.map_parser_error
   (error : lalr.ParserError) : Result engine.EngineError := do
   match error with
@@ -7088,7 +7088,7 @@ def mask.clear (output : Slice Std.U8) : Result (Slice Std.U8) := do
   mask.clear_loop output 0#usize
 
 /-- [greatgramma_core::engine::fill_selected_mask]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 777:0-790:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 784:0-797:1 -/
 def engine.fill_selected_mask
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (scratch : alloc.vec.Vec ids.ParserStateId) (output : Slice Std.U8)
@@ -7130,7 +7130,7 @@ def engine.Matcher.mask
   else ok (result, { self with scratch }, output2)
 
 /-- [greatgramma_core::engine::engine_result]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 1021:0-1026:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 1028:0-1033:1 -/
 def engine.engine_result
   (error : Option engine.EngineError) :
   Result (core.result.Result Unit engine.EngineError)
@@ -7140,7 +7140,7 @@ def engine.engine_result
   | some error1 => ok (core.result.Result.Err error1)
 
 /-- [greatgramma_core::engine::fill_mask_row]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 792:0-817:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 799:0-824:1 -/
 def engine.fill_mask_row
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (scratch : alloc.vec.Vec ids.ParserStateId) (output : Slice Std.U8)
@@ -7198,7 +7198,7 @@ def engine.fill_mask_row
     ok (r1, scratch, output)
 
 /-- [greatgramma_core::engine::fill_all_masks]: loop 0:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 770:4-773:5 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 777:4-780:5 -/
 @[rust_loop]
 def engine.fill_all_masks_loop
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
@@ -7223,7 +7223,7 @@ def engine.fill_all_masks_loop
 partial_fixpoint
 
 /-- [greatgramma_core::engine::fill_all_masks]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 762:0-775:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 769:0-782:1 -/
 def engine.fill_all_masks
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (scratch : alloc.vec.Vec ids.ParserStateId) (output : Slice Std.U8) :
@@ -7289,7 +7289,7 @@ def engine.Matcher.allows
       Bool (core.convert.FromSame engine.EngineError) residual
 
 /-- [greatgramma_core::engine::swap_status_at]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 959:0-974:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 966:0-981:1 -/
 def engine.swap_status_at
   (states : Slice engine.MatcherStatus) (staging : Slice engine.MatcherStatus)
   (row : Std.Usize) :
@@ -7321,7 +7321,7 @@ def engine.swap_status_at
       ok (core.result.Result.Ok (), states1, staging1)
 
 /-- [greatgramma_core::engine::next_status_at]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 932:0-947:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 939:0-954:1 -/
 def engine.next_status_at
   (prepared : engine.PreparedGrammar) (state : engine.MatcherStatus)
   (staging : Slice engine.MatcherStatus) (row : Std.Usize)
@@ -7388,7 +7388,7 @@ def engine.Matcher.advance
       ok (r, { self with staging := v })
 
 /-- [greatgramma_core::engine::stage_batch_row]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 835:0-858:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 842:0-865:1 -/
 def engine.stage_batch_row
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (staging : Slice engine.MatcherStatus) (tokens : Slice ids.TokenId)
@@ -7424,7 +7424,7 @@ def engine.stage_batch_row
         ok (core.result.Result.Err error, staging1, results)
 
 /-- [greatgramma_core::engine::stage_batch]: loop 0:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 828:4-831:5 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 835:4-838:5 -/
 @[rust_loop]
 def engine.stage_batch_loop
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
@@ -7451,7 +7451,7 @@ def engine.stage_batch_loop
 partial_fixpoint
 
 /-- [greatgramma_core::engine::stage_batch]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 819:0-833:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 826:0-840:1 -/
 def engine.stage_batch
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (staging : Slice engine.MatcherStatus) (tokens : Slice ids.TokenId)
@@ -7535,7 +7535,7 @@ def engine.Matcher.advance_batch
       ok (r2, self)
 
 /-- [greatgramma_core::engine::set_staging_accepted]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 949:0-957:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 956:0-964:1 -/
 def engine.set_staging_accepted
   (staging : Slice engine.MatcherStatus) (row : Std.Usize) :
   Result ((core.result.Result Unit engine.EngineError) × (Slice
@@ -7555,7 +7555,7 @@ def engine.set_staging_accepted
     ok (core.result.Result.Ok (), staging1)
 
 /-- [greatgramma_core::engine::stage_active_row]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 896:0-929:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 903:0-936:1 -/
 def engine.stage_active_row
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (staging : Slice engine.MatcherStatus) (tokens : Slice (Option ids.TokenId))
@@ -7642,7 +7642,7 @@ def engine.stage_active_row
           ok (core.result.Result.Err engine.EngineError.Completed, staging)
 
 /-- [greatgramma_core::engine::stage_active_with_results]: loop 0:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 870:4-876:5 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 877:4-883:5 -/
 @[rust_loop]
 def engine.stage_active_with_results_loop
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
@@ -7677,7 +7677,7 @@ def engine.stage_active_with_results_loop
 partial_fixpoint
 
 /-- [greatgramma_core::engine::stage_active_with_results]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 860:0-878:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 867:0-885:1 -/
 def engine.stage_active_with_results
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (staging : Slice engine.MatcherStatus) (tokens : Slice (Option ids.TokenId))
@@ -7763,8 +7763,18 @@ def engine.Matcher.advance_active
           engine.EngineError) residual
       ok (r2, self)
 
+/-- [greatgramma_core::engine::reserved_vec_after_clear]:
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 764:0-767:1 -/
+def engine.reserved_vec_after_clear
+  (T : Type) (capacity : Std.Usize) (output : Slice Std.U8) :
+  Result ((core.result.Result (alloc.vec.Vec T) Std.Usize) × (Slice Std.U8))
+  := do
+  let output1 ← mask.clear output
+  let r ← token_step.reserved_vec T capacity
+  ok (r, output1)
+
 /-- [greatgramma_core::engine::fill_staged_mask_row]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 991:0-1019:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 998:0-1026:1 -/
 def engine.fill_staged_mask_row
   (prepared : engine.PreparedGrammar) (staging : Slice engine.MatcherStatus)
   (scratch : alloc.vec.Vec ids.ParserStateId) (output : Slice Std.U8)
@@ -7832,7 +7842,7 @@ def engine.fill_staged_mask_row
     else ok (core.result.Result.Ok (), scratch, output)
 
 /-- [greatgramma_core::engine::fill_staged_masks]: loop 0:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 984:4-987:5 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 991:4-994:5 -/
 @[rust_loop]
 def engine.fill_staged_masks_loop
   (prepared : engine.PreparedGrammar) (staging : Slice engine.MatcherStatus)
@@ -7858,7 +7868,7 @@ def engine.fill_staged_masks_loop
 partial_fixpoint
 
 /-- [greatgramma_core::engine::fill_staged_masks]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 976:0-989:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 983:0-996:1 -/
 def engine.fill_staged_masks
   (prepared : engine.PreparedGrammar) (staging : Slice engine.MatcherStatus)
   (scratch : alloc.vec.Vec ids.ParserStateId) (output : Slice Std.U8) :
@@ -7871,7 +7881,7 @@ def engine.fill_staged_masks
   ok (r, scratch1, output1)
 
 /-- [greatgramma_core::engine::stage_active_without_results]: loop 0:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 889:4-892:5 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 896:4-899:5 -/
 @[rust_loop]
 def engine.stage_active_without_results_loop
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
@@ -7898,7 +7908,7 @@ def engine.stage_active_without_results_loop
 partial_fixpoint
 
 /-- [greatgramma_core::engine::stage_active_without_results]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 880:0-894:1 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 887:0-901:1 -/
 def engine.stage_active_without_results
   (prepared : engine.PreparedGrammar) (states : Slice engine.MatcherStatus)
   (staging : Slice engine.MatcherStatus) (tokens : Slice (Option ids.TokenId))
@@ -7913,7 +7923,7 @@ def engine.stage_active_without_results
   ok (r, staging1)
 
 /-- [greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks_impl]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 695:4-752:5 -/
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 696:4-752:5 -/
 def engine.Matcher.advance_active_and_masks_impl
   (self : engine.Matcher) (tokens : Slice (Option ids.TokenId))
   (output : Slice Std.U8)
@@ -7922,7 +7932,6 @@ def engine.Matcher.advance_active_and_masks_impl
   Result ((core.result.Result Unit engine.EngineError) × engine.Matcher ×
     (Slice Std.U8) × (Option (alloc.vec.Vec (Option engine.AdvanceResult))))
   := do
-  let output1 ← mask.clear output
   let i := Slice.len tokens
   let i1 := alloc.vec.Vec.len self.states
   if i != i1
@@ -7930,7 +7939,7 @@ def engine.Matcher.advance_active_and_masks_impl
     let i2 := alloc.vec.Vec.len self.states
     let i3 := Slice.len tokens
     ok (core.result.Result.Err (engine.EngineError.BatchSizeMismatch i2 i3),
-      self, output1, results)
+      self, output, results)
   else
     let i2 := alloc.vec.Vec.len self.states
     let o ← lift (Usize.checked_mul i2 self.prepared.mask_bytes)
@@ -7938,12 +7947,12 @@ def engine.Matcher.advance_active_and_masks_impl
     let cf ← core.result.Result.Insts.CoreOpsTry.branch r
     match cf with
     | core.ops.control_flow.ControlFlow.Continue val =>
-      let i3 := Slice.len output1
+      let i3 := Slice.len output
       if i3 < val
       then
-        let i4 := Slice.len output1
+        let i4 := Slice.len output
         ok (core.result.Result.Err (engine.EngineError.BufferTooSmall val i4),
-          self, output1, results)
+          self, output, results)
       else
         let (v, staged_rows, back) ←
           match results with
@@ -7967,29 +7976,29 @@ def engine.Matcher.advance_active_and_masks_impl
                 results1 report_rejected_row
             let v1 := deref_mut_back s2
             ok (v1, staged_rows1, some results2)
-        let (v1, output2, staged) ←
+        let (v1, output1, staged) ←
           match staged_rows with
           | core.result.Result.Ok _ =>
             do
             let s := alloc.vec.Vec.deref v
-            let (staged1, v2, output3) ←
-              engine.fill_staged_masks self.prepared s self.scratch output1
-            ok (v2, output3, staged1)
-          | core.result.Result.Err _ => ok (self.scratch, output1, staged_rows)
+            let (staged1, v2, output2) ←
+              engine.fill_staged_masks self.prepared s self.scratch output
+            ok (v2, output2, staged1)
+          | core.result.Result.Err _ => ok (self.scratch, output, staged_rows)
         match staged with
         | core.result.Result.Ok _ =>
           let (v2, v3) := core.mem.swap self.states v
           ok (core.result.Result.Ok (),
-            { self with states := v2, staging := v3, scratch := v1 }, output2,
+            { self with states := v2, staging := v3, scratch := v1 }, output1,
             back)
         | core.result.Result.Err _ =>
-          let output3 ← mask.clear output2
-          ok (staged, { self with staging := v, scratch := v1 }, output3, back)
+          let output2 ← mask.clear output1
+          ok (staged, { self with staging := v, scratch := v1 }, output2, back)
     | core.ops.control_flow.ControlFlow.Break residual =>
       let r1 ←
         core.result.Result.Insts.CoreOpsTryTraitFromResidualResultInfallible.from_residual
           Unit (core.convert.FromSame engine.EngineError) residual
-      ok (r1, self, output1, results)
+      ok (r1, self, output, results)
 
 /-- [greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks::{impl core::ops::function::FnOnce<(usize,), greatgramma_core::engine::EngineError> for greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks::closure}::call_once]:
     Source: 'crates/greatgramma-core/src/engine.rs', lines 675:21-675:77 -/
@@ -8022,7 +8031,8 @@ def engine.Matcher.advance_active_and_masks
     engine.EngineError) × engine.Matcher × (Slice Std.U8))
   := do
   let i := alloc.vec.Vec.len self.states
-  let r ← token_step.reserved_vec (Option engine.AdvanceResult) i
+  let (r, output1) ←
+    engine.reserved_vec_after_clear (Option engine.AdvanceResult) i output
   let r1 ←
     core.result.Result.map_err
       engine.Matcher.advance_active_and_masks.closure.Insts.CoreOpsFunctionFnOnceTupleUsizeEngineError
@@ -8030,8 +8040,8 @@ def engine.Matcher.advance_active_and_masks
   let cf ← core.result.Result.Insts.CoreOpsTry.branch r1
   match cf with
   | core.ops.control_flow.ControlFlow.Continue val =>
-    let (r2, self1, output1, o) ←
-      engine.Matcher.advance_active_and_masks_impl self tokens output (some
+    let (r2, self1, output2, o) ←
+      engine.Matcher.advance_active_and_masks_impl self tokens output1 (some
         val) false
     let cf1 ← core.result.Result.Insts.CoreOpsTry.branch r2
     match cf1 with
@@ -8039,22 +8049,22 @@ def engine.Matcher.advance_active_and_masks
       let results := match o with
                      | some v => v
                      | _ => val
-      ok (core.result.Result.Ok results, self1, output1)
+      ok (core.result.Result.Ok results, self1, output2)
     | core.ops.control_flow.ControlFlow.Break residual =>
       let r3 ←
         core.result.Result.Insts.CoreOpsTryTraitFromResidualResultInfallible.from_residual
           (alloc.vec.Vec (Option engine.AdvanceResult)) (core.convert.FromSame
           engine.EngineError) residual
-      ok (r3, self1, output1)
+      ok (r3, self1, output2)
   | core.ops.control_flow.ControlFlow.Break residual =>
     let r2 ←
       core.result.Result.Insts.CoreOpsTryTraitFromResidualResultInfallible.from_residual
         (alloc.vec.Vec (Option engine.AdvanceResult)) (core.convert.FromSame
         engine.EngineError) residual
-    ok (r2, self, output)
+    ok (r2, self, output1)
 
 /-- [greatgramma_core::engine::{greatgramma_core::engine::Matcher}::advance_active_and_masks_no_result]:
-    Source: 'crates/greatgramma-core/src/engine.rs', lines 687:4-693:5
+    Source: 'crates/greatgramma-core/src/engine.rs', lines 687:4-694:5
     Visibility: public -/
 def engine.Matcher.advance_active_and_masks_no_result
   (self : engine.Matcher) (tokens : Slice (Option ids.TokenId))
@@ -8062,9 +8072,10 @@ def engine.Matcher.advance_active_and_masks_no_result
   Result ((core.result.Result Unit engine.EngineError) × engine.Matcher ×
     (Slice Std.U8))
   := do
-  let (r, self1, output1, _) ←
-    engine.Matcher.advance_active_and_masks_impl self tokens output none true
-  ok (r, self1, output1)
+  let output1 ← mask.clear output
+  let (r, self1, output2, _) ←
+    engine.Matcher.advance_active_and_masks_impl self tokens output1 none true
+  ok (r, self1, output2)
 
 /-- [greatgramma_core::error::{impl core::clone::Clone for greatgramma_core::error::ValidationTable}::clone]:
     Source: 'crates/greatgramma-core/src/error.rs', lines 4:9-4:14

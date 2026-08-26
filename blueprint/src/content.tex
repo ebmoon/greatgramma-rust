@@ -24,6 +24,7 @@ is represented in Lean.  No state in this document is proof evidence.
   \label{asm:token-bytes-correct}
   \bpstatus{assumption}
   \notready
+  \lean{Greatgramma.Spec.TokenBytesCorrect}
   \textbf{TokenBytesCorrect.}
   Every ordinary token ID denotes its authoritative normalized byte sequence,
   concatenation agrees with whole-sequence decoding, and every normalized EOS
@@ -34,6 +35,7 @@ is represented in Lean.  No state in this document is proof evidence.
   \label{asm:lexer-dfa-correct}
   \bpstatus{assumption}
   \notready
+  \lean{Greatgramma.Spec.LexerDfaCorrect}
   \textbf{LexerDfaCorrect.}
   The supplied DFA implements priority-resolved one-lookahead maximal munch,
   has no empty lexeme, labels terminals correctly, and removes unreachable
@@ -44,6 +46,7 @@ is represented in Lean.  No state in this document is proof evidence.
   \label{asm:lalr-operational-wf}
   \bpstatus{assumption}
   \notready
+  \lean{Greatgramma.Spec.LalrOperationalWF}
   \textbf{LalrOperationalWF.}
   Reachable action, goto, production, EOF, and ignored-terminal behavior is
   safe and excludes missing-goto and stack-underflow corruption.
@@ -53,6 +56,7 @@ is represented in Lean.  No state in this document is proof evidence.
   \label{asm:reduction-rank-correct}
   \bpstatus{assumption}
   \notready
+  \lean{Greatgramma.Spec.ReductionRankCorrect}
   \textbf{ReductionRankCorrect.}
   Every reachable reduction sequence decreases the supplied well-founded rank
   used to rule out parser divergence.
@@ -62,6 +66,7 @@ is represented in Lean.  No state in this document is proof evidence.
   \label{asm:lalr-language-correct}
   \bpstatus{assumption}
   \notready
+  \lean{Greatgramma.Spec.LalrLanguageCorrect}
   \textbf{LalrLanguageCorrect.}
   Safe ranked LALR acceptance recognizes the intended grammar language.
 \end{assumption}
@@ -70,6 +75,7 @@ is represented in Lean.  No state in this document is proof evidence.
   \label{asm:continuation-realizable}
   \bpstatus{assumption}
   \notready
+  \lean{Greatgramma.Spec.ContinuationRealizable}
   \textbf{ContinuationRealizable.}
   Every admitted finite byte head has the model-token continuation witness
   required by the soundness argument.  This premise is explicit because the
@@ -80,6 +86,7 @@ is represented in Lean.  No state in this document is proof evidence.
   \label{asm:parser-productive}
   \bpstatus{assumption}
   \notready
+  \lean{Greatgramma.Spec.ParserProductive}
   \textbf{ParserProductive.}
   Every reachable nonrejected parser configuration has an accepting
   continuation.
@@ -112,9 +119,11 @@ is represented in Lean.  No state in this document is proof evidence.
   \notready
   Split Aeneas output, translation metadata, exact dependency pins, and the
   generated inventory define the reproducible boundary between Rust and the
-  handwritten proof.  Nothing under \texttt{proofs/Generated/} is edited by
-  hand.  The two temporary external bridge modules are exact template copies
-  excluded from the Aeneas-owned manifest.  The pinned extraction still uses
+  handwritten proof.  Aeneas owns the files listed in the generated manifest;
+  the two excluded, declaration-free external bridge modules import reviewed
+  models from \texttt{proofs/External/}.  The smoke gate reconciles those
+  bridges with the Rust template hooks and elaborates the generated root.  The
+  pinned extraction still uses
   \texttt{partial\_fixpoint} for all 46 translated loops, so totality remains
   an explicit U2 feasibility obligation.  Blueprint output is outside both the
   generated and Lean dependency graphs.
@@ -122,29 +131,50 @@ is represented in Lean.  No state in this document is proof evidence.
 
 \begin{proposition}[U2: feasibility gate]
   \label{prop:feasibility-gate}
-  \bpstatus{planned}
-  \notready
+  \bpstatus{proved}
+  \lean{Greatgramma.Refinement.totalLoops}
+  \leanok
   \uses{def:generated-proof-boundary, asm:allocator-contract, asm:trusted-computing-base}
-  Representative validation, graph, ranked parser, and transactional batch
-  loops have total weakest-precondition specifications after all proof-reachable
-  external operations are modeled or explicitly classified.
+  Representative validation, singleton fact-propagation, ranked parser, and
+  transactional batch loops have total weakest-precondition specifications
+  after all proof-reachable external operations are modeled or explicitly
+  classified.
 \end{proposition}
 
 \begin{definition}[U3: finite-head checker]
   \label{def:finite-head-checker}
-  \bpstatus{planned}
-  \notready
-  \uses{prop:feasibility-gate}
+  \bpstatus{linked}
+  \lean{Greatgramma.Spec.FiniteHeadAllows}
+  \uses{def:normalized-table-spec, prop:feasibility-gate}
   The stable handwritten checker consumes normalized token bytes through the
   corrected lexer and ranked LALR relation, and defines the exact next-token
   predicate independently of generated declaration names.
 \end{definition}
 
+\begin{definition}[U3: normalized table specification]
+  \label{def:normalized-table-spec}
+  \bpstatus{linked}
+  \lean{Greatgramma.Spec.NormalizedGrammar}
+  Stable mathematical token, lexer, and LALR tables use natural-number IDs,
+  checked flattened lookups, and no generated declaration names.
+\end{definition}
+
+\begin{definition}[U3: validated representation]
+  \label{def:validated-representation}
+  \bpstatus{linked}
+  \lean{Greatgramma.Invariants.ValidatedWF}
+  \uses{def:normalized-table-spec, prop:feasibility-gate}
+  Successful validation must establish exactly the structural dimensions,
+  ranges, token shape, EOF separation, and ignored-terminal facts checked by
+  the Rust boundary; semantic lexer and parser correctness remain assumptions.
+\end{definition}
+
 \begin{theorem}[U3: validation boundary]
   \label{thm:validation-boundary}
-  \bpstatus{planned}
-  \notready
-  \uses{def:finite-head-checker, prop:feasibility-gate}
+  \bpstatus{proved}
+  \lean{Greatgramma.Refinement.validationBoundary}
+  \leanok
+  \uses{def:validated-representation, prop:feasibility-gate}
   Successful generated validation establishes the structural representation
   predicates needed by every later refinement theorem; failure exposes no
   value carrying those predicates.

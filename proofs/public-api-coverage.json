@@ -21,7 +21,8 @@
       "kind": "type",
       "source": "greatgramma_core::normalized::Action",
       "lean": "GreatgrammaCore.normalized.Action",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewAction"
     },
     "greatgramma_core::AdvanceResult": {
       "kind": "type",
@@ -33,13 +34,15 @@
       "kind": "type",
       "source": "greatgramma_core::error::ArithmeticKind",
       "lean": "GreatgrammaCore.error.ArithmeticKind",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewArithmeticKind"
     },
     "greatgramma_core::DfaStateId": {
       "kind": "type",
       "source": "greatgramma_core::ids::DfaStateId",
       "lean": "GreatgrammaCore.ids.DfaStateId",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewDfaStateId"
     },
     "greatgramma_core::DfaStateId::get": {
       "kind": "method",
@@ -48,7 +51,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.dfaStateIdGet_spec"
     },
     "greatgramma_core::DfaStateId::new": {
       "kind": "method",
@@ -57,7 +61,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.dfaStateIdNew_spec"
     },
     "greatgramma_core::EngineError": {
       "kind": "type",
@@ -69,13 +74,15 @@
       "kind": "type",
       "source": "greatgramma_core::error::IdKind",
       "lean": "GreatgrammaCore.error.IdKind",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewIdKind"
     },
     "greatgramma_core::LalrDimensions": {
       "kind": "type",
       "source": "greatgramma_core::normalized::LalrDimensions",
       "lean": "GreatgrammaCore.normalized.LalrDimensions",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewLalrDimensions"
     },
     "greatgramma_core::LalrDimensions::new": {
       "kind": "method",
@@ -84,7 +91,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsNew_spec"
     },
     "greatgramma_core::LalrDimensions::nonterminal_count": {
       "kind": "method",
@@ -93,7 +101,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsNonterminalCount_spec"
     },
     "greatgramma_core::LalrDimensions::state_count": {
       "kind": "method",
@@ -102,7 +111,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsStateCount_spec"
     },
     "greatgramma_core::LalrDimensions::terminal_count": {
       "kind": "method",
@@ -111,13 +121,15 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrDimensionsTerminalCount_spec"
     },
     "greatgramma_core::LalrTable": {
       "kind": "type",
       "source": "greatgramma_core::normalized::LalrTable",
       "lean": "GreatgrammaCore.normalized.LalrTable",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewLalr"
     },
     "greatgramma_core::LalrTable::new": {
       "kind": "method",
@@ -126,7 +138,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrTableNew_spec"
     },
     "greatgramma_core::LalrTable::with_ignored_terminals": {
       "kind": "method",
@@ -135,13 +148,15 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lalrTableWithIgnoredTerminals_spec"
     },
     "greatgramma_core::LexerDfa": {
       "kind": "type",
       "source": "greatgramma_core::normalized::LexerDfa",
       "lean": "GreatgrammaCore.normalized.LexerDfa",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewLexer"
     },
     "greatgramma_core::LexerDfa::new": {
       "kind": "method",
@@ -150,7 +165,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.lexerDfaNew_spec"
     },
     "greatgramma_core::LexerError": {
       "kind": "type",
@@ -180,7 +196,8 @@
       "kind": "type",
       "source": "greatgramma_core::error::LimitKind",
       "lean": "GreatgrammaCore.error.LimitKind",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewLimitKind"
     },
     "greatgramma_core::Matcher": {
       "kind": "type",
@@ -300,7 +317,8 @@
       "kind": "type",
       "source": "greatgramma_core::ids::NonterminalId",
       "lean": "GreatgrammaCore.ids.NonterminalId",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewNonterminalId"
     },
     "greatgramma_core::NonterminalId::get": {
       "kind": "method",
@@ -309,7 +327,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.nonterminalIdGet_spec"
     },
     "greatgramma_core::NonterminalId::new": {
       "kind": "method",
@@ -318,7 +337,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.nonterminalIdNew_spec"
     },
     "greatgramma_core::ParserError": {
       "kind": "type",
@@ -336,7 +356,8 @@
       "kind": "type",
       "source": "greatgramma_core::ids::ParserStateId",
       "lean": "GreatgrammaCore.ids.ParserStateId",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewParserStateId"
     },
     "greatgramma_core::ParserStateId::get": {
       "kind": "method",
@@ -345,7 +366,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.parserStateIdGet_spec"
     },
     "greatgramma_core::ParserStateId::new": {
       "kind": "method",
@@ -354,7 +376,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.parserStateIdNew_spec"
     },
     "greatgramma_core::PreparationError": {
       "kind": "type",
@@ -462,7 +485,8 @@
       "kind": "type",
       "source": "greatgramma_core::normalized::Production",
       "lean": "GreatgrammaCore.normalized.Production",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewProduction"
     },
     "greatgramma_core::Production::lhs": {
       "kind": "method",
@@ -471,7 +495,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionLhs_spec"
     },
     "greatgramma_core::Production::new": {
       "kind": "method",
@@ -480,7 +505,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionNew_spec"
     },
     "greatgramma_core::Production::pop_len": {
       "kind": "method",
@@ -489,13 +515,15 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionPopLength_spec"
     },
     "greatgramma_core::ProductionId": {
       "kind": "type",
       "source": "greatgramma_core::ids::ProductionId",
       "lean": "GreatgrammaCore.ids.ProductionId",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewProductionId"
     },
     "greatgramma_core::ProductionId::get": {
       "kind": "method",
@@ -504,7 +532,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionIdGet_spec"
     },
     "greatgramma_core::ProductionId::new": {
       "kind": "method",
@@ -513,7 +542,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.productionIdNew_spec"
     },
     "greatgramma_core::SequenceClassification": {
       "kind": "type",
@@ -525,7 +555,8 @@
       "kind": "type",
       "source": "greatgramma_core::ids::SequenceId",
       "lean": "GreatgrammaCore.ids.SequenceId",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewSequenceId"
     },
     "greatgramma_core::SequenceId::get": {
       "kind": "method",
@@ -534,7 +565,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.sequenceIdGet_spec"
     },
     "greatgramma_core::SequenceId::new": {
       "kind": "method",
@@ -543,7 +575,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.sequenceIdNew_spec"
     },
     "greatgramma_core::SpannerQueryError": {
       "kind": "type",
@@ -555,7 +588,8 @@
       "kind": "type",
       "source": "greatgramma_core::ids::TerminalId",
       "lean": "GreatgrammaCore.ids.TerminalId",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewTerminalId"
     },
     "greatgramma_core::TerminalId::get": {
       "kind": "method",
@@ -564,7 +598,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.terminalIdGet_spec"
     },
     "greatgramma_core::TerminalId::new": {
       "kind": "method",
@@ -573,13 +608,15 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.terminalIdNew_spec"
     },
     "greatgramma_core::TokenEntry": {
       "kind": "type",
       "source": "greatgramma_core::normalized::TokenEntry",
       "lean": "GreatgrammaCore.normalized.TokenEntry",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewTokenEntry"
     },
     "greatgramma_core::TokenExecution": {
       "kind": "type",
@@ -591,7 +628,8 @@
       "kind": "type",
       "source": "greatgramma_core::ids::TokenId",
       "lean": "GreatgrammaCore.ids.TokenId",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewTokenId"
     },
     "greatgramma_core::TokenId::get": {
       "kind": "method",
@@ -600,7 +638,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.tokenIdGet_spec"
     },
     "greatgramma_core::TokenId::new": {
       "kind": "method",
@@ -609,7 +648,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.tokenIdNew_spec"
     },
     "greatgramma_core::TokenStepError": {
       "kind": "type",
@@ -621,7 +661,8 @@
       "kind": "type",
       "source": "greatgramma_core::normalized::UnvalidatedGrammar",
       "lean": "GreatgrammaCore.normalized.UnvalidatedGrammar",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewUnvalidated"
     },
     "greatgramma_core::UnvalidatedGrammar::new": {
       "kind": "method",
@@ -630,7 +671,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.unvalidatedGrammarNew_spec"
     },
     "greatgramma_core::UnvalidatedGrammar::validate": {
       "kind": "method",
@@ -639,7 +681,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": true,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validationBoundary"
     },
     "greatgramma_core::ValidatedGrammar": {
       "kind": "type",
@@ -654,7 +697,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarLalr_spec"
     },
     "greatgramma_core::ValidatedGrammar::lexer": {
       "kind": "method",
@@ -663,7 +707,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarLexer_spec"
     },
     "greatgramma_core::ValidatedGrammar::token": {
       "kind": "method",
@@ -672,7 +717,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarToken_spec"
     },
     "greatgramma_core::ValidatedGrammar::token_count": {
       "kind": "method",
@@ -681,7 +727,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarTokenCount_spec"
     },
     "greatgramma_core::ValidatedGrammar::tokens": {
       "kind": "method",
@@ -690,7 +737,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedGrammarTokens_spec"
     },
     "greatgramma_core::ValidatedLalr": {
       "kind": "type",
@@ -705,7 +753,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrAction_spec"
     },
     "greatgramma_core::ValidatedLalr::eof_terminal": {
       "kind": "method",
@@ -714,7 +763,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrEofTerminal_spec"
     },
     "greatgramma_core::ValidatedLalr::goto": {
       "kind": "method",
@@ -723,7 +773,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrGoto_spec"
     },
     "greatgramma_core::ValidatedLalr::is_ignored": {
       "kind": "method",
@@ -732,7 +783,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrIsIgnored_spec"
     },
     "greatgramma_core::ValidatedLalr::nonterminal_count": {
       "kind": "method",
@@ -741,7 +793,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrNonterminalCount_spec"
     },
     "greatgramma_core::ValidatedLalr::production": {
       "kind": "method",
@@ -750,7 +803,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrProduction_spec"
     },
     "greatgramma_core::ValidatedLalr::production_count": {
       "kind": "method",
@@ -759,7 +813,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrProductionCount_spec"
     },
     "greatgramma_core::ValidatedLalr::start_state": {
       "kind": "method",
@@ -768,7 +823,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrStartState_spec"
     },
     "greatgramma_core::ValidatedLalr::state_count": {
       "kind": "method",
@@ -777,7 +833,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrStateCount_spec"
     },
     "greatgramma_core::ValidatedLalr::terminal_count": {
       "kind": "method",
@@ -786,7 +843,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLalrTerminalCount_spec"
     },
     "greatgramma_core::ValidatedLexer": {
       "kind": "type",
@@ -801,7 +859,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerByteClass_spec"
     },
     "greatgramma_core::ValidatedLexer::class_count": {
       "kind": "method",
@@ -810,7 +869,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerClassCount_spec"
     },
     "greatgramma_core::ValidatedLexer::start_state": {
       "kind": "method",
@@ -819,7 +879,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerStartState_spec"
     },
     "greatgramma_core::ValidatedLexer::state_count": {
       "kind": "method",
@@ -828,7 +889,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerStateCount_spec"
     },
     "greatgramma_core::ValidatedLexer::terminal": {
       "kind": "method",
@@ -837,7 +899,8 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerTerminal_spec"
     },
     "greatgramma_core::ValidatedLexer::transition": {
       "kind": "method",
@@ -846,25 +909,29 @@
       "is_opaque": false,
       "can_fail": true,
       "can_diverge": false,
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Refinement.validatedLexerTransition_spec"
     },
     "greatgramma_core::ValidationError": {
       "kind": "type",
       "source": "greatgramma_core::error::ValidationError",
       "lean": "GreatgrammaCore.error.ValidationError",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewValidationError"
     },
     "greatgramma_core::ValidationLimits": {
       "kind": "type",
       "source": "greatgramma_core::limits::ValidationLimits",
       "lean": "GreatgrammaCore.limits.ValidationLimits",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewValidationLimits"
     },
     "greatgramma_core::ValidationTable": {
       "kind": "type",
       "source": "greatgramma_core::error::ValidationTable",
       "lean": "GreatgrammaCore.error.ValidationTable",
-      "status": "unproved"
+      "status": "proved",
+      "theorem": "Greatgramma.Invariants.viewValidationTable"
     },
     "greatgramma_core::classify_sequence_head": {
       "kind": "function",

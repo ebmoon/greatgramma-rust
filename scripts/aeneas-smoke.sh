@@ -239,15 +239,76 @@ while IFS= read -r relative_path; do
     fi
 done < "${expected_manifest}"
 
-# Until Unit 2 replaces these external models with reviewed handwritten ones,
-# Unit 1 deliberately elaborates the exact Aeneas templates. They are support
-# files, not generator-owned baseline files, so they stay out of the manifest.
-for template_name in TypesExternal FunsExternal; do
-    template_path="${generated_baseline}/${LEAN_NAMESPACE}/${template_name}_Template.lean"
-    support_path="${generated_baseline}/${LEAN_NAMESPACE}/${template_name}.lean"
-    [ -f "${support_path}" ] || fail "missing extraction support module ${support_path}"
-    cmp -s "${template_path}" "${support_path}" || fail "${support_path} must exactly match its Aeneas template during Unit 1"
-done
+# Aeneas owns the templates. The adjacent files are import-only bridges to the
+# stable reviewed models under proofs/External. Reconcile the union of model
+# hooks against the templates and reject unconstrained declarations throughout
+# that boundary. The generated root build below checks that each modeled Lean
+# name also has the exact type expected by Funs.lean.
+python3 - \
+    "${generated_baseline}/${LEAN_NAMESPACE}/TypesExternal_Template.lean" \
+    "${generated_baseline}/${LEAN_NAMESPACE}/FunsExternal_Template.lean" \
+    "${proof_root}/External" \
+    "${generated_baseline}/${LEAN_NAMESPACE}/TypesExternal.lean" \
+    "${generated_baseline}/${LEAN_NAMESPACE}/FunsExternal.lean" <<'PY' || fail "external model hooks do not match the generated templates"
+from collections import Counter
+from pathlib import Path
+import re
+import sys
+
+types_template, funs_template, model_root_arg, types_bridge_arg, funs_bridge_arg = (
+    Path(arg) for arg in sys.argv[1:]
+)
+model_root = model_root_arg
+bridges = [types_bridge_arg, funs_bridge_arg]
+
+for required in [types_template, funs_template, model_root, *bridges]:
+    if not required.exists():
+        raise SystemExit(f"missing external-model input: {required}")
+
+model_paths = sorted(model_root.rglob("*.lean"))
+if not model_paths:
+    raise SystemExit(f"no stable external models found under {model_root}")
+
+def hooks(path: Path, kind: str) -> Counter:
+    pattern = re.compile(rf'@\[rust_{kind}\s+"([^"]+)"')
+    return Counter(pattern.findall(path.read_text(encoding="utf-8")))
+
+expected_types = hooks(types_template, "type")
+expected_funs = hooks(funs_template, "fun")
+modeled_types = sum((hooks(path, "type") for path in model_paths), Counter())
+modeled_funs = sum((hooks(path, "fun") for path in model_paths), Counter())
+if expected_types != modeled_types:
+    raise SystemExit(
+        f"Rust type hooks differ between {types_template} and {model_root}"
+    )
+if expected_funs != modeled_funs:
+    raise SystemExit(
+        f"Rust function hooks differ between {funs_template} and {model_root}"
+    )
+
+for bridge in bridges:
+    bridge_text = bridge.read_text(encoding="utf-8")
+    if re.search(r'@\[rust_(?:fun|type)\s+"', bridge_text):
+        raise SystemExit(f"generated-adjacent bridge is not import-only: {bridge}")
+    declaration = re.search(
+        r"(?m)^\s*(?:abbrev|def|inductive|instance|opaque|structure|theorem)\s",
+        bridge_text,
+    )
+    if declaration:
+        line = bridge_text.count(chr(10), 0, declaration.start()) + 1
+        raise SystemExit(
+            f"declaration in import-only bridge {bridge}:{line}"
+        )
+
+for model_path in [*model_paths, *bridges]:
+    model = model_path.read_text(encoding="utf-8")
+    forbidden = re.search(
+        r"(?m)^\s*(?:axiom|opaque|constant)\s|\b(?:sorry|admit)\b", model
+    )
+    if forbidden:
+        line = model.count(chr(10), 0, forbidden.start()) + 1
+        raise SystemExit(f"unconstrained declaration in {model_path}:{line}")
+PY
 
 echo "Elaborating the pinned proof workspace with ${LEAN_TOOLCHAIN}..."
 (
