@@ -108,6 +108,40 @@ def split_csv(value: str) -> list[str]:
     return [part.strip() for part in value.split(",") if part.strip()]
 
 
+def find_dependency_cycle(edges: dict[str, set[str]]) -> list[str] | None:
+    """Return one deterministic dependency cycle, including its repeated start."""
+
+    states: dict[str, int] = {}
+    path: list[str] = []
+    active_positions: dict[str, int] = {}
+
+    def visit(label: str) -> list[str] | None:
+        states[label] = 1
+        active_positions[label] = len(path)
+        path.append(label)
+
+        for dependency in sorted(edges[label]):
+            state = states.get(dependency, 0)
+            if state == 0:
+                cycle = visit(dependency)
+                if cycle is not None:
+                    return cycle
+            elif state == 1:
+                return path[active_positions[dependency] :] + [dependency]
+
+        path.pop()
+        active_positions.pop(label)
+        states[label] = 2
+        return None
+
+    for label in sorted(edges):
+        if states.get(label, 0) == 0:
+            cycle = visit(label)
+            if cycle is not None:
+                return cycle
+    return None
+
+
 def validate_source(source: str, *, require_roadmap: bool = True) -> list[str]:
     source = strip_comments(source)
     errors: list[str] = []
@@ -141,6 +175,31 @@ def validate_source(source: str, *, require_roadmap: bool = True) -> list[str]:
         for target in targets:
             if target not in node_label_counts:
                 errors.append(f"\\uses target {target!r} has no matching roadmap node")
+
+    graph_labels = {
+        label
+        for label, count in node_label_counts.items()
+        if count == 1
+        and label_counts[label] == 1
+        and VALID_LABEL_RE.fullmatch(label) is not None
+    }
+    dependency_edges = {label: set() for label in graph_labels}
+    for node in nodes:
+        body = node.group("body")
+        labels = [value.strip() for value in LABEL_RE.findall(body)]
+        if len(labels) != 1 or labels[0] not in dependency_edges:
+            continue
+        source_label = labels[0]
+        for raw_targets in USES_RE.findall(body):
+            dependency_edges[source_label].update(
+                target
+                for target in split_csv(raw_targets)
+                if target in dependency_edges
+            )
+
+    cycle = find_dependency_cycle(dependency_edges)
+    if cycle is not None:
+        errors.append("cyclic Blueprint dependencies: " + " -> ".join(cycle))
 
     if not nodes:
         errors.append("no theorem-like Blueprint nodes found")
@@ -262,6 +321,23 @@ def run_self_tests() -> None:
     dangling_errors = validate_source(dangling, require_roadmap=False)
     if not any("has no matching roadmap node" in error for error in dangling_errors):
         raise AssertionError("dangling-edge fixture was accepted")
+
+    cyclic = r"""
+\begin{definition}
+  \label{def:cycle-a}
+  \bpstatus{planned}\notready
+  \uses{thm:cycle-b}
+\end{definition}
+\begin{theorem}
+  \label{thm:cycle-b}
+  \bpstatus{planned}\notready
+  \uses{def:cycle-a}
+\end{theorem}
+"""
+    cyclic_errors = validate_source(cyclic, require_roadmap=False)
+    expected_cycle = "def:cycle-a -> thm:cycle-b -> def:cycle-a"
+    if not any(expected_cycle in error for error in cyclic_errors):
+        raise AssertionError("cyclic-dependency fixture was accepted")
 
     invalid_state = r"""
 \begin{definition}

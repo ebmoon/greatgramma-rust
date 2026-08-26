@@ -14,6 +14,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  proof-coverage:
+    name: Proof and Blueprint source coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check generated proof coverage
+        run: python3 scripts/check-proof-coverage.py --self-test
+      - name: Check public API coverage
+        run: python3 scripts/check-public-api-coverage.py --self-test
+      - name: Check Blueprint coverage
+        run: python3 scripts/check-blueprint-coverage.py --self-test
+
   rust:
     runs-on: ubuntu-latest
     steps:
