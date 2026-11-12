@@ -3,11 +3,11 @@ use crate::{
     TerminalId, ValidatedGrammar,
 };
 
-use crate::lalr::{
+use super::execute::{
     RunDecision, RunStatus, execute_terminals_symbolic,
     execute_terminals_symbolic_checked_with_limit,
 };
-use crate::token_step::{WorkBudget, check_items, prepared_vec};
+use crate::preparation::budget::{WorkBudget, check_items, prepared_vec};
 
 /// Whether a sequence head is readable from a parser state without consulting
 /// states below the current stack top.

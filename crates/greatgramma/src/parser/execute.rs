@@ -1,9 +1,11 @@
+use std::{error::Error, fmt};
+
 use crate::{
     Action, NonterminalId, ParserStateId, ProductionId, SequenceId, TerminalId, ValidatedGrammar,
     ValidatedLalr,
 };
 
-use crate::token_step::reserve_one;
+use crate::preparation::budget::reserve_one;
 
 /// The result of executing a complete terminal slice against the LALR table.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -466,3 +468,53 @@ fn parser_push(stack: &mut Vec<ParserStateId>, state: ParserStateId) -> Result<(
 fn stack_top(stack: &[ParserStateId]) -> Result<ParserStateId, ParserError> {
     stack.last().copied().ok_or(ParserError::InvariantViolation)
 }
+
+impl fmt::Display for ParserError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::EmptyStack => f.write_str("the parser stack is empty"),
+            Self::EmptySequenceHead => f.write_str("the parser sequence head is empty"),
+            Self::InvalidState { state } => write!(f, "invalid parser state {}", state.get()),
+            Self::InvalidTerminal { terminal } => write!(f, "invalid terminal {}", terminal.get()),
+            Self::InvalidSequence { sequence } => write!(f, "invalid sequence {}", sequence.get()),
+            Self::StackUnderflow {
+                production,
+                pop_len,
+                stack_len,
+            } => write!(
+                f,
+                "production {} cannot pop {pop_len} states from a parser stack of length {stack_len} while preserving its base",
+                production.get()
+            ),
+            Self::MissingGoto {
+                state,
+                nonterminal,
+                production,
+            } => write!(
+                f,
+                "parser state {} has no goto for nonterminal {} after reducing production {}",
+                state.get(),
+                nonterminal.get(),
+                production.get()
+            ),
+            Self::AcceptBeforeEnd { terminal_index } => {
+                write!(
+                    f,
+                    "parser accepted at terminal index {terminal_index} before the end of input"
+                )
+            }
+            Self::InvalidReductionProgress { state, terminal } => write!(
+                f,
+                "parser reduction makes no valid progress in state {} on terminal {}",
+                state.get(),
+                terminal.get()
+            ),
+            Self::AllocationFailure { requested } => {
+                write!(f, "parser allocation failed for {requested} states")
+            }
+            Self::InvariantViolation => f.write_str("parser table or stack invariant violated"),
+        }
+    }
+}
+
+impl Error for ParserError {}

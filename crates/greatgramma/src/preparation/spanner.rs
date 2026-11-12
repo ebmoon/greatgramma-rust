@@ -1,12 +1,14 @@
+use std::{error::Error, fmt};
+
 use crate::{
     DfaStateId, LexerState, PreparationError, PreparationLimits, SequenceId, TerminalId,
     TokenExecution, TokenId, ValidatedGrammar,
 };
 
-use crate::sequence::SequenceTable;
-use crate::token_step::{
-    PreparedTokenTable, WorkBudget, check_items, prepare_token_table, prepared_push, prepared_vec,
-    source_index, source_index_for_count,
+use super::budget::{WorkBudget, check_items, prepared_push, prepared_vec};
+use super::sequence::SequenceTable;
+use super::tokens::{
+    PreparedTokenTable, prepare_token_table, source_index, source_index_for_count,
 };
 
 /// A checked error for read-only prepared-spanner queries.
@@ -263,6 +265,21 @@ fn invalid_state(source: LexerState) -> SpannerQueryError {
         },
     }
 }
+
+impl fmt::Display for SpannerQueryError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::InvalidState { state } => {
+                write!(f, "invalid lexer state {} for spanner query", state.get())
+            }
+            Self::InvalidSequence { sequence } => {
+                write!(f, "invalid sequence {} for spanner query", sequence.get())
+            }
+        }
+    }
+}
+
+impl Error for SpannerQueryError {}
 
 #[cfg(test)]
 mod tests {

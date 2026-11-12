@@ -5,7 +5,7 @@ use llguidance::earley::regexvec::{RegexVec, StateID};
 
 use crate::{
     CompileError,
-    regex::{CompiledRegexes, TerminalMeta},
+    lexer::regex::{CompiledRegexes, TerminalMeta},
 };
 
 pub(crate) fn build_lexer_dfa(

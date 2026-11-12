@@ -26,52 +26,30 @@
 
 #![forbid(unsafe_code)]
 
-mod compile;
-mod compile_error;
-mod dfa;
-mod diagnostics;
-mod engine;
-mod error;
 mod grammar;
-mod ids;
-mod lalr;
-mod lalr_reference;
 mod lexer;
-mod limits;
-mod lr;
-mod mask;
-mod normalized;
-mod preprocess;
-mod regex;
-mod sequence;
-mod source;
-mod spanner;
-mod token_step;
+mod matcher;
+mod parser;
+mod preparation;
 mod tokenizer;
-mod tokenizer_json;
-mod validate;
 
-pub use engine::{AdvanceResult, EngineError, Matcher, PreparedGrammar, prepare};
-pub use error::{ArithmeticKind, IdKind, LimitKind, ValidationError, ValidationTable};
-pub use ids::{
-    DfaStateId, NonterminalId, ParserStateId, ProductionId, SequenceId, TerminalId, TokenId,
+pub use grammar::{
+    Action, ArithmeticKind, CompileError, CompileLimits, DfaStateId, IdKind, LalrDimensions,
+    LalrTable, LexerDfa, LimitKind, NonterminalId, ParserStateId, Production, ProductionId,
+    SequenceId, SourceGrammar, TerminalId, TerminalSpec, TokenEntry, TokenId, UnvalidatedGrammar,
+    ValidatedGrammar, ValidatedLalr, ValidatedLexer, ValidationError, ValidationLimits,
+    ValidationTable, compile, normalize,
 };
-pub use lalr::{ParserError, ParserExecution, execute_terminals};
-pub use lalr_reference::execute_sequence_head;
 pub use lexer::{LexerError, LexerInput, LexerState, LexerStep, lexer_step};
-pub use limits::{PreparationLimits, ValidationLimits};
-pub use normalized::{
-    Action, LalrDimensions, LalrTable, LexerDfa, Production, TokenEntry, UnvalidatedGrammar,
-    ValidatedGrammar, ValidatedLalr, ValidatedLexer,
+pub use matcher::{AdvanceResult, EngineError, Matcher, PreparedGrammar, prepare};
+pub use parser::{
+    ParserError, ParserExecution, PreparedParser, SequenceClassification, classify_sequence_head,
+    execute_sequence_head, execute_terminals, prepare_parser,
 };
-pub use preprocess::{
-    PreparedParser, SequenceClassification, classify_sequence_head, prepare_parser,
+pub use preparation::{
+    PreparationError, PreparationLimits, PreparedSpanner, SpannerQueryError, prepare_spanner,
 };
-pub use spanner::{PreparedSpanner, SpannerQueryError, prepare_spanner};
-pub use token_step::{PreparationError, TokenExecution, TokenStepError, execute_token};
-
-pub use compile::{CompileLimits, compile, normalize};
-pub use compile_error::{CompileError, TokenizerError};
-pub use source::{SourceGrammar, TerminalSpec};
-pub use tokenizer::{TokenSpec, TokenizerManifest};
-pub use tokenizer_json::{CompatibilityReport, TokenizerJsonLimits};
+pub use tokenizer::{
+    CompatibilityReport, TokenExecution, TokenSpec, TokenStepError, TokenizerError,
+    TokenizerJsonLimits, TokenizerManifest, execute_token,
+};

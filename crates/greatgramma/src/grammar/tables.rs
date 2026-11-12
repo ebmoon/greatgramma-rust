@@ -170,7 +170,7 @@ impl UnvalidatedGrammar {
     /// Consumes untrusted input and returns an opaque value only after every
     /// finite structural check succeeds.
     pub fn validate(self, limits: ValidationLimits) -> Result<ValidatedGrammar, ValidationError> {
-        crate::validate::validate(self, limits)
+        super::validate::validate(self, limits)
     }
 }
 

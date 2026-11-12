@@ -1,17 +1,19 @@
+use std::{error::Error, fmt};
+
 use crate::{
     LexerState, ParserError, ParserStateId, PreparationError, PreparationLimits, PreparedParser,
     PreparedSpanner, SequenceClassification, SequenceId, SpannerQueryError, TokenExecution,
     TokenId, ValidatedGrammar,
 };
 
-use crate::lalr::{
+use super::mask;
+use crate::parser::execute::{
     RunDecision, execute_terminals_concrete_in_place, execute_terminals_concrete_into,
 };
-use crate::lalr_reference::sequence_head_allowed_with_scratch;
-use crate::mask;
-use crate::preprocess::prepare_parser_with_budget;
-use crate::spanner::{InverseBucket, prepare_spanner_with_budget};
-use crate::token_step::{WorkBudget, reserved_vec};
+use crate::parser::lookahead::sequence_head_allowed_with_scratch;
+use crate::parser::preprocess::prepare_parser_with_budget;
+use crate::preparation::budget::{WorkBudget, reserved_vec};
+use crate::preparation::spanner::{InverseBucket, prepare_spanner_with_budget};
 
 /// One immutable, fully prepared normalized grammar and all of its derived tables.
 pub struct PreparedGrammar {
@@ -764,6 +766,44 @@ fn map_parser_error(error: ParserError) -> EngineError {
 fn map_spanner_error(_error: SpannerQueryError) -> EngineError {
     EngineError::CorruptPreparedData
 }
+
+impl fmt::Display for EngineError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::InvalidToken { token } => write!(f, "invalid token {}", token.get()),
+            Self::InvalidRow { row, rows } => {
+                write!(f, "row {row} is outside the batch of {rows} rows")
+            }
+            Self::EmptyBatch => f.write_str("a matcher batch must contain at least one row"),
+            Self::BatchSizeMismatch { expected, actual } => {
+                write!(f, "batch has {actual} entries, expected {expected}")
+            }
+            Self::MissingRunningToken { row } => write!(f, "running row {row} requires a token"),
+            Self::Completed => f.write_str("the matcher row has already completed"),
+            Self::ConstraintViolation { token } => {
+                write!(f, "token {} violates the grammar constraint", token.get())
+            }
+            Self::BatchConstraintViolation { row, token } => write!(
+                f,
+                "token {} violates the grammar constraint in row {row}",
+                token.get()
+            ),
+            Self::BufferTooSmall { required, actual } => {
+                write!(
+                    f,
+                    "output buffer has {actual} bytes, at least {required} are required"
+                )
+            }
+            Self::NoValidToken => f.write_str("no token satisfies the grammar constraint"),
+            Self::AllocationFailure { requested } => {
+                write!(f, "matcher allocation failed for {requested} entries")
+            }
+            Self::CorruptPreparedData => f.write_str("prepared grammar data is inconsistent"),
+        }
+    }
+}
+
+impl Error for EngineError {}
 
 #[cfg(test)]
 mod tests {

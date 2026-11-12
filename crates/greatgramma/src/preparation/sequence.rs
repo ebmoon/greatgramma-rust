@@ -3,9 +3,8 @@ use crate::{
     ValidatedGrammar, lexer_step,
 };
 
-use crate::token_step::{
-    WorkBudget, check_items, prepared_push, prepared_vec, source_at, source_count, source_index,
-};
+use super::budget::{WorkBudget, check_items, prepared_push, prepared_vec};
+use super::tokens::{source_at, source_count, source_index};
 
 #[derive(Clone, Copy)]
 struct Fact {

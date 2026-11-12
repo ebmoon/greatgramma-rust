@@ -9,7 +9,7 @@ use llguidance::{
 };
 use regex_syntax::ParserBuilder as SyntaxParserBuilder;
 
-use crate::{CompileError, grammar::ResolvedTerminal};
+use crate::{CompileError, parser::yacc::ResolvedTerminal};
 
 pub(crate) struct TerminalMeta {
     pub(crate) name: String,

@@ -1,3 +1,5 @@
+use std::{error::Error, fmt};
+
 use crate::{DfaStateId, TerminalId, ValidatedGrammar, ValidatedLexer};
 
 /// Runtime state of the normalized lexer.
@@ -114,3 +116,28 @@ fn eos_step(grammar: &ValidatedGrammar, state: LexerState) -> Result<LexerStep, 
     };
     Ok(LexerStep::Finished { terminal, eof })
 }
+
+impl fmt::Display for LexerError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::InvalidState { state } => write!(f, "invalid lexer state {}", state.get()),
+            Self::CannotBeginLexeme { byte } => {
+                write!(f, "byte 0x{byte:02x} cannot begin a lexeme")
+            }
+            Self::ByteAfterUnfinishedResidual { state, byte } => write!(
+                f,
+                "byte 0x{byte:02x} cannot continue the unfinished lexeme in lexer state {}",
+                state.get()
+            ),
+            Self::EosAfterUnfinishedResidual { state } => {
+                write!(
+                    f,
+                    "EOS reached with an unfinished lexeme in lexer state {}",
+                    state.get()
+                )
+            }
+        }
+    }
+}
+
+impl Error for LexerError {}

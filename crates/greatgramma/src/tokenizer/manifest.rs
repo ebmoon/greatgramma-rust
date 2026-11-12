@@ -59,7 +59,7 @@ impl TokenizerManifest {
         eos_token_ids: &[u32],
         limits: crate::TokenizerJsonLimits,
     ) -> Result<(Self, crate::CompatibilityReport), CompileError> {
-        crate::tokenizer_json::extract(json, eos_token_ids, limits)
+        super::json::extract(json, eos_token_ids, limits)
     }
 }
 

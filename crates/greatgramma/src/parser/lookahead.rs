@@ -1,6 +1,6 @@
 use crate::{ParserStateId, TerminalId, ValidatedGrammar};
 
-use crate::lalr::{
+use super::execute::{
     ParserError, RunDecision, execute_terminals_concrete_in_place, execute_terminals_concrete_into,
     validate_inputs,
 };

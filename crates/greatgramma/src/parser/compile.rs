@@ -5,7 +5,7 @@ use crate::{
 use cfgrammar::{PIdx, Symbol, yacc::YaccGrammar};
 use lrtable::{Action as LrAction, Minimiser, StateTableErrorKind, from_yacc};
 
-use crate::{CompileError, grammar::ParsedGrammar};
+use crate::{CompileError, parser::yacc::ParsedGrammar};
 
 #[derive(Clone, Copy)]
 struct ProgressEdge {

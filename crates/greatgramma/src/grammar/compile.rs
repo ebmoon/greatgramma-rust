@@ -1,8 +1,9 @@
 use crate::{PreparationLimits, PreparedGrammar, UnvalidatedGrammar, ValidationLimits, prepare};
 
 use crate::{
-    CompileError, SourceGrammar, TokenizerManifest, dfa::build_lexer_dfa, grammar::parse_source,
-    lr::lower_lalr, regex::compile_regexes, tokenizer::normalize_manifest,
+    CompileError, SourceGrammar, TokenizerManifest, lexer::dfa::build_lexer_dfa,
+    lexer::regex::compile_regexes, parser::compile::lower_lalr, parser::yacc::parse_source,
+    tokenizer::manifest::normalize_manifest,
 };
 
 /// Resource limits for compiler outputs and validation/preparation.

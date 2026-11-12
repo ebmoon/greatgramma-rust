@@ -20,6 +20,24 @@ ancestry, encoder-decoder models, assisted generation, serialized prepared
 grammars, and longer-context lexer rollback are not supported. The complete
 contract is in the [v1 compatibility profile](docs/compatibility/v1.md).
 
+## Source layout
+
+The library lives in `crates/greatgramma/src/`. `lib.rs` exposes its public API;
+implementation modules are grouped by responsibility:
+
+| Directory | Responsibility |
+| --- | --- |
+| `grammar/` | Source specifications, compilation orchestration, normalized tables, IDs, and validation |
+| `lexer/` | Byte regexes, DFA construction, and byte/EOS execution |
+| `parser/` | Yacc parsing, LALR table construction, parser execution, and lookahead preprocessing |
+| `tokenizer/` | Token manifests, tokenizer JSON extraction, and token execution |
+| `preparation/` | Token caches, sequence interning, inverse spanners, and work/allocation budgets |
+| `matcher/` | Prepared grammar ownership, token masks, and atomic row/batch advancement |
+
+The Python integration consists of `crates/greatgramma-python/` (PyO3 bindings)
+and `python/greatgramma/` (the typed facade and Transformers adapter).
+See the [architecture guide](docs/architecture.md) for dependencies and entry points.
+
 ## Setup
 
 The Python package is not published. Build it from a local checkout with
