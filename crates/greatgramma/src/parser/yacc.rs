@@ -92,12 +92,15 @@ pub(crate) fn parse_source(
         })?;
     for token in yacc.iter_tidxs() {
         if let Some(name) = yacc.token_name(token) {
-            index.insert(name, TerminalLookup {
-                token,
-                spec: None,
-                ignored: false,
-                used: false,
-            });
+            index.insert(
+                name,
+                TerminalLookup {
+                    token,
+                    spec: None,
+                    ignored: false,
+                    used: false,
+                },
+            );
         }
     }
     for production in yacc.iter_pidxs() {

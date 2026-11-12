@@ -72,11 +72,14 @@ pub(crate) fn compile_regexes(
         }
         fallible_push(
             &mut bindings,
-            (index, TerminalMeta {
-                name: terminal.name,
-                priority: terminal.priority,
-                terminal: terminal.terminal,
-            }),
+            (
+                index,
+                TerminalMeta {
+                    name: terminal.name,
+                    priority: terminal.priority,
+                    terminal: terminal.terminal,
+                },
+            ),
         )?;
     }
 

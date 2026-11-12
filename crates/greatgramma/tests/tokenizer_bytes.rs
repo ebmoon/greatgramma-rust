@@ -5,10 +5,13 @@ use greatgramma::{
 };
 
 fn byte_source() -> SourceGrammar {
-    SourceGrammar::new("%start S\n%token ZERO HIGH\n%%\nS: ZERO HIGH;\n", vec![
-        TerminalSpec::new("ZERO", r"\x00", 0),
-        TerminalSpec::new("HIGH", r"\xFF", 0),
-    ])
+    SourceGrammar::new(
+        "%start S\n%token ZERO HIGH\n%%\nS: ZERO HIGH;\n",
+        vec![
+            TerminalSpec::new("ZERO", r"\x00", 0),
+            TerminalSpec::new("HIGH", r"\xFF", 0),
+        ],
+    )
 }
 
 #[test]

@@ -251,10 +251,13 @@ fn append_member(
     check_items(row.len().checked_add(1), limits)?;
     let mut tokens = prepared_vec(1)?;
     tokens.push(token);
-    prepared_push(row, InverseBucket {
-        sequence: sequence_id,
-        tokens,
-    })
+    prepared_push(
+        row,
+        InverseBucket {
+            sequence: sequence_id,
+            tokens,
+        },
+    )
 }
 
 fn invalid_state(source: LexerState) -> SpannerQueryError {

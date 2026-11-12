@@ -341,10 +341,13 @@ fn add_progress_edge(
     };
     charge(work, edges.len() as u64, maximum_work)?;
     if !edges.iter().any(|edge| edge.destination == next_node) {
-        fallible_push(edges, ProgressEdge {
-            destination: next_node,
-            strict,
-        })?;
+        fallible_push(
+            edges,
+            ProgressEdge {
+                destination: next_node,
+                strict,
+            },
+        )?;
     }
     Ok(())
 }
@@ -386,10 +389,13 @@ fn progress_ranks(
                 .find(|known| known.destination == destination_component)
             {
                 Some(known) => known.strict |= edge.strict,
-                None => fallible_push(known_edges, ProgressEdge {
-                    destination: destination_component,
-                    strict: edge.strict,
-                })?,
+                None => fallible_push(
+                    known_edges,
+                    ProgressEdge {
+                        destination: destination_component,
+                        strict: edge.strict,
+                    },
+                )?,
             }
         }
     }

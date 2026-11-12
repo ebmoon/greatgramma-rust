@@ -209,10 +209,13 @@ fn inverse_buckets_preserve_direct_emissions_duplicate_ids_and_rejection() {
     let result = execute_token(&grammar, LexerState::Start, TokenId::new(0))
         .expect("valid direct query")
         .expect("token is accepted");
-    assert_eq!(result, TokenExecution::Continue {
-        state: LexerState::Dfa(DfaStateId::new(1)),
-        emitted: Vec::new(),
-    });
+    assert_eq!(
+        result,
+        TokenExecution::Continue {
+            state: LexerState::Dfa(DfaStateId::new(1)),
+            emitted: Vec::new(),
+        }
+    );
     assert_eq!(spanner.sequence(a), Some(&[A][..]));
 }
 
@@ -349,10 +352,13 @@ fn excludes_eos_empty_heads_and_fabricated_or_unchecked_membership() {
 #[test]
 fn rejects_preparation_with_one_coarse_item_limit() {
     let grammar = grammar();
-    let error = prepare_spanner(&grammar, PreparationLimits {
-        max_items: 63,
-        ..PreparationLimits::default()
-    })
+    let error = prepare_spanner(
+        &grammar,
+        PreparationLimits {
+            max_items: 63,
+            ..PreparationLimits::default()
+        },
+    )
     .err();
 
     assert_eq!(
@@ -367,10 +373,13 @@ fn rejects_preparation_with_one_coarse_item_limit() {
 #[test]
 fn rejects_preparation_with_one_coarse_work_limit() {
     let grammar = grammar();
-    let error = prepare_spanner(&grammar, PreparationLimits {
-        max_work: 63,
-        ..PreparationLimits::default()
-    })
+    let error = prepare_spanner(
+        &grammar,
+        PreparationLimits {
+            max_work: 63,
+            ..PreparationLimits::default()
+        },
+    )
     .err();
 
     assert_eq!(
@@ -386,10 +395,13 @@ fn rejects_preparation_with_one_coarse_work_limit() {
 fn coarse_limits_cover_later_singleton_preparation() {
     let grammar = grammar();
     assert_eq!(
-        prepare_spanner(&grammar, PreparationLimits {
-            max_items: 2_047,
-            ..PreparationLimits::default()
-        },)
+        prepare_spanner(
+            &grammar,
+            PreparationLimits {
+                max_items: 2_047,
+                ..PreparationLimits::default()
+            },
+        )
         .err(),
         Some(PreparationError::TooLarge {
             required: 2_048,
@@ -397,10 +409,13 @@ fn coarse_limits_cover_later_singleton_preparation() {
         })
     );
     assert_eq!(
-        prepare_spanner(&grammar, PreparationLimits {
-            max_work: 2_239,
-            ..PreparationLimits::default()
-        },)
+        prepare_spanner(
+            &grammar,
+            PreparationLimits {
+                max_work: 2_239,
+                ..PreparationLimits::default()
+            },
+        )
         .err(),
         Some(PreparationError::TooLarge {
             required: 2_240,

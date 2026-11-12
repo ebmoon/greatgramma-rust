@@ -13,10 +13,10 @@ fn terminal(name: &str, pattern: &str, priority: u32) -> TerminalSpec {
 }
 
 fn item_close_source() -> SourceGrammar {
-    source("%start S\n%token ITEM CLOSE\n%%\nS: ITEM CLOSE;\n", vec![
-        terminal("ITEM", "i", 0),
-        terminal("CLOSE", "c", 0),
-    ])
+    source(
+        "%start S\n%token ITEM CLOSE\n%%\nS: ITEM CLOSE;\n",
+        vec![terminal("ITEM", "i", 0), terminal("CLOSE", "c", 0)],
+    )
 }
 
 fn item_close_tokens() -> TokenizerManifest {
@@ -81,9 +81,10 @@ fn compiles_yacc_regexes_and_exact_token_bytes_into_a_matcher() {
 
 #[test]
 fn accepting_lexer_residual_can_finish_through_eos() {
-    let source = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-        "ITEM", "i+", 0,
-    )]);
+    let source = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "i+", 0)],
+    );
     let tokens = TokenizerManifest::new(vec![
         TokenSpec::Bytes(b"i".to_vec()),
         TokenSpec::Bytes(b"ii".to_vec()),
@@ -100,9 +101,10 @@ fn accepting_lexer_residual_can_finish_through_eos() {
 
 #[test]
 fn rejects_nullable_and_unsupported_regexes() {
-    let nullable = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-        "ITEM", "i*", 0,
-    )]);
+    let nullable = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "i*", 0)],
+    );
     assert_eq!(
         compile_error(nullable, CompileLimits::default()),
         CompileError::NullableTerminal {
@@ -110,9 +112,10 @@ fn rejects_nullable_and_unsupported_regexes() {
         }
     );
 
-    let lookahead = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-        "ITEM", "i(?=c)", 0,
-    )]);
+    let lookahead = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "i(?=c)", 0)],
+    );
     assert!(matches!(
         compile_error(lookahead, CompileLimits::default()),
         CompileError::UnsupportedRegex { name, .. } if name == "ITEM"
@@ -121,9 +124,10 @@ fn rejects_nullable_and_unsupported_regexes() {
 
 #[test]
 fn rejects_missing_unknown_and_duplicate_terminal_specs() {
-    let missing = source("%start S\n%token ITEM CLOSE\n%%\nS: ITEM CLOSE;\n", vec![
-        terminal("ITEM", "i", 0),
-    ]);
+    let missing = source(
+        "%start S\n%token ITEM CLOSE\n%%\nS: ITEM CLOSE;\n",
+        vec![terminal("ITEM", "i", 0)],
+    );
     assert_eq!(
         compile_error(missing, CompileLimits::default()),
         CompileError::MissingTerminal {
@@ -131,10 +135,10 @@ fn rejects_missing_unknown_and_duplicate_terminal_specs() {
         }
     );
 
-    let unknown = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![
-        terminal("ITEM", "i", 0),
-        terminal("EXTRA", "x", 1),
-    ]);
+    let unknown = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "i", 0), terminal("EXTRA", "x", 1)],
+    );
     assert_eq!(
         compile_error(unknown, CompileLimits::default()),
         CompileError::UnknownTerminal {
@@ -142,10 +146,10 @@ fn rejects_missing_unknown_and_duplicate_terminal_specs() {
         }
     );
 
-    let duplicate = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![
-        terminal("ITEM", "i", 0),
-        terminal("ITEM", "j", 1),
-    ]);
+    let duplicate = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "i", 0), terminal("ITEM", "j", 1)],
+    );
     assert_eq!(
         compile_error(duplicate, CompileLimits::default()),
         CompileError::DuplicateTerminal {
@@ -156,10 +160,10 @@ fn rejects_missing_unknown_and_duplicate_terminal_specs() {
 
 #[test]
 fn rejects_equal_priority_overlap_and_dfa_growth() {
-    let ambiguous = source("%start S\n%token A B\n%%\nS: A | B;\n", vec![
-        terminal("A", "x", 7),
-        terminal("B", "[x]", 7),
-    ]);
+    let ambiguous = source(
+        "%start S\n%token A B\n%%\nS: A | B;\n",
+        vec![terminal("A", "x", 7), terminal("B", "[x]", 7)],
+    );
     assert_eq!(
         compile_error(ambiguous, CompileLimits::default()),
         CompileError::AmbiguousPriority {
@@ -173,9 +177,10 @@ fn rejects_equal_priority_overlap_and_dfa_growth() {
         max_dfa_states: 1,
         ..CompileLimits::default()
     };
-    let too_large = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-        "ITEM", "ab", 0,
-    )]);
+    let too_large = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "ab", 0)],
+    );
     assert_eq!(
         compile_error(too_large, limits),
         CompileError::TooManyDfaStates {
@@ -215,9 +220,10 @@ fn enforces_dfa_cell_limit_during_normalization() {
 
 #[test]
 fn exports_shared_compressed_lexer_byte_classes() {
-    let range = source("%start S\n%token RANGE\n%%\nS: RANGE;\n", vec![terminal(
-        "RANGE", "[a-c]", 0,
-    )]);
+    let range = source(
+        "%start S\n%token RANGE\n%%\nS: RANGE;\n",
+        vec![terminal("RANGE", "[a-c]", 0)],
+    );
     let tokens = TokenizerManifest::new(vec![
         TokenSpec::Bytes(b"a".to_vec()),
         TokenSpec::Bytes(b"b".to_vec()),
@@ -252,9 +258,10 @@ fn exports_shared_compressed_lexer_byte_classes() {
 
 #[test]
 fn checks_regex_output_limit_before_dfa_work_budget_exhaustion() {
-    let long_regex = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-        "ITEM", "a{100}", 0,
-    )]);
+    let long_regex = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "a{100}", 0)],
+    );
     let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(vec![b'a'; 100]), TokenSpec::Eos]);
     let limits = CompileLimits {
         max_regex_output_bytes: 0,
@@ -300,9 +307,10 @@ fn meters_linear_lexeme_registration_scans() {
 
 #[test]
 fn enforces_dfa_work_limit_during_normalization() {
-    let long_product = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-        "ITEM", "a{100}", 0,
-    )]);
+    let long_product = source(
+        "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "a{100}", 0)],
+    );
     let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(vec![b'a'; 100]), TokenSpec::Eos]);
     let mut limits = CompileLimits::default();
     limits.validation.max_work = 100;
@@ -318,11 +326,14 @@ fn enforces_dfa_work_limit_during_normalization() {
 
 #[test]
 fn rejects_lexer_products_that_need_multi_byte_last_accept_rollback() {
-    let fallback = source("%start S\n%token A ABC B\n%%\nS: A B;\n", vec![
-        terminal("A", "a", 0),
-        terminal("ABC", "abc", 0),
-        terminal("B", "b", 0),
-    ]);
+    let fallback = source(
+        "%start S\n%token A ABC B\n%%\nS: A B;\n",
+        vec![
+            terminal("A", "a", 0),
+            terminal("ABC", "abc", 0),
+            terminal("B", "b", 0),
+        ],
+    );
     assert!(matches!(
         compile_error(fallback, CompileLimits::default()),
         CompileError::UnsupportedLexerBoundary { .. }
@@ -331,17 +342,19 @@ fn rejects_lexer_products_that_need_multi_byte_last_accept_rollback() {
 
 #[test]
 fn rejects_lalr_conflicts_and_precedence_declarations() {
-    let conflict = source("%start S\n%token A\n%%\nS: S S | A;\n", vec![terminal(
-        "A", "a", 0,
-    )]);
+    let conflict = source(
+        "%start S\n%token A\n%%\nS: S S | A;\n",
+        vec![terminal("A", "a", 0)],
+    );
     assert!(matches!(
         compile_error(conflict, CompileLimits::default()),
         CompileError::GrammarConflict { .. }
     ));
 
-    let precedence = source("%start S\n%token A\n%left A\n%%\nS: S A S | A;\n", vec![
-        terminal("A", "a", 0),
-    ]);
+    let precedence = source(
+        "%start S\n%token A\n%left A\n%%\nS: S A S | A;\n",
+        vec![terminal("A", "a", 0)],
+    );
     assert_eq!(
         compile_error(precedence, CompileLimits::default()),
         CompileError::UnsupportedGrammar {
@@ -363,9 +376,10 @@ fn rejects_lalr_conflicts_and_precedence_declarations() {
 
 #[test]
 fn maps_accept_reduce_conflicts_to_grammar_conflict() {
-    let recursive_start = source("%start S\n%token A\n%%\nS: S | A;\n", vec![terminal(
-        "A", "a", 0,
-    )]);
+    let recursive_start = source(
+        "%start S\n%token A\n%%\nS: S | A;\n",
+        vec![terminal("A", "a", 0)],
+    );
 
     assert_eq!(
         compile_error(recursive_start, CompileLimits::default()),
@@ -458,9 +472,10 @@ fn rejects_code_epilogues_and_unlisted_yacc_metadata() {
 #[test]
 fn rejects_all_complement_class_spellings() {
     for pattern in [r"\D+", r"\S+", r"\W+"] {
-        let complement = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-            "ITEM", pattern, 0,
-        )]);
+        let complement = source(
+            "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+            vec![terminal("ITEM", pattern, 0)],
+        );
         assert!(matches!(
             compile_error(complement, CompileLimits::default()),
             CompileError::UnsupportedRegex { name, .. } if name == "ITEM"
@@ -471,9 +486,10 @@ fn rejects_all_complement_class_spellings() {
 #[test]
 fn accepts_literal_anchor_characters_but_rejects_assertions() {
     for (pattern, byte) in [(r"[$]", b'$'), (r"\$", b'$'), (r"[\^]", b'^')] {
-        let literal = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-            "ITEM", pattern, 0,
-        )]);
+        let literal = source(
+            "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+            vec![terminal("ITEM", pattern, 0)],
+        );
         let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(vec![byte]), TokenSpec::Eos]);
         let prepared = compile(literal, tokens, CompileLimits::default())
             .unwrap_or_else(|error| panic!("literal pattern {pattern:?} was rejected: {error}"));
@@ -495,9 +511,10 @@ fn accepts_literal_anchor_characters_but_rejects_assertions() {
     }
 
     for pattern in [r"^a", r"a$", r"a\b", r"a\B"] {
-        let boundary = source("%start S\n%token ITEM\n%%\nS: ITEM;\n", vec![terminal(
-            "ITEM", pattern, 0,
-        )]);
+        let boundary = source(
+            "%start S\n%token ITEM\n%%\nS: ITEM;\n",
+            vec![terminal("ITEM", pattern, 0)],
+        );
         assert!(matches!(
             compile_error(boundary, CompileLimits::default()),
             CompileError::UnsupportedRegex { name, .. } if name == "ITEM"
@@ -589,10 +606,10 @@ fn resolves_priority_and_accepts_declared_parser_noop_terminals() {
     let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(b"if".to_vec()), TokenSpec::Eos]);
     assert!(compile(priority, tokens, CompileLimits::default()).is_ok());
 
-    let aliases = source("%start S\n%token WINNER LOSER\n%%\nS: WINNER;\n", vec![
-        terminal("WINNER", "x", 0),
-        terminal("LOSER", "[x]", 1),
-    ]);
+    let aliases = source(
+        "%start S\n%token WINNER LOSER\n%%\nS: WINNER;\n",
+        vec![terminal("WINNER", "x", 0), terminal("LOSER", "[x]", 1)],
+    );
     let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(b"x".to_vec()), TokenSpec::Eos]);
     let prepared = compile(aliases, tokens, CompileLimits::default())
         .expect("deduplicated regex aliases retain explicit priority");
@@ -606,10 +623,10 @@ fn resolves_priority_and_accepts_declared_parser_noop_terminals() {
         AdvanceResult::Accepted
     );
 
-    let ignored = source("%start S\n%token ITEM SPACE\n%%\nS: ITEM;\n", vec![
-        terminal("ITEM", "i", 0),
-        terminal("SPACE", " +", 1),
-    ])
+    let ignored = source(
+        "%start S\n%token ITEM SPACE\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "i", 0), terminal("SPACE", " +", 1)],
+    )
     .with_ignored_terminals(vec!["SPACE".to_owned()]);
     let tokens = TokenizerManifest::new(vec![TokenSpec::Bytes(b" i".to_vec()), TokenSpec::Eos]);
     assert!(compile(ignored, tokens, CompileLimits::default()).is_ok());
@@ -662,10 +679,10 @@ fn enforces_compiler_input_limits_before_parsing_yacc() {
     terminal_limits.max_terminal_specs = 2;
     assert!(compile(supported, item_close_tokens(), terminal_limits).is_ok());
 
-    let ignored = source("%start S\n%token ITEM SPACE\n%%\nS: ITEM;\n", vec![
-        terminal("ITEM", "i", 0),
-        terminal("SPACE", " +", 1),
-    ])
+    let ignored = source(
+        "%start S\n%token ITEM SPACE\n%%\nS: ITEM;\n",
+        vec![terminal("ITEM", "i", 0), terminal("SPACE", " +", 1)],
+    )
     .with_ignored_terminals(vec!["SPACE".to_owned()]);
     let mut ignored_limits = CompileLimits {
         max_ignored_terminals: 0,
@@ -684,13 +701,14 @@ fn enforces_compiler_input_limits_before_parsing_yacc() {
 
 #[test]
 fn enforces_aggregate_regex_source_output_and_work_limits() {
-    let one = source("%start S\n%token A\n%%\nS: A;\n", vec![terminal(
-        "A", "a", 0,
-    )]);
-    let two = source("%start S\n%token A B\n%%\nS: A B;\n", vec![
-        terminal("A", "a", 0),
-        terminal("B", "b", 0),
-    ]);
+    let one = source(
+        "%start S\n%token A\n%%\nS: A;\n",
+        vec![terminal("A", "a", 0)],
+    );
+    let two = source(
+        "%start S\n%token A B\n%%\nS: A B;\n",
+        vec![terminal("A", "a", 0), terminal("B", "b", 0)],
+    );
 
     let source_limits = CompileLimits {
         max_regex_bytes: 1,

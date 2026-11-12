@@ -85,9 +85,14 @@ fn grammar() -> greatgramma::ValidatedGrammar {
 }
 
 fn dead_end_grammar() -> greatgramma::ValidatedGrammar {
-    let lexer = LexerDfa::new(1, 1, vec![0; 256], vec![None], DfaStateId::new(0), vec![
-        None,
-    ]);
+    let lexer = LexerDfa::new(
+        1,
+        1,
+        vec![0; 256],
+        vec![None],
+        DfaStateId::new(0),
+        vec![None],
+    );
     let lalr = LalrTable::new(
         LalrDimensions::new(1, 1, 0),
         state(0),
@@ -106,9 +111,14 @@ fn dead_end_grammar() -> greatgramma::ValidatedGrammar {
 }
 
 fn nonzero_start_grammar() -> greatgramma::ValidatedGrammar {
-    let lexer = LexerDfa::new(1, 1, vec![0; 256], vec![None], DfaStateId::new(0), vec![
-        None,
-    ]);
+    let lexer = LexerDfa::new(
+        1,
+        1,
+        vec![0; 256],
+        vec![None],
+        DfaStateId::new(0),
+        vec![None],
+    );
     let lalr = LalrTable::new(
         LalrDimensions::new(2, 1, 0),
         state(1),
@@ -147,14 +157,14 @@ fn stack_dependent_grammar() -> greatgramma::ValidatedGrammar {
     transitions[2] = Some(DfaStateId::new(3));
     transitions[3] = Some(DfaStateId::new(4));
     transitions[4 * 6 + 4] = Some(DfaStateId::new(5));
-    let lexer = LexerDfa::new(6, 6, byte_classes, transitions, DfaStateId::new(0), vec![
-        None,
-        Some(a),
-        Some(b),
-        Some(x),
-        Some(skip),
-        Some(close),
-    ]);
+    let lexer = LexerDfa::new(
+        6,
+        6,
+        byte_classes,
+        transitions,
+        DfaStateId::new(0),
+        vec![None, Some(a), Some(b), Some(x), Some(skip), Some(close)],
+    );
 
     let mut actions = vec![Action::Error; 6 * 6];
     actions[usize::try_from(a.get()).expect("fixture ID fits")] = Action::Shift(state(1));
@@ -532,10 +542,13 @@ fn top_level_preparation_uses_one_cumulative_work_budget() {
             maximum: 526,
         })
     );
-    prepare(dead_end_grammar(), PreparationLimits {
-        max_work: 527,
-        ..PreparationLimits::default()
-    })
+    prepare(
+        dead_end_grammar(),
+        PreparationLimits {
+            max_work: 527,
+            ..PreparationLimits::default()
+        },
+    )
     .expect("the reported exact cumulative requirement succeeds");
 }
 
