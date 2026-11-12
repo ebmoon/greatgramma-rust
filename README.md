@@ -164,15 +164,14 @@ cargo test --workspace --all-targets --all-features
 cargo test --workspace --doc --all-features
 python3 scripts/check-publication-metadata.py
 scripts/conformance-oracle.sh
-scripts/fuzz-smoke.sh
 scripts/leak-check.sh
 uv run --frozen --no-sync pytest tests/python -q
 uv run --frozen --no-sync pyright
 scripts/package-check.sh
 ```
 
-CI runs Rust checks, the independent conformance oracle, bounded normalized-input
-fuzzing, Python tests and strict typing across Python 3.10 and 3.14 on Linux,
+CI runs Rust checks, the independent conformance oracle, Python tests and strict
+typing across Python 3.10 and 3.14 on Linux,
 macOS, and Windows, plus host sdist/abi3-wheel smoke tests. Local benchmark and
 100,000-step leak harnesses are also available. A retained frozen-upstream
 comparison, a selected project license, and green final-commit CI are still

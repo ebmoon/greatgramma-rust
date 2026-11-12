@@ -56,7 +56,7 @@ package use the same version.
 - Run and retain passing Rust formatting, lint, test, and publication-metadata
   checks on the final commit.
 - Add CI coverage for Python 3.10+, native wheel builds, strict type checking,
-  Python tests, repeated-session/leak checks, fuzz targets, and release-package
+  Python tests, repeated-session/leak checks, and release-package
   smoke tests, then retain green results for the final commit. The workflows
   and local gates are implemented; their first PR run is not a retained release
   result.

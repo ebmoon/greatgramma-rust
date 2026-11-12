@@ -24,7 +24,6 @@ Rust versions are locked in `Cargo.lock`.
 | [regex-syntax](https://crates.io/crates/regex-syntax) | 0.8.11 | MIT OR Apache-2.0 | `greatgramma` |
 | [serde_json](https://crates.io/crates/serde_json) | 1.0.151 | MIT OR Apache-2.0 | `greatgramma` |
 | [pyo3](https://crates.io/crates/pyo3) | 0.29.0 | MIT OR Apache-2.0 | `greatgramma-python` |
-| [libfuzzer-sys](https://crates.io/crates/libfuzzer-sys) | 0.4.13 | MIT OR Apache-2.0 | bounded development fuzz target only |
 
 The path dependency from `greatgramma-python` to `greatgramma` is project code,
 not a third-party package.
@@ -104,7 +103,6 @@ Transformers adapter.
 | [Transformers](https://github.com/huggingface/transformers) | `>=5.14,<5.15` | Apache-2.0 | optional generation adapter |
 | [Pyright](https://github.com/microsoft/pyright) | 1.1.411 | MIT | development type checking |
 | [pytest](https://github.com/pytest-dev/pytest) | 9.1.1 | MIT | development tests |
-| [cargo-fuzz](https://github.com/rust-fuzz/cargo-fuzz) | 0.13.2 | MIT OR Apache-2.0 | bounded development fuzz runner |
 
 Python wheels may include platform-specific or bundled dependencies. Their
 notices must be derived from the exact wheel build, not inferred from this

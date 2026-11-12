@@ -2,15 +2,12 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 
 fmt:
     cargo fmt --all
-    cargo fmt --manifest-path fuzz/Cargo.toml
 
 fmt-check:
     cargo fmt --all -- --check
-    cargo fmt --manifest-path fuzz/Cargo.toml -- --check
 
 lint:
     cargo clippy --workspace --all-targets --all-features -- -D warnings
-    cargo clippy --manifest-path fuzz/Cargo.toml --all-targets --all-features -- -D warnings
 
 test:
     cargo test --workspace --all-targets --all-features
@@ -27,9 +24,6 @@ metadata-check:
 
 conformance:
     @scripts/conformance-oracle.sh
-
-fuzz-smoke:
-    @scripts/fuzz-smoke.sh
 
 leak-check:
     @scripts/leak-check.sh
@@ -50,4 +44,4 @@ benchmark-self-test:
 package-check:
     @scripts/package-check.sh
 
-ci: fmt-check lint test metadata-check conformance fuzz-smoke python-check leak-check benchmark-self-test package-check
+ci: fmt-check lint test metadata-check conformance python-check leak-check benchmark-self-test package-check

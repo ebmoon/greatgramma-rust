@@ -3,7 +3,6 @@ members = [
     "crates/greatgramma",
     "crates/greatgramma-python",
 ]
-exclude = ["fuzz"]
 resolver = "3"
 
 [workspace.package]
