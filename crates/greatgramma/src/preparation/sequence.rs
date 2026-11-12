@@ -184,10 +184,10 @@ fn scan_source(
     work: &mut WorkBudget,
 ) -> Result<(), PreparationError> {
     let lexer_source = source_at(source).ok_or(PreparationError::InvariantViolation)?;
-    if let crate::LexerState::Dfa(state) = lexer_source {
-        if let Some(Some(terminal)) = grammar.lexer().terminal(state) {
-            add_fact(seen, facts, source, terminal, terminal_count)?;
-        }
+    if let crate::LexerState::Dfa(state) = lexer_source
+        && let Some(Some(terminal)) = grammar.lexer().terminal(state)
+    {
+        add_fact(seen, facts, source, terminal, terminal_count)?;
     }
     let mut destinations = prepared_vec(256)?;
     for byte in u8::MIN..=u8::MAX {
