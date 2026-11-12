@@ -4,11 +4,10 @@
 
 use std::panic::{AssertUnwindSafe, catch_unwind};
 
-use greatgramma_compile::{
-    CompileLimits, SourceGrammar, TerminalSpec, TokenSpec, TokenizerJsonLimits, TokenizerManifest,
-    compile,
+use greatgramma::{
+    CompileLimits, EngineError, Matcher, PreparedGrammar, SourceGrammar, TerminalSpec, TokenId,
+    TokenSpec, TokenizerJsonLimits, TokenizerManifest, compile,
 };
-use greatgramma_core::{EngineError, Matcher, PreparedGrammar, TokenId};
 use pyo3::{
     create_exception,
     exceptions::{PyException, PyTypeError},

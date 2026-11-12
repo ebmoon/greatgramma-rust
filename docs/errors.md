@@ -37,7 +37,7 @@ token position, not a byte offset into the grammar or token text.
 
 Compilation errors produce no reusable compiled object. Constraint,
 completion, configuration, and sequence errors reject the operation without
-silently relaxing the grammar. The core batch-transition methods compute every
+silently relaxing the grammar. The batch-transition methods compute every
 row successor and successor mask before committing them. The native
 advance-and-mask path uses that atomic operation, so a constraint or dead-end
 failure neither partially advances successful rows nor commits the failing
@@ -54,14 +54,14 @@ after that session has been taken.
 
 The Rust APIs retain more detailed typed errors:
 
-- `greatgramma_compile::CompileError` covers grammar parsing, restricted regex
+- `greatgramma::CompileError` covers grammar parsing, restricted regex
   compilation, tokenizer ingestion, table construction, validation, resource
   limits, and preparation.
-- `greatgramma_core::ValidationError` rejects malformed or over-limit normalized
+- `greatgramma::ValidationError` rejects malformed or over-limit normalized
   tables before they become `ValidatedGrammar`.
-- `greatgramma_core::PreparationError` rejects over-limit or inconsistent
+- `greatgramma::PreparationError` rejects over-limit or inconsistent
   precomputation before it becomes `PreparedGrammar`.
-- `greatgramma_core::EngineError` covers runtime row/token misuse, dead ends,
+- `greatgramma::EngineError` covers runtime row/token misuse, dead ends,
   completion, allocation failure, and corrupt prepared data.
 
 These Rust enum variants are source-level APIs in version 0.1.0; the Python

@@ -1,7 +1,7 @@
 # Third-party dependencies and reference provenance
 
 This file records the dependency inputs declared by the repository and the
-external projects used as behavioral or verification references. It is an
+external projects used as behavioral references. It is an
 inventory, not a substitute for the upstream license texts. Upstream licenses
 do not license GreatGramma Rust itself; this repository does not yet declare a
 project license and is not ready for public distribution.
@@ -18,15 +18,16 @@ Rust versions are locked in `Cargo.lock`.
 
 | Package | Version | Upstream license | Used by |
 |---|---:|---|---|
-| [cfgrammar](https://crates.io/crates/cfgrammar) | 0.15.0 | Apache-2.0/MIT | `greatgramma-compile` |
-| [llguidance](https://crates.io/crates/llguidance) | 1.8.0 | MIT | `greatgramma-compile` |
-| [lrtable](https://crates.io/crates/lrtable) | 0.15.0 | Apache-2.0/MIT | `greatgramma-compile` |
-| [serde_json](https://crates.io/crates/serde_json) | 1.0.151 | MIT OR Apache-2.0 | `greatgramma-compile` |
+| [cfgrammar](https://crates.io/crates/cfgrammar) | 0.15.0 | Apache-2.0/MIT | `greatgramma` |
+| [llguidance](https://crates.io/crates/llguidance) | 1.8.0 | MIT | `greatgramma` |
+| [lrtable](https://crates.io/crates/lrtable) | 0.15.0 | Apache-2.0/MIT | `greatgramma` |
+| [regex-syntax](https://crates.io/crates/regex-syntax) | 0.8.11 | MIT OR Apache-2.0 | `greatgramma` |
+| [serde_json](https://crates.io/crates/serde_json) | 1.0.151 | MIT OR Apache-2.0 | `greatgramma` |
 | [pyo3](https://crates.io/crates/pyo3) | 0.29.0 | MIT OR Apache-2.0 | `greatgramma-python` |
 | [libfuzzer-sys](https://crates.io/crates/libfuzzer-sys) | 0.4.13 | MIT OR Apache-2.0 | bounded development fuzz target only |
 
-`greatgramma-core` has no third-party dependencies. Path dependencies among
-the three workspace crates are project code, not third-party packages.
+The path dependency from `greatgramma-python` to `greatgramma` is project code,
+not a third-party package.
 `Cargo.lock` is the authoritative inventory of transitive Rust packages for a
 checkout. The remaining locked packages and their registry-manifest license
 expressions are recorded below. Some are target-conditional and may not be
@@ -93,7 +94,7 @@ license texts and notices still need a release-time review.
 
 The following versions or ranges are declared in `pyproject.toml`. `uv.lock`
 is the reproducible development lockfile for this checkout. Optional runtime
-packages are not imported by `greatgramma-core`; they are needed only by the
+packages are not imported by `greatgramma`; they are needed only by the
 Transformers adapter.
 
 | Package | Declared version | Upstream license | Role |
@@ -109,18 +110,15 @@ Python wheels may include platform-specific or bundled dependencies. Their
 notices must be derived from the exact wheel build, not inferred from this
 source inventory.
 
-## Behavioral and verification references
+## Behavioral references
 
-The projects below informed behavior, design, or future verification work.
+The projects below informed behavior or design.
 They are not source dependencies unless also listed above.
 
 | Project | Frozen source | Upstream license and attribution | Role |
 |---|---|---|---|
 | GreatGramma | [commit `4c21981386fc6d457efa381d1eb1863623d50fa1`](https://github.com/large-loris-models/greatgramma/commit/4c21981386fc6d457efa381d1eb1863623d50fa1) | MIT; Copyright (c) 2024 Kanghee Park ([license](https://github.com/large-loris-models/greatgramma/blob/4c21981386fc6d457efa381d1eb1863623d50fa1/LICENSE)) | Behavioral reference |
 | llguidance | [commit `c75b0d90e12c941b881566e0a77bb5fa24cd2731`](https://github.com/guidance-ai/llguidance/commit/c75b0d90e12c941b881566e0a77bb5fa24cd2731) | MIT; Copyright (c) Microsoft Corporation ([license](https://github.com/guidance-ai/llguidance/blob/c75b0d90e12c941b881566e0a77bb5fa24cd2731/LICENSE)) | Compiler dependency and implementation reference |
-| constrained-decoding-formalization | [commit `112af02fa29b3e50c1048c36b4b8d18975dee102`](https://github.com/ucsd-formal/constrained-decoding-formalization/commit/112af02fa29b3e50c1048c36b4b8d18975dee102) | Apache-2.0; Copyright 2026 Arnav Dandu ([license](https://github.com/ucsd-formal/constrained-decoding-formalization/blob/112af02fa29b3e50c1048c36b4b8d18975dee102/LICENSE)) | Formal-specification reference |
-| Aeneas | [commit `5d08da45a405913bbee6fd544e01debf8154ac9d`](https://github.com/AeneasVerif/aeneas/commit/5d08da45a405913bbee6fd544e01debf8154ac9d) | Apache-2.0 ([license](https://github.com/AeneasVerif/aeneas/blob/5d08da45a405913bbee6fd544e01debf8154ac9d/LICENSE.md)) | Future Rust-to-Lean translation tool |
-| Charon | [commit `f5208b1c4ce287898a1fc015d41a20da3baf0974`](https://github.com/AeneasVerif/charon/commit/f5208b1c4ce287898a1fc015d41a20da3baf0974) | Apache-2.0 ([license](https://github.com/AeneasVerif/charon/blob/f5208b1c4ce287898a1fc015d41a20da3baf0974/LICENSE.md)) | Future Rust extraction tool |
 
 ## derivre version and reference revision
 

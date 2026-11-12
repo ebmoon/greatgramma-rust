@@ -18,4 +18,4 @@ Expected observations were derived by the independent interpreter in
 `tests/conformance/oracle.rs`, which operates directly on its own raw byte-DFA
 and LALR table representation. The paper is contextual material, not an
 executable oracle. The conformance adapter separately constructs the same
-normalized tables through `greatgramma-core` and compares public behavior.
+normalized tables through `greatgramma` and compares public behavior.

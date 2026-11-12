@@ -1,7 +1,7 @@
 #![no_main]
 #![forbid(unsafe_code)]
 
-use greatgramma_core::{
+use greatgramma::{
     Action, DfaStateId, LalrDimensions, LalrTable, LexerDfa, NonterminalId, ParserStateId,
     PreparationLimits, Production, ProductionId, TerminalId, TokenEntry, TokenId,
     UnvalidatedGrammar, ValidationLimits, prepare,
@@ -33,13 +33,10 @@ fn exercise(grammar: UnvalidatedGrammar, input: &mut Input<'_>) {
     let Ok(validated) = grammar.validate(fuzz_validation_limits()) else {
         return;
     };
-    let Ok(prepared) = prepare(
-        validated,
-        PreparationLimits {
-            max_items: 4_096,
-            max_work: 20_000,
-        },
-    ) else {
+    let Ok(prepared) = prepare(validated, PreparationLimits {
+        max_items: 4_096,
+        max_work: 20_000,
+    }) else {
         return;
     };
 
@@ -170,7 +167,7 @@ fn exercise(grammar: UnvalidatedGrammar, input: &mut Input<'_>) {
     assert!(invalid_row_output.iter().all(|byte| *byte == 0));
 }
 
-fn assert_mask_matches_allows(matcher: &greatgramma_core::Matcher, row: usize, mask: &[u8]) {
+fn assert_mask_matches_allows(matcher: &greatgramma::Matcher, row: usize, mask: &[u8]) {
     let mut any = false;
     let mut token_index = 0_u32;
     while token_index < matcher.token_count() {
@@ -193,7 +190,7 @@ fn assert_mask_matches_allows(matcher: &greatgramma_core::Matcher, row: usize, m
     }
 }
 
-fn assert_failed_mask_is_zero(matcher: &mut greatgramma_core::Matcher, row: usize) {
+fn assert_failed_mask_is_zero(matcher: &mut greatgramma::Matcher, row: usize) {
     if matcher.mask_bytes() == 0 {
         return;
     }

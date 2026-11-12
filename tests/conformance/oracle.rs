@@ -197,7 +197,7 @@ impl Mutation {
     }
 }
 
-// This module is the oracle. It deliberately has no greatgramma_core imports.
+// This module is the oracle. It deliberately has no greatgramma imports.
 // It operates only on the raw fixture representation declared above.
 mod oracle {
     use super::*;
@@ -485,7 +485,7 @@ mod oracle {
 // that observes the production engine.
 mod production {
     use super::*;
-    use greatgramma_core::{
+    use greatgramma::{
         Action, AdvanceResult, DfaStateId, EngineError, LalrDimensions, LalrTable, LexerDfa,
         Matcher, NonterminalId, ParserStateId, PreparationLimits, Production, ProductionId,
         TerminalId, TokenEntry, TokenId, UnvalidatedGrammar, ValidationLimits, prepare,

@@ -1,0 +1,25 @@
+[package]
+name = "greatgramma"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+publish = false
+
+[lints]
+workspace = true
+
+[[bench]]
+name = "phase1"
+harness = false
+
+[dependencies]
+cfgrammar = "=0.15.0"
+llguidance = { version = "=1.8.0", default-features = false, features = ["ahash"] }
+lrtable = "=0.15.0"
+regex-syntax = "=0.8.11"
+serde_json = "=1.0.151"
+
+[[test]]
+name = "conformance"
+path = "../../tests/conformance/oracle.rs"

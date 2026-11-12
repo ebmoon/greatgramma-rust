@@ -1,7 +1,6 @@
 [workspace]
 members = [
-    "crates/greatgramma-core",
-    "crates/greatgramma-compile",
+    "crates/greatgramma",
     "crates/greatgramma-python",
 ]
 exclude = ["fuzz"]

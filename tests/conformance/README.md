@@ -6,9 +6,8 @@ Run from the repository root:
 scripts/conformance-oracle.sh
 ```
 
-The script uses `rustc` directly, so this test remains independent of the
-workspace manifests. It compiles the current `greatgramma-core`, then compiles
-and runs `oracle.rs` as a standalone Rust test binary in a temporary directory.
+The script runs the `greatgramma` Cargo integration test named `conformance`.
+It is also included in `cargo test --workspace --all-targets --all-features`.
 
 The `oracle` module does not import or call production lexer, token-composition,
 parser-preprocessing, mask, or advance code. It interprets raw token bytes,

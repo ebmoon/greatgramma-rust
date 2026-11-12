@@ -113,11 +113,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "greatgramma-compile"
+name = "greatgramma"
 version = "0.1.0"
 dependencies = [
  "cfgrammar",
- "greatgramma-core",
  "llguidance",
  "lrtable",
  "regex-syntax",
@@ -125,15 +124,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "greatgramma-core"
-version = "0.1.0"
-
-[[package]]
 name = "greatgramma-python"
 version = "0.1.0"
 dependencies = [
- "greatgramma-compile",
- "greatgramma-core",
+ "greatgramma",
  "pyo3",
 ]
 

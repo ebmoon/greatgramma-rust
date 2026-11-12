@@ -1,28 +1,18 @@
 # GreatGramma Rust
 
-GreatGramma Rust is an exact grammar-constrained decoding engine with a small
-Rust semantic kernel, a restricted Yacc/byte-regex compiler, and a Python
-`LogitsProcessor` integration.
-
-> Target Phase 1 label: **Aeneas-translatable; Lean proof in progress.**
-
-This is not a formal-verification claim. The pinned source-built Charon/Aeneas
-gate now translates the complete core, elaborates the generated Lean module,
-and checks byte-for-byte drift against the reviewed baseline. No Lean soundness
-or completeness theorem has been proved. See the
-[trusted-boundary ADR](docs/architecture/0001-trusted-boundary.md).
+GreatGramma Rust implements [GreatGramma](https://github.com/large-loris-models/greatgramma)
+for grammar-constrained decoding. A single Rust library compiles Yacc grammars,
+byte regexes, and tokenizer manifests, prepares token masks, and advances the
+parser during generation. Python bindings integrate it with Transformers.
 
 ## What is implemented
 
-- `greatgramma-core`: dependency-free, `unsafe`-free normalized-table
-  validation, lexer/token composition, LALR execution, preprocessing, packed
-  masks, and atomic fixed-row advancement.
-- `greatgramma-compile`: action-free original-Yacc parsing, shared compressed
-  byte-regex vectors through `llguidance`/`derivre`, Pager LALR table generation
-  through `lrtable`, and exact token-manifest normalization.
-- `greatgramma`: a typed Python facade and private PyO3 module, plus a strict
-  fixed-row Transformers-compatible processor. Torch is imported only when a
-  mask is applied.
+- `greatgramma`: an `unsafe`-free Rust library with grammar compilation,
+  tokenizer normalization, validated lexer and LALR tables, bounded
+  preprocessing, packed token masks, and atomic fixed-row advancement.
+- `greatgramma-python`: the PyO3 bindings used by the typed Python `greatgramma`
+  package and its Transformers-compatible `LogitsProcessor`. Torch is imported
+  only when a mask is applied.
 
 The supported surface is intentionally narrow. In particular, tokenizer
 introspection outside the strict fast-tokenizer ByteLevel JSON profile, beam
@@ -124,14 +114,21 @@ generation because it does not accept an explicit attention mask.
 
 ## Rust example
 
-The compiler is the ordinary Rust entry point:
+Add the library to your Cargo dependencies (use the checkout path appropriate
+for your project):
+
+```toml
+[dependencies]
+greatgramma = { path = "../greatgramma-rust/crates/greatgramma" }
+```
+
+Compile a grammar and run its matcher through the same API:
 
 ```rust
-use greatgramma_compile::{
-    CompileLimits, SourceGrammar, TerminalSpec, TokenSpec, TokenizerManifest,
+use greatgramma::{
+    CompileLimits, SourceGrammar, TerminalSpec, TokenId, TokenSpec, TokenizerManifest,
     compile,
 };
-use greatgramma_core::TokenId;
 
 let source = SourceGrammar::new(
     "%start S\n%token ITEM\n%%\nS: ITEM;\n",
@@ -164,6 +161,7 @@ The workspace targets Rust 1.98.0.
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-targets --all-features
+cargo test --workspace --doc --all-features
 python3 scripts/check-publication-metadata.py
 scripts/conformance-oracle.sh
 scripts/fuzz-smoke.sh
@@ -178,20 +176,20 @@ fuzzing, Python tests and strict typing across Python 3.10 and 3.14 on Linux,
 macOS, and Windows, plus host sdist/abi3-wheel smoke tests. Local benchmark and
 100,000-step leak harnesses are also available. A retained frozen-upstream
 comparison, a selected project license, and green final-commit CI are still
-required before a Phase 1 tag. The
+required before a release. The
 [benchmark protocol](docs/benchmarks/protocol-v1.md) separates implemented
 measurements from performance claims that have not yet earned release status.
 
-## Error and trust contracts
+## Errors and input validation
 
 Every failure is fail-closed: malformed input, unsupported syntax, exhausted
 limits, invalid history, and an empty legal-token set produce an error rather
 than unconstrained logits. Python errors expose stable codes documented in the
 [error reference](docs/errors.md).
 
-The compiler and Python integration are outside the planned theorem boundary.
-The core structurally validates normalized tables but assumes their
-language-level token-byte, lexer-DFA, and LALR semantics are correct.
+The library validates grammar inputs and normalized table structure. Callers
+using the advanced normalized-table API are responsible for supplying tables
+that describe their intended lexer and grammar, and exact token-local bytes.
 
 ## Licensing and distribution
 

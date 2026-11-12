@@ -9,7 +9,7 @@ rust-version = "1.98"
 cargo-fuzz = true
 
 [dependencies]
-greatgramma-core = { path = "../crates/greatgramma-core" }
+greatgramma = { path = "../crates/greatgramma" }
 libfuzzer-sys = "=0.4.13"
 
 [[bin]]

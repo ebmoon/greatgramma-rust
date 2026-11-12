@@ -1,11 +1,11 @@
 # Rust API guide
 
-Most callers should use `greatgramma-compile`. It owns the supported source
-contract and returns an opaque `PreparedGrammar` only after normalization,
+The `greatgramma` crate provides compilation and matching. `compile` accepts
+the supported source contract and returns an opaque `PreparedGrammar` after normalization,
 validation, and bounded preparation succeed:
 
 ```rust
-use greatgramma_compile::{
+use greatgramma::{
     CompileLimits, SourceGrammar, TerminalSpec, TokenSpec, TokenizerManifest, compile,
 };
 
@@ -41,8 +41,8 @@ that need lower service-specific ceilings can call
 
 ## Manual normalized tables
 
-`greatgramma-core` also exposes the normalized schema for callers that already
-have a lexer DFA and LALR table. This is an advanced trust boundary. Validation
+`greatgramma` also exposes the normalized schema for callers that already
+have a lexer DFA and LALR table. This is an advanced API. Validation
 checks finite structure, IDs, dimensions, EOF placement, and limits, but cannot
 prove that caller-supplied tables implement a source grammar or tokenizer.
 
@@ -51,7 +51,7 @@ EOS. Parser terminal 0 is `ITEM`, terminal 1 is EOF, and nonterminal 0 is the
 start symbol.
 
 ```rust
-use greatgramma_core::{
+use greatgramma::{
     Action, DfaStateId, LalrDimensions, LalrTable, LexerDfa, NonterminalId,
     ParserStateId, PreparationLimits, Production, ProductionId, TerminalId,
     TokenEntry, TokenId, UnvalidatedGrammar, ValidationLimits, prepare,
@@ -112,8 +112,8 @@ assert_eq!(mask[0] & 0b0000_0011, 0b0000_0010); // only EOS remains
 ```
 
 The `rank` in every reduce action is a compiler-supplied progress witness. A
-manual table must satisfy the core parser's reduction-progress rules at runtime.
-`greatgramma-compile` derives these ranks and rejects a table construction when
+manual table must satisfy the parser's reduction-progress rules at runtime.
+`greatgramma` derives these ranks and rejects a table construction when
 it cannot produce a witness.
 
 ## Matchers and masks
@@ -151,7 +151,7 @@ before a mask is written.
 An EOS entry is a semantic end marker, not a byte string. It finishes the
 current accepting lexer token, feeds the parser EOF terminal, and is allowed
 only when that sequence accepts. A matcher row becomes permanently accepted
-after a successful EOS advance. Core APIs leave padding policy to the caller;
+after a successful EOS advance. Rust APIs leave padding policy to the caller;
 `allows`, `advance`, and per-row mask queries then return `EngineError::Completed`.
 Use `is_completed` and the `None` entries accepted by `advance_active` for a
 mixed running/completed batch. The Python fixed-row adapter supplies the
@@ -170,10 +170,8 @@ No constructor above performs network access or consults a tokenizer. The
 caller remains responsible for the semantic accuracy of normalized token bytes,
 lexer language/priority behavior, and parser language. Prefer the compiler when
 possible because it narrows that responsibility to source specifications and
-the exact manifest. See [the trusted-boundary ADR](architecture/0001-trusted-boundary.md)
-and [the error contract](errors.md).
+the exact manifest. See [the error contract](errors.md).
 
-The core is labeled **Aeneas-translatable; Lean proof in progress**. That label
-describes an implementation constraint and unfinished verification program. It
-is not a claim that this API, its compiler inputs, or its runtime behavior has
-been formally verified.
+All public error types implement `std::fmt::Display` and `std::error::Error`.
+`CompileError::source()` exposes tokenizer, validation, and preparation errors
+when compilation wraps one of those failures.

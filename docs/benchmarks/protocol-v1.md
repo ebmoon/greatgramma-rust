@@ -53,7 +53,7 @@ conformance oracle and bounded exhaustive tests.
 
 The Python runner records raw samples and nearest-rank p50/p95/p99 values for:
 
-- source compilation plus core preparation;
+- source compilation plus matcher preparation;
 - initial acceptance-mask access;
 - one legal token advance plus successor acceptance mask; and
 - the candidate's trusted fixed-append Python processor with a dependency-free

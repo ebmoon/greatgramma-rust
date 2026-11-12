@@ -1,2 +1,0 @@
-# Preserve byte-exact Aeneas output, including generator-owned whitespace.
-proofs/Generated/** -whitespace

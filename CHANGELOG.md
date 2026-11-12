@@ -1,27 +1,30 @@
 # Changelog
 
 All notable changes to the Rust workspace and Python package are recorded here.
-Until a public release policy is adopted, the three Rust crates and the Python
+Until a public release policy is adopted, the two Rust crates and the Python
 package use the same version.
 
 ## Unreleased — 0.1.0
 
-Target Phase 1 label: **Aeneas-translatable; Lean proof in progress**. The
-pinned source-built Charon/Aeneas gate translates the complete core, elaborates
-the generated Lean module, and checks it against a byte-exact baseline. This is
-an implementation constraint and extraction result, not a formal-verification
-claim.
+### Changed
+
+- Unified compilation and matching in the `greatgramma` Rust crate. Rust callers
+  now import compiler and matcher types from `greatgramma`; the Python API is
+  unchanged.
+- Simplified runtime and preparation code with standard Rust iteration, slice
+  operations, and early error propagation while retaining bounded work,
+  fallible allocation, and atomic matcher updates.
 
 ### Added
 
-- A dependency-free, `unsafe`-free semantic core with validated normalized
+- An `unsafe`-free decoding engine with validated normalized
   token, lexer-DFA, and LALR tables; bounded preprocessing; packed next-token
   masks; atomic fixed-row batch advancement; and explicit EOS acceptance.
 - A Rust compiler for action-free original Yacc, named restricted byte-regex
   terminals, exact token manifests and the supported strict `tokenizer.json`
   profile. It lowers llguidance's derivre-backed shared regex vector and
   lrtable's Pager LALR tables into the normalized ranked schema, then validates
-  and prepares them through the core boundary.
+  and prepares them for matching.
 - A typed Python package and private PyO3 extension with stable public error
   codes, an exact-manifest compiler entry point, a fixed-row Transformers
   `LogitsProcessor`, and an intentionally narrow decoder-only `generate`
@@ -31,8 +34,6 @@ claim.
   empty masks, completed rows, caught native panics, and score-mask failures.
 - Compatibility, architecture, Rust API, error-contract, benchmark-protocol,
   and third-party provenance documentation.
-- A pinned source-built Charon/Aeneas/Lean extraction gate and reviewed
-  byte-exact generated Lean baseline for the complete semantic core.
 
 ### Compatibility limits
 
@@ -50,7 +51,7 @@ claim.
   supported tokenizer JSON profile. General runtime tokenizer introspection is
   intentionally rejected.
 
-### Required before a Phase 1 release
+### Required before a release
 
 - Run and retain passing Rust formatting, lint, test, and publication-metadata
   checks on the final commit.
@@ -72,7 +73,4 @@ claim.
 - General tokenizer conversion, lexer modes, precedence resolution, semantic
   Yacc actions, arbitrary regex syntax, ambiguous equal-priority terminals, or
   all-CFG parsing.
-- A proof of compiler correctness, tokenizer extraction correctness, Python or
-  PyO3 correctness, or end-to-end constrained-decoding correctness.
-- A soundness or completeness theorem for the Aeneas-generated Lean program.
 - Published crates or wheels.
