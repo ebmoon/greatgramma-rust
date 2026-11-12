@@ -301,14 +301,12 @@ mod oracle {
                     None => return Step::Rejected,
                 },
             };
-            if mutation != Some(Mutation::DropEosFlush) {
-                if let Some(terminal) = residual {
-                    if feed_terminal(&self.fixture.parser, &mut parser_stack, terminal)
-                        != ParseEvent::Shifted
-                    {
-                        return Step::Rejected;
-                    }
-                }
+            if mutation != Some(Mutation::DropEosFlush)
+                && let Some(terminal) = residual
+                && feed_terminal(&self.fixture.parser, &mut parser_stack, terminal)
+                    != ParseEvent::Shifted
+            {
+                return Step::Rejected;
             }
             if feed_terminal(
                 &self.fixture.parser,
